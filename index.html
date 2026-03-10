@@ -1,0 +1,81 @@
+---
+layout: default
+title: Home
+---
+
+<!-- Hero -->
+<section class="hero">
+  <p class="hero-greeting">Hey, I'm Chamomo</p>
+  <h1 class="hero-title">I remix systems into experiences.</h1>
+  <p class="hero-description">
+    Builder, DJ, product thinker. I work at the intersection of AI and creativity —
+    making technology feel human and art feel like technology.
+  </p>
+</section>
+
+<!-- Latest Writing -->
+{% if site.posts.size > 0 %}
+<section class="content-section">
+  <div class="section-header">
+    <h2>Latest Writing</h2>
+    <a href="/writing/">View all &rarr;</a>
+  </div>
+  <div class="card-grid card-grid--3">
+    {% for post in site.posts limit: 3 %}
+      {% include card.html item=post type="post" %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- Featured Projects -->
+{% assign featured_projects = site.projects | where: "featured", true | sort: "date" | reverse %}
+{% if featured_projects.size > 0 %}
+<section class="content-section">
+  <div class="section-header">
+    <h2>Projects</h2>
+    <a href="/projects/">View all &rarr;</a>
+  </div>
+  <div class="card-grid">
+    {% for project in featured_projects limit: 4 %}
+      {% include card.html item=project type="project" %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- Recent Ideas -->
+{% if site.ideas.size > 0 %}
+<section class="content-section">
+  <div class="section-header">
+    <h2>Ideas</h2>
+    <a href="/ideas/">View all &rarr;</a>
+  </div>
+  <div class="ideas-list">
+    {% assign sorted_ideas = site.ideas | sort: "date" | reverse %}
+    {% for idea in sorted_ideas limit: 5 %}
+    <a href="{{ idea.url }}" class="idea-item">
+      <span class="badge badge--{{ idea.status }}">{{ idea.status }}</span>
+      <span class="idea-item-title">{{ idea.title }}</span>
+      <span class="idea-item-date">{{ idea.date | date: "%b %d" }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- DJ Sets -->
+{% if site.dj.size > 0 %}
+<section class="content-section">
+  <div class="section-header">
+    <h2>DJ</h2>
+    <a href="/dj/">View all &rarr;</a>
+  </div>
+  <div class="card-grid">
+    {% assign sorted_dj = site.dj | sort: "date" | reverse %}
+    {% for set in sorted_dj limit: 2 %}
+      {% include card.html item=set type="dj" %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

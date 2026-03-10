@@ -1,0 +1,28 @@
+# Jekyll build output
+_site/
+.jekyll-cache/
+.jekyll-metadata
+
+# Bundler
+vendor/
+.bundle/
+Gemfile.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Claude skill (lives in your Claude skills folder, not in the repo)
+jekyll-skill/
+
+# Reference docs (personal use, not part of the site)
+JEKYLL_COMPREHENSIVE_GUIDE.md
+SITE-MANAGEMENT-GUIDE.md
+
+# Environment
+.env
+.ruby-version

@@ -1,0 +1,29 @@
+<!--
+  Shows up to 3 related posts based on shared tags.
+  Used in post.html layout.
+-->
+{% assign related = site.posts | where_exp: "p", "p.url != page.url" %}
+{% assign scored_posts = "" | split: "" %}
+
+{% for post in related limit: 20 %}
+  {% assign shared = 0 %}
+  {% for tag in post.tags %}
+    {% if page.tags contains tag %}
+      {% assign shared = shared | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+  {% if shared > 0 %}
+    {% assign scored_posts = scored_posts | push: post %}
+  {% endif %}
+{% endfor %}
+
+{% if scored_posts.size > 0 %}
+<section class="related-posts">
+  <h2>Related</h2>
+  <div class="card-grid card-grid--3">
+    {% for post in scored_posts limit: 3 %}
+      {% include card.html item=post type="post" %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

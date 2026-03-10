@@ -1,0 +1,136 @@
+# ──────────────────────────────────────────────
+# Chamomo — Site Configuration
+# ──────────────────────────────────────────────
+
+# Site identity
+title: "Chamomo"
+tagline: "Remix artist across domains"
+description: "AI, music, product, building. Making technology feel human."
+url: ""  # Set to https://chamomo.com when domain is live
+baseurl: ""
+lang: en
+
+# Author
+author:
+  name: "Rahil Chamola"
+  email: "rahilchamola@gmail.com"
+  bio: "Builder, DJ, product thinker. ISB PGP '26. I remix systems into experiences."
+  avatar: "/assets/images/avatar.jpg"
+  location: "Hyderabad, India"
+
+# Build
+markdown: kramdown
+highlighter: rouge
+timezone: Asia/Kolkata
+permalink: /blog/:title/
+
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+
+# ──────────────────────────────────────────────
+# Collections
+# ──────────────────────────────────────────────
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:title/
+  ideas:
+    output: true
+    permalink: /ideas/:title/
+  dj:
+    output: true
+    permalink: /dj/:title/
+
+# ──────────────────────────────────────────────
+# Default front matter
+# ──────────────────────────────────────────────
+
+defaults:
+  # Posts
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      image: "/assets/images/default-og.jpg"
+
+  # Projects
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "project"
+      status: "active"
+      featured: false
+
+  # Ideas
+  - scope:
+      path: ""
+      type: "ideas"
+    values:
+      layout: "idea"
+      status: "seed"
+
+  # DJ
+  - scope:
+      path: ""
+      type: "dj"
+    values:
+      layout: "dj"
+
+  # Pages
+  - scope:
+      path: "pages"
+      type: "pages"
+    values:
+      layout: "page"
+
+# ──────────────────────────────────────────────
+# Plugins
+# ──────────────────────────────────────────────
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-redirect-from
+
+# ──────────────────────────────────────────────
+# Sass
+# ──────────────────────────────────────────────
+
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# ──────────────────────────────────────────────
+# Social (used by seo-tag and templates)
+# ──────────────────────────────────────────────
+
+social:
+  name: Chamomo
+  links:
+    - https://instagram.com/chamomo
+    - https://linkedin.com/in/rahilchamola
+    - https://soundcloud.com/chamomo
+
+# ──────────────────────────────────────────────
+# Exclude from build
+# ──────────────────────────────────────────────
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - README.md
+  - CLAUDE.md
+  - SITE-MANAGEMENT-GUIDE.md
+  - JEKYLL_COMPREHENSIVE_GUIDE.md
+  - jekyll-skill
+  - .sass-cache
+  - .jekyll-cache
+  - vercel.json

@@ -1,0 +1,53 @@
+---
+layout: default
+title: Projects
+permalink: /projects/
+---
+
+<section class="page-content">
+  <header class="page-header">
+    <h1 class="page-title">Projects</h1>
+    <p class="page-subtitle">Things I've built, am building, or am thinking about building.</p>
+  </header>
+
+  {% assign active_projects = site.projects | where: "status", "active" | sort: "date" | reverse %}
+  {% assign completed_projects = site.projects | where: "status", "completed" | sort: "date" | reverse %}
+  {% assign other_projects = site.projects | where_exp: "p", "p.status != 'active' and p.status != 'completed'" | sort: "date" | reverse %}
+
+  {% if active_projects.size > 0 %}
+  <div class="section-header">
+    <h2>Active</h2>
+  </div>
+  <div class="card-grid">
+    {% for project in active_projects %}
+      {% include card.html item=project type="project" %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if completed_projects.size > 0 %}
+  <div class="section-header">
+    <h2>Completed</h2>
+  </div>
+  <div class="card-grid">
+    {% for project in completed_projects %}
+      {% include card.html item=project type="project" %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if other_projects.size > 0 %}
+  <div class="section-header">
+    <h2>Archive</h2>
+  </div>
+  <div class="card-grid">
+    {% for project in other_projects %}
+      {% include card.html item=project type="project" %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if site.projects.size == 0 %}
+  <p class="empty-state">Projects loading... check back soon.</p>
+  {% endif %}
+</section>

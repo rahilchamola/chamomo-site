@@ -1,0 +1,306 @@
+// ──────────────────────────────────────────────
+// Layout — Site structure
+// ──────────────────────────────────────────────
+
+.site-main {
+  min-height: calc(100vh - 200px);
+  padding: $space-8 0;
+}
+
+// ──────────────────────────────────────────────
+// Header / Navigation
+// ──────────────────────────────────────────────
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba($bg-primary, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid $bg-tertiary;
+  padding: $space-4 0;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.site-logo {
+  font-size: $text-xl;
+  font-weight: 700;
+  color: $text-primary;
+  letter-spacing: -0.02em;
+
+  &:hover {
+    color: $accent-primary;
+  }
+}
+
+.site-nav {
+  display: none;
+  gap: $space-1;
+
+  @media (min-width: $bp-md) {
+    display: flex;
+  }
+}
+
+.nav-link {
+  color: $text-secondary;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  font-size: $text-sm;
+  font-weight: 500;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: $text-primary;
+    background: $bg-tertiary;
+  }
+
+  &--active {
+    color: $text-primary;
+    background: $bg-secondary;
+  }
+}
+
+// Mobile nav
+.nav-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: $space-2;
+
+  @media (min-width: $bp-md) {
+    display: none;
+  }
+
+  span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: $text-primary;
+    transition: all $transition-fast;
+  }
+
+  &.is-open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  &.is-open span:nth-child(2) {
+    opacity: 0;
+  }
+  &.is-open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+}
+
+.site-nav.is-open {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: $bg-secondary;
+  border-bottom: 1px solid $bg-tertiary;
+  padding: $space-4;
+}
+
+// ──────────────────────────────────────────────
+// Footer
+// ──────────────────────────────────────────────
+
+.site-footer {
+  border-top: 1px solid $bg-tertiary;
+  padding: $space-12 0 $space-8;
+  margin-top: $space-16;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $space-8;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+}
+
+.footer-tagline {
+  color: $text-secondary;
+  margin-top: $space-2;
+}
+
+.footer-links, .footer-social {
+  h4 {
+    font-size: $text-sm;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $text-secondary;
+    margin-bottom: $space-3;
+  }
+
+  a {
+    display: block;
+    color: $text-secondary;
+    padding: $space-1 0;
+    font-size: $text-sm;
+
+    &:hover {
+      color: $text-primary;
+    }
+  }
+}
+
+.footer-bottom {
+  margin-top: $space-8;
+  padding-top: $space-4;
+  border-top: 1px solid $bg-tertiary;
+
+  p {
+    color: $text-tertiary;
+    font-size: $text-sm;
+  }
+}
+
+// ──────────────────────────────────────────────
+// Card Grid
+// ──────────────────────────────────────────────
+
+.card-grid {
+  display: grid;
+  gap: $space-6;
+  grid-template-columns: 1fr;
+
+  @media (min-width: $bp-sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &--3 {
+    @media (min-width: $bp-lg) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+// ──────────────────────────────────────────────
+// Section headings
+// ──────────────────────────────────────────────
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: $space-6;
+
+  h2 {
+    font-size: $text-2xl;
+  }
+
+  a {
+    font-size: $text-sm;
+    color: $text-secondary;
+
+    &:hover {
+      color: $accent-primary;
+    }
+  }
+}
+
+// ──────────────────────────────────────────────
+// Page layouts
+// ──────────────────────────────────────────────
+
+.page-content, .post-full, .project-full, .idea-full, .dj-full {
+  max-width: $container-max;
+  margin: 0 auto;
+  padding: 0 $space-4;
+
+  @media (min-width: $bp-md) {
+    padding: 0 $space-8;
+  }
+}
+
+.page-header, .post-header, .project-header, .idea-header, .dj-header {
+  max-width: $container-narrow;
+  margin: 0 auto $space-8;
+}
+
+.post-title, .project-title, .idea-title, .dj-title, .page-title {
+  margin-bottom: $space-4;
+}
+
+.post-hero, .project-hero, .dj-hero {
+  max-width: $container-narrow;
+  margin: 0 auto $space-6;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  color: $text-secondary;
+  font-size: $text-sm;
+}
+
+.meta-sep {
+  color: $text-tertiary;
+}
+
+.post-categories {
+  margin-bottom: $space-3;
+}
+
+// Related posts
+.related-posts {
+  max-width: $container-narrow;
+  margin: $space-12 auto 0;
+  padding-top: $space-8;
+  border-top: 1px solid $bg-tertiary;
+
+  h2 {
+    margin-bottom: $space-6;
+  }
+}
+
+// DJ embed
+.dj-embed {
+  max-width: $container-narrow;
+  margin: 0 auto $space-6;
+}
+
+.dj-venue {
+  color: $text-secondary;
+  font-size: $text-sm;
+}
+
+// Tech stack badges
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin-bottom: $space-4;
+}
+
+.tech-badge {
+  font-size: $text-xs;
+  color: $text-secondary;
+  background: $bg-tertiary;
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  font-family: $font-mono;
+}
+
+// Project links
+.project-links {
+  display: flex;
+  gap: $space-3;
+  margin-top: $space-4;
+}

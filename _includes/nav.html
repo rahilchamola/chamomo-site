@@ -1,0 +1,29 @@
+<header class="site-header">
+  <div class="container">
+    <a href="/" class="site-logo">{{ site.title }}</a>
+
+    <nav class="site-nav" id="site-nav">
+      {% for item in site.data.navigation.main %}
+      <a href="{{ item.url }}"
+         class="nav-link {% if page.url == item.url %}nav-link--active{% endif %}">
+        {{ item.title }}
+      </a>
+      {% endfor %}
+    </nav>
+
+    <!-- Mobile menu toggle -->
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<script>
+  // Simple mobile nav toggle
+  document.getElementById('nav-toggle').addEventListener('click', function() {
+    document.getElementById('site-nav').classList.toggle('is-open');
+    this.classList.toggle('is-open');
+  });
+</script>

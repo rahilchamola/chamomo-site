@@ -27,12 +27,7 @@
 
     <div class="card-meta">
       <time>{{ include.item.date | date: "%b %d, %Y" }}</time>
-      {% if include.type == "post" %}
-        {% assign words = include.item.content | number_of_words %}
-        {% assign mins = words | divided_by: 200 %}
-        {% if mins < 1 %}{% assign mins = 1 %}{% endif %}
-        <span>{{ mins }} min read</span>
-      {% elsif include.type == "dj" and include.item.duration %}
+      {% if include.type == "dj" and include.item.duration %}
         <span>{{ include.item.duration }}</span>
       {% elsif include.type == "idea" and include.item.status %}
         <span class="idea-status">{{ include.item.status }}</span>

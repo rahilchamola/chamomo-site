@@ -96,7 +96,7 @@ const hasError = Astro.url.searchParams.get('error') === '1';
     <div class="login-badge">Private Preview</div>
     <h1>chamomo</h1>
     <p class="subtitle">This site is password-protected while in development.</p>
-    <form method="POST" action="/login">
+    <form method="GET" action="/login">
       <label for="password">Password</label>
       <input type="password" id="password" name="password" placeholder="Enter site password" autofocus required />
       <button type="submit">Enter</button>

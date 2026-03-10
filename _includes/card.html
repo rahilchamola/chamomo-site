@@ -1,8 +1,8 @@
-<!--
+{% comment %}
   Reusable card component. Usage:
-  {% include card.html item=post type="post" %}
-  {% include card.html item=project type="project" %}
--->
+  include card.html item=post type="post"
+  include card.html item=project type="project"
+{% endcomment %}
 <a href="{{ include.item.url }}" class="card card--{{ include.type | default: 'post' }}">
   {% if include.item.image %}
   <div class="card-image">

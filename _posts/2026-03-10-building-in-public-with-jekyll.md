@@ -5,6 +5,7 @@ date: 2026-03-10
 categories: building
 tags: [jekyll, web-development, building-in-public]
 description: "Why I chose Jekyll to build my personal site from scratch, and what I'm learning about web development by actually doing it."
+image: "/assets/images/posts/building-in-public.svg"
 ---
 
 I could have used a template. Literally hundreds of polished Jekyll themes exist, and a few of them are genuinely beautiful. But I didn't want beautiful — I wanted *mine*.

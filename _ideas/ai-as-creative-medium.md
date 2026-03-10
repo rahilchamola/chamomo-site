@@ -4,6 +4,7 @@ title: "AI as Creative Medium, Not Just Tool"
 date: 2026-03-10
 tags: [ai, creativity, frameworks]
 status: growing
+description: "Most people talk about AI as a productivity tool — do the same thing faster. That frame misses the interesting part: AI as a creative medium with its own aesthetic."
 ---
 
 Most people talk about AI as a productivity tool — do the same thing faster. That frame misses the interesting part.

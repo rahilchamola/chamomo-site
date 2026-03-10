@@ -6,6 +6,8 @@ type: recap
 venue: ISB Hyderabad
 duration: "90 min"
 tags: [live-set, bollywood, electronic, isb]
+description: "My first proper set at ISB. 90 minutes, ~400 people, and the kind of energy you can't plan for. Bollywood remixes into peak-hour electronic."
+image: "/assets/images/dj/isb-freshers-2025.svg"
 ---
 
 My first proper set at ISB. 90 minutes, ~400 people, and the kind of energy you can't plan for.

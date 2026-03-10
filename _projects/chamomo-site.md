@@ -5,6 +5,8 @@ subtitle: "Personal website built from scratch with Jekyll"
 date: 2026-03-10
 status: active
 featured: true
+image: "/assets/images/projects/chamomo-site.svg"
+description: "This very site — built from scratch with Jekyll, Sass, and Liquid. A personal operating system for writing, projects, ideas, and DJ content."
 tech: [jekyll, sass, liquid, vercel]
 links:
   live: https://chamomo.com

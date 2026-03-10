@@ -4,6 +4,7 @@ title: "Digital Garden Taxonomy"
 date: 2026-03-08
 tags: [systems, content, thinking]
 status: seed
+description: "A way to think about the lifecycle of ideas on a personal site — from seed to growing to mature. What triggers each transition?"
 ---
 
 A way to think about the lifecycle of ideas on a personal site.

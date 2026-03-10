@@ -22,3 +22,10 @@ Thumbs.db
 
 # Blog source assets (raw notes, not for public repo)
 Blog Post 01 Assets (Shard)/
+
+# Old Jekyll build output
+_site/
+Gemfile.lock
+jekyll-skill/
+JEKYLL_COMPREHENSIVE_GUIDE.md
+SITE-MANAGEMENT-GUIDE.md

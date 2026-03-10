@@ -12,7 +12,7 @@ export default defineConfig({
     sitemap(),
   ],
   adapter: vercel(),
-  output: 'static',
+  output: 'server',
   markdown: {
     shikiConfig: {
       theme: 'github-dark-default',

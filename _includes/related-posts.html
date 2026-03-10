@@ -1,6 +1,6 @@
 <!--
   Shows up to 3 related posts based on shared tags.
-  Used in post.html layout.
+  Uses inline HTML (not card.html) to avoid recursive rendering.
 -->
 {% assign related = site.posts | where_exp: "p", "p.url != page.url" %}
 {% assign scored_posts = "" | split: "" %}
@@ -22,7 +22,17 @@
   <h2>Related</h2>
   <div class="card-grid card-grid--3">
     {% for post in scored_posts limit: 3 %}
-      {% include card.html item=post type="post" %}
+    <a href="{{ post.url }}" class="card card--post">
+      <div class="card-body">
+        {% for cat in post.categories limit:1 %}
+        <span class="badge badge--{{ cat }}">{{ cat }}</span>
+        {% endfor %}
+        <h3 class="card-title">{{ post.title }}</h3>
+        <div class="card-meta">
+          <time>{{ post.date | date: "%b %d, %Y" }}</time>
+        </div>
+      </div>
+    </a>
     {% endfor %}
   </div>
 </section>

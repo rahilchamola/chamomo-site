@@ -21,8 +21,8 @@
 
     <h3 class="card-title">{{ include.item.title }}</h3>
 
-    {% if include.item.excerpt %}
-    <p class="card-excerpt">{{ include.item.excerpt | strip_html | truncate: 120 }}</p>
+    {% if include.item.description %}
+    <p class="card-excerpt">{{ include.item.description | truncate: 120 }}</p>
     {% endif %}
 
     <div class="card-meta">

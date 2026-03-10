@@ -1,28 +1,24 @@
-# Jekyll build output
-_site/
-.jekyll-cache/
-.jekyll-metadata
+# Build output
+dist/
+.vercel/
 
-# Bundler
-vendor/
-.bundle/
-Gemfile.lock
+# Dependencies
+node_modules/
 
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-
-# Claude skill (lives in your Claude skills folder, not in the repo)
-jekyll-skill/
-
-# Reference docs (personal use, not part of the site)
-JEKYLL_COMPREHENSIVE_GUIDE.md
-SITE-MANAGEMENT-GUIDE.md
+# Astro
+.astro/
 
 # Environment
 .env
-.ruby-version
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Blog source assets (raw notes, not for public repo)
+Blog Post 01 Assets (Shard)/

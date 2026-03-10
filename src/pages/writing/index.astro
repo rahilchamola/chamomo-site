@@ -1,0 +1,45 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Card from '@/components/astro/Card.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = (await getCollection('posts'))
+  .filter(p => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Get unique categories
+const categories = [...new Set(allPosts.flatMap(p => p.data.categories))];
+---
+
+<BaseLayout title="Writing" description="Essays on AI, music, product, building, and the spaces where they overlap.">
+  <section class="container">
+    <div class="content-header">
+      <p class="hero-greeting animate-in animate-in-1">Writing</p>
+      <h1 class="animate-in animate-in-2">Thinking out loud</h1>
+      <p class="content-header-description animate-in animate-in-3">
+        Essays on AI, music, product thinking, building, and the spaces where they overlap.
+      </p>
+      <div class="card-tags animate-in animate-in-4" style="margin-top: var(--space-4);">
+        {categories.map(cat => (
+          <span class={`badge badge--${cat}`}>{cat}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section--compact container">
+    <div class="card-grid card-grid--3">
+      {allPosts.map((post) => (
+        <Card
+          title={post.data.title}
+          description={post.data.description}
+          href={`/writing/${post.id}/`}
+          image={post.data.image}
+          date={post.data.date}
+          category={post.data.categories?.[0]}
+          type="post"
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

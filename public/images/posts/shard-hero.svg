@@ -1,0 +1,69 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c0a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a0a2e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#818cf8;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#c084fc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="20" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.05" stroke="#818cf8" stroke-width="1">
+    <line x1="0" y1="0" x2="0" y2="630"/><line x1="60" y1="0" x2="60" y2="630"/>
+    <line x1="120" y1="0" x2="120" y2="630"/><line x1="180" y1="0" x2="180" y2="630"/>
+    <line x1="240" y1="0" x2="240" y2="630"/><line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="360" y1="0" x2="360" y2="630"/><line x1="420" y1="0" x2="420" y2="630"/>
+    <line x1="480" y1="0" x2="480" y2="630"/><line x1="540" y1="0" x2="540" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/><line x1="660" y1="0" x2="660" y2="630"/>
+    <line x1="720" y1="0" x2="720" y2="630"/><line x1="780" y1="0" x2="780" y2="630"/>
+    <line x1="840" y1="0" x2="840" y2="630"/><line x1="900" y1="0" x2="900" y2="630"/>
+    <line x1="960" y1="0" x2="960" y2="630"/><line x1="1020" y1="0" x2="1020" y2="630"/>
+    <line x1="1080" y1="0" x2="1080" y2="630"/><line x1="1140" y1="0" x2="1140" y2="630"/>
+    <line x1="0" y1="60" x2="1200" y2="60"/><line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="180" x2="1200" y2="180"/><line x1="0" y1="240" x2="1200" y2="240"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/><line x1="0" y1="360" x2="1200" y2="360"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/><line x1="0" y1="480" x2="1200" y2="480"/>
+    <line x1="0" y1="540" x2="1200" y2="540"/>
+  </g>
+
+  <!-- Glowing orbs -->
+  <circle cx="300" cy="200" r="120" fill="#818cf8" opacity="0.06" filter="url(#glow)"/>
+  <circle cx="900" cy="400" r="150" fill="#ec4899" opacity="0.05" filter="url(#glow)"/>
+  <circle cx="600" cy="300" r="80" fill="#c084fc" opacity="0.04" filter="url(#glow)"/>
+
+  <!-- Shard crystal shape -->
+  <g transform="translate(600,260)" filter="url(#glow)">
+    <polygon points="0,-100 60,-30 40,80 -40,80 -60,-30" fill="none" stroke="url(#accent)" stroke-width="2" opacity="0.6"/>
+    <polygon points="0,-70 40,-20 28,55 -28,55 -40,-20" fill="url(#accent)" opacity="0.08"/>
+    <line x1="0" y1="-100" x2="40" y2="80" stroke="#c084fc" stroke-width="0.5" opacity="0.3"/>
+    <line x1="0" y1="-100" x2="-40" y2="80" stroke="#818cf8" stroke-width="0.5" opacity="0.3"/>
+    <line x1="-60" y1="-30" x2="60" y2="-30" stroke="#ec4899" stroke-width="0.5" opacity="0.3"/>
+  </g>
+
+  <!-- Text -->
+  <text x="600" y="430" text-anchor="middle" font-family="monospace" font-size="52" font-weight="800" fill="url(#accent)">SHARD</text>
+  <text x="600" y="470" text-anchor="middle" font-family="monospace" font-size="16" fill="#71717a" letter-spacing="8">BUILDING IN PUBLIC</text>
+
+  <!-- Stats bar at bottom -->
+  <g transform="translate(0,560)">
+    <rect width="1200" height="70" fill="#0c0a1a" opacity="0.8"/>
+    <text x="200" y="40" text-anchor="middle" font-family="monospace" font-size="13" fill="#818cf8">8 DAYS</text>
+    <text x="400" y="40" text-anchor="middle" font-family="monospace" font-size="13" fill="#a78bfa">50K LOC</text>
+    <text x="600" y="40" text-anchor="middle" font-family="monospace" font-size="13" fill="#c084fc">125 COMMITS</text>
+    <text x="800" y="40" text-anchor="middle" font-family="monospace" font-size="13" fill="#e879f9">10 WORLDS</text>
+    <text x="1000" y="40" text-anchor="middle" font-family="monospace" font-size="13" fill="#ec4899">VIBE-CODED</text>
+  </g>
+</svg>

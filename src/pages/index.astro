@@ -1,0 +1,200 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Card from '@/components/astro/Card.astro';
+import HeroScene from '@/components/react/HeroScene';
+import { getCollection } from 'astro:content';
+
+const allPosts = (await getCollection('posts'))
+  .filter(p => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const allProjects = (await getCollection('projects'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const featuredProjects = allProjects.filter(p => p.data.featured);
+
+const allIdeas = (await getCollection('ideas'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const allDj = (await getCollection('dj'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Shard series for featured section
+const shardSeries = allPosts
+  .filter(p => p.data.series === 'building-shard')
+  .sort((a, b) => (a.data.part ?? 0) - (b.data.part ?? 0));
+
+const shardColors = ['#818cf8', '#c084fc', '#ec4899', '#f59e0b', '#34d399'];
+---
+
+<BaseLayout>
+  <!-- Hero -->
+  <section class="hero container" style="position: relative; overflow: hidden;">
+    <HeroScene client:load />
+    <p class="hero-greeting animate-in animate-in-1">Hey, I'm Chamomo</p>
+    <h1 class="hero-title animate-in animate-in-2">
+      I remix systems into <span class="gradient-text">experiences.</span>
+    </h1>
+    <p class="hero-description animate-in animate-in-3">
+      Builder, DJ, product thinker. I work at the intersection of AI and creativity —
+      making technology feel human and art feel like technology.
+    </p>
+    <div class="hero-links animate-in animate-in-4">
+      <a href="/writing/" class="btn btn--primary">Read my writing</a>
+      <a href="/about/" class="btn btn--ghost">About me</a>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="container" data-animate>
+    <div class="divider"></div>
+    <div class="stats-row" style="justify-content: center;">
+      <div class="stat">
+        <div class="stat-value gradient-text">{allPosts.length}</div>
+        <div class="stat-label">Articles</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value gradient-text">{allProjects.length}</div>
+        <div class="stat-label">Projects</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value gradient-text">{allIdeas.length}</div>
+        <div class="stat-label">Ideas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value gradient-text">{allDj.length}</div>
+        <div class="stat-label">DJ Sets</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+  </section>
+
+  <!-- Featured Series: Building Shard -->
+  {shardSeries.length > 0 && (
+    <section class="section container" data-animate>
+      <div style="border-radius: 1.25rem; border: 1px solid rgba(255,255,255,0.06); background: linear-gradient(135deg, rgba(129,140,248,0.04) 0%, rgba(236,72,153,0.04) 100%); padding: 2rem; position: relative; overflow: hidden;">
+        <!-- Subtle background glow -->
+        <div style="position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(129,140,248,0.08) 0%, transparent 70%); pointer-events: none;"></div>
+        <div style="position: absolute; bottom: -40px; left: -40px; width: 160px; height: 160px; border-radius: 50%; background: radial-gradient(circle, rgba(236,72,153,0.06) 0%, transparent 70%); pointer-events: none;"></div>
+
+        <!-- Header -->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; position: relative;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem;">
+              <span style="font-size: 0.65rem; font-family: monospace; color: #818cf8; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600;">Featured Series</span>
+              <span style="font-size: 0.6rem; font-family: monospace; color: #3f3f46; padding: 0.15rem 0.5rem; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.06);">5 Parts</span>
+            </div>
+            <h2 style="font-size: 1.5rem; font-weight: 800; color: #f4f4f5; margin: 0; line-height: 1.2;">Building Shard</h2>
+            <p style="font-size: 0.85rem; color: #71717a; margin: 0.25rem 0 0 0;">50,000 lines of AI game engine, vibe-coded in 8 days</p>
+          </div>
+          <a href="/writing/building-shard-1-the-spark/" style="font-size: 0.8rem; color: #a5b4fc; text-decoration: none; display: flex; align-items: center; gap: 0.3rem; padding: 0.4rem 0.85rem; border-radius: 0.5rem; background: rgba(129,140,248,0.1); transition: background 0.2s;">Start reading &rarr;</a>
+        </div>
+
+        <!-- Parts grid -->
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem;">
+          {shardSeries.map((post, i) => {
+            const color = shardColors[i] || '#818cf8';
+            const partNum = post.data.part ?? (i + 1);
+            const shortTitles = ['The Spark', 'AI as Engine', '8 Days', 'What We Killed', 'Ten Lessons'];
+            return (
+              <a href={`/writing/${post.id}/`} style={`text-decoration: none; border-radius: 0.875rem; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); padding: 1rem; transition: all 0.2s; display: flex; flex-direction: column; gap: 0.5rem;`}>
+                <div style={`display: flex; align-items: center; gap: 0.5rem;`}>
+                  <div style={`width: 2rem; height: 2rem; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; font-family: monospace; color: ${color}; background: ${color}15; border: 1px solid ${color}25; flex-shrink: 0;`}>{partNum}</div>
+                  <span style={`font-size: 0.7rem; font-family: monospace; color: #52525b; text-transform: uppercase; letter-spacing: 0.05em;`}>Part {partNum}</span>
+                </div>
+                <h4 style="font-size: 0.9rem; font-weight: 700; color: #e4e4e7; margin: 0; line-height: 1.3;">{shortTitles[i] || post.data.title}</h4>
+                <div style={`height: 2px; border-radius: 1px; background: linear-gradient(90deg, ${color} 0%, transparent 100%); opacity: 0.4; margin-top: auto;`}></div>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Latest Writing -->
+  <section class="section container">
+    <div class="section-header" data-animate>
+      <h2>Latest Writing</h2>
+      <a href="/writing/">View all &rarr;</a>
+    </div>
+    <div class="card-grid card-grid--3">
+      {allPosts.slice(0, 3).map((post) => (
+        <Card
+          title={post.data.title}
+          description={post.data.description}
+          href={`/writing/${post.id}/`}
+          image={post.data.image}
+          date={post.data.date}
+          category={post.data.categories?.[0]}
+          type="post"
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- Featured Projects -->
+  {featuredProjects.length > 0 && (
+    <section class="section container">
+      <div class="section-header" data-animate>
+        <h2>Projects</h2>
+        <a href="/projects/">View all &rarr;</a>
+      </div>
+      <div class="card-grid card-grid--2">
+        {featuredProjects.map((project) => (
+          <Card
+            title={project.data.title}
+            description={project.data.description}
+            href={`/projects/${project.id}/`}
+            image={project.data.image}
+            date={project.data.date}
+            status={project.data.status}
+            type="project"
+            featured={project.data.featured}
+            tech={project.data.tech}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Ideas -->
+  <section class="section container">
+    <div class="section-header" data-animate>
+      <h2>Ideas</h2>
+      <a href="/ideas/">View all &rarr;</a>
+    </div>
+    <div class="ideas-list">
+      {allIdeas.slice(0, 5).map((idea) => (
+        <a href={`/ideas/${idea.id}/`} class="idea-row" data-animate>
+          <span class={`badge badge--${idea.data.status}`}>{idea.data.status}</span>
+          <span class="idea-row-title">{idea.data.title}</span>
+          <span class="idea-row-date">
+            {idea.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- DJ -->
+  <section class="section container">
+    <div class="section-header" data-animate>
+      <h2>DJ</h2>
+      <a href="/dj/">View all &rarr;</a>
+    </div>
+    <div class="card-grid card-grid--2">
+      {allDj.slice(0, 2).map((set) => (
+        <Card
+          title={set.data.title}
+          description={set.data.description}
+          href={`/dj/${set.id}/`}
+          image={set.data.image}
+          date={set.data.date}
+          type="dj"
+          duration={set.data.duration}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

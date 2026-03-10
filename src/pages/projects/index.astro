@@ -1,0 +1,92 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Card from '@/components/astro/Card.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = (await getCollection('projects'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const active = allProjects.filter(p => p.data.status === 'active');
+const completed = allProjects.filter(p => p.data.status === 'completed');
+const archived = allProjects.filter(p => p.data.status === 'archive');
+---
+
+<BaseLayout title="Projects" description="Things I'm building, have built, and learned from building.">
+  <section class="container">
+    <div class="content-header">
+      <p class="hero-greeting animate-in animate-in-1">Projects</p>
+      <h1 class="animate-in animate-in-2">Things I'm building</h1>
+      <p class="content-header-description animate-in animate-in-3">
+        Active experiments, completed work, and the archived projects that taught me something.
+      </p>
+    </div>
+  </section>
+
+  {active.length > 0 && (
+    <section class="section--compact container">
+      <div class="section-header" data-animate>
+        <h2>Active</h2>
+        <span style="font-size: var(--text-sm); color: var(--text-tertiary);">{active.length} projects</span>
+      </div>
+      <div class="card-grid card-grid--2">
+        {active.map((project) => (
+          <Card
+            title={project.data.title}
+            description={project.data.description}
+            href={`/projects/${project.id}/`}
+            image={project.data.image}
+            date={project.data.date}
+            status={project.data.status}
+            type="project"
+            featured={project.data.featured}
+            tech={project.data.tech}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  {completed.length > 0 && (
+    <section class="section--compact container">
+      <div class="section-header" data-animate>
+        <h2>Completed</h2>
+      </div>
+      <div class="card-grid card-grid--2">
+        {completed.map((project) => (
+          <Card
+            title={project.data.title}
+            description={project.data.description}
+            href={`/projects/${project.id}/`}
+            image={project.data.image}
+            date={project.data.date}
+            status={project.data.status}
+            type="project"
+            tech={project.data.tech}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+
+  {archived.length > 0 && (
+    <section class="section--compact container">
+      <div class="section-header" data-animate>
+        <h2>Archive</h2>
+      </div>
+      <div class="card-grid card-grid--2">
+        {archived.map((project) => (
+          <Card
+            title={project.data.title}
+            description={project.data.description}
+            href={`/projects/${project.id}/`}
+            image={project.data.image}
+            date={project.data.date}
+            status={project.data.status}
+            type="project"
+            tech={project.data.tech}
+          />
+        ))}
+      </div>
+    </section>
+  )}
+</BaseLayout>

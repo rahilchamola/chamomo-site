@@ -1,0 +1,44 @@
+---
+const navLinks = [
+  { title: 'Writing', url: '/writing/' },
+  { title: 'Projects', url: '/projects/' },
+  { title: 'Ideas', url: '/ideas/' },
+  { title: 'DJ', url: '/dj/' },
+  { title: 'About', url: '/about/' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="nav" id="main-nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">chamomo</a>
+    <ul class="nav-links" id="nav-links">
+      {navLinks.map(link => (
+        <li>
+          <a
+            href={link.url}
+            aria-current={currentPath.startsWith(link.url) ? 'page' : undefined}
+          >
+            {link.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Toggle menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const links = document.getElementById('nav-links');
+  toggle?.addEventListener('click', () => {
+    links?.classList.toggle('open');
+  });
+</script>

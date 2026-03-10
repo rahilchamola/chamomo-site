@@ -1,7 +1,6 @@
-# CLAUDE.md — Chamomo Jekyll Site
+# CLAUDE.md — Chamomo Astro Site
 
-> This file gives Claude instant context about this Jekyll site.
-> Keep it updated as the site evolves.
+> This file gives Claude instant context about this site.
 
 ## What This Is
 Personal website for Rahil Chamola (Chamomo). Built with Jekyll. Covers writing, projects, DJ content, ideas/notes.

@@ -1,0 +1,114 @@
+---
+title: "Building Shard, Part 4: What We Killed"
+date: 2026-03-14
+categories: [product, building]
+tags: [building-in-public, shard, product-decisions, tradeoffs]
+description: "The decisions that shaped Shard weren't about what to build — they were about what to kill. Six critical tradeoffs, five murdered features, and the logic behind each cut. All inside an 8-day sprint."
+image: /images/posts/shard-hero-4.svg
+series: "building-shard"
+part: 4
+totalParts: 5
+prevSlug: "building-shard-3-eight-days"
+nextSlug: "building-shard-5-ten-lessons"
+---
+
+import SeriesNav from '../../components/blog/SeriesNav.jsx';
+import DecisionCards from '../../components/blog/DecisionCards.jsx';
+import FeaturesCutTable from '../../components/blog/FeaturesCutTable.jsx';
+import metricsData from '../../data/growth-metrics.json';
+
+<SeriesNav client:visible current={4} total={5} prevSlug="building-shard-3-eight-days" nextSlug="building-shard-5-ten-lessons" seriesTitle="Building Shard" />
+
+## Products are shaped by subtraction
+
+The natural instinct when building is to add. More features. More options. More surface area. The logic feels sound: more things means more value, right?
+
+Wrong. Or at least, wrong for the kind of product Shard is.
+
+Every feature in an AI-native product has a cost you don't see in traditional software. It's not just engineering time and maintenance burden — it's *cognitive load on the AI*. Every system the AI needs to reason about dilutes its attention across all the others. A feature that works in isolation can degrade the entire experience by making the prompt context noisier.
+
+In a sprint, this realization hits fast. By Day 3, I'd already built and killed features that seemed essential 48 hours earlier. The speed of vibe-coding means you can build, test, and cut a feature in the same afternoon. No sunk cost paralysis — the iteration cost is too low for that.
+
+Here's the honest accounting.
+
+## The six decisions
+
+These aren't the easy calls. Easy calls don't need post-mortems. These are the decisions where both sides had real merit, where I weighed the tradeoffs quickly, and where the choice shaped what Shard became.
+
+Click each card to see the full tradeoff and what I learned.
+
+<DecisionCards client:visible decisions={metricsData.decisions} />
+
+### The hardest one: Depth Over Breadth
+
+The depth-over-breadth decision was a recurring argument I had with myself through the first half of the sprint.
+
+The market logic says: ship content. More worlds means more hooks for different audiences. More variety means more retention. More surface area means more things to put in a launch tweet.
+
+The building logic says: one deeply systemic world teaches you things that a dozen shallow ones never will. You discover interaction patterns, edge cases, and emergent behaviors that only appear when systems are dense enough to intersect.
+
+I chose building logic. For the first three days, Shard had one world. *One.* While the instinct screamed "build more content," I was debugging what happens when a relationship shifts during a quest that requires trust from an NPC the player betrayed two acts ago.
+
+That specific interaction — cascading consequences of a betrayal through multiple typed systems — is something that only emerges from depth. And it's what made worlds 2–10 dramatically better when they came, because the tooling was already rich enough to support them.
+
+### The one I almost skipped: External Critique
+
+On Day 6 — the highest-volume day of the sprint, 33 commits — I submitted the full Shard architecture to two independent auditors for review. Not friends. Not collaborators. People whose job it was to find problems.
+
+I almost didn't. Six days of intense solo building creates a momentum that resists interruption. You know the reasoning behind every decision. You've already considered the alternatives. Why pause to explain yourself?
+
+Because: blind spots compound. Assumptions calcify into architecture. Complexity that exists because of historical accident gets mistaken for design intent. Two reviewers, each spending a few hours, produced more actionable improvement ideas than the previous two days of building.
+
+The lesson isn't "get feedback." Everyone knows that. The lesson is: **seek feedback that has the structural authority to change your mind.** And do it mid-sprint, not after.
+
+## The kill list
+
+Five features that I built, tested, and deliberately removed. Each one worked. None of them belonged.
+
+<FeaturesCutTable client:visible features={metricsData.featuresCut} />
+
+### Real-time multiplayer
+
+Built a prototype on Day 2. It worked. Two players in the same world, each making choices that affected the other's experience.
+
+Killed it the same day. 10x complexity in the state engine, synchronization problems between AI calls, and zero users to validate whether multiplayer narrative fiction was even something people wanted. The core single-player loop wasn't validated yet. Adding multiplayer before validating core gameplay is building a roof before pouring the foundation.
+
+### AI-generated scene images
+
+Integrated image generation on Day 3. Each scene got a dynamically generated illustration.
+
+Killed it by the evening. Images were slow (2-4 seconds per generation), expensive, visually inconsistent across scenes, and — worst of all — broke immersion more than they helped it. Players had built a mental image of the world. A generated image that didn't match their imagination was *worse* than no image at all.
+
+Text is the primary medium. Lean into it instead of fighting it.
+
+### Token-by-token streaming
+
+Streaming AI responses character-by-character for a typewriter effect. Built on Day 2. Killed on Day 3.
+
+It worked beautifully on turn 1 and silently hung on turn 15. Multi-step pipelines with streaming create race conditions that are almost impossible to debug reliably. A 90% success rate meant a broken experience every few minutes.
+
+**Kill features that work 90% of the time.** 90% reliable is a broken product.
+
+### Dice-based skill checks
+
+D&D-style rolls determining success and failure. Seemed like a natural fit for interactive fiction.
+
+Killed it on Day 4. In a narrative context, visible randomness felt arbitrary and unfair. "You failed the persuasion check" breaks the narrative contract. Hidden probability — where the AI weighs character skills against difficulty without showing dice — feels more authentic and maintains immersion.
+
+### Universal free-text input
+
+Letting players type anything they wanted, every turn.
+
+Killed it on Day 5 and replaced with structured choices: 2–4 AI-generated options per turn, each with clear consequences. Players initially resist — "but I want freedom!" Then they notice that structured choices produce dramatically better stories.
+
+**Freedom isn't the same as agency.** Constraints create better experiences.
+
+## The meta-lesson
+
+In a sprint, killing features is easier than you'd think. The iteration cost is so low that sunk cost fallacy barely has time to form. You build something in two hours, test it, realize it doesn't belong, and cut it before dinner.
+
+The harder lesson: every feature you kill makes the surviving features stronger. Less context noise for the AI. Less cognitive load for the player. Fewer integration points to maintain. More room for the things that matter to breathe.
+
+The product you ship is defined by what you chose not to include.
+
+<SeriesNav client:visible current={4} total={5} prevSlug="building-shard-3-eight-days" nextSlug="building-shard-5-ten-lessons" seriesTitle="Building Shard" />

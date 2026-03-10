@@ -1,0 +1,69 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  href: string;
+  image?: string;
+  date?: Date;
+  category?: string;
+  status?: string;
+  type?: string; // post | project | idea | dj
+  duration?: string;
+  featured?: boolean;
+  tech?: string[];
+}
+
+const {
+  title,
+  description,
+  href,
+  image,
+  date,
+  category,
+  status,
+  type = 'post',
+  duration,
+  featured = false,
+  tech = [],
+} = Astro.props;
+
+const dateStr = date ? new Date(date).toLocaleDateString('en-US', {
+  month: 'short', day: 'numeric', year: 'numeric'
+}) : '';
+
+const cardClass = `card${featured ? ' card--featured' : ''}`;
+---
+
+<a href={href} class={cardClass} data-animate>
+  {image && (
+    <div class="card-image">
+      <img src={image} alt={title} loading="lazy" />
+    </div>
+  )}
+  <div class="card-body">
+    <div class="card-tags">
+      {type === 'project' && status && (
+        <span class={`badge badge--${status}`}>{status}</span>
+      )}
+      {type === 'dj' && Astro.props.type && (
+        <span class={`badge badge--${Astro.props.type}`}>{Astro.props.type}</span>
+      )}
+      {category && type === 'post' && (
+        <span class={`badge badge--${category}`}>{category}</span>
+      )}
+    </div>
+    <h3 class="card-title">{title}</h3>
+    {description && (
+      <p class="card-excerpt">{description}</p>
+    )}
+    {tech.length > 0 && (
+      <div class="tech-stack">
+        {tech.map(t => <span class="tech-pill">{t}</span>)}
+      </div>
+    )}
+    <div class="card-meta">
+      {dateStr && <time>{dateStr}</time>}
+      {duration && <span>{duration}</span>}
+    </div>
+  </div>
+</a>

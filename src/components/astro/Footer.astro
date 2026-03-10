@@ -1,0 +1,22 @@
+---
+const socialLinks = [
+  { name: 'Twitter', url: 'https://twitter.com/chamomo' },
+  { name: 'LinkedIn', url: 'https://linkedin.com/in/rahilchamola' },
+  { name: 'GitHub', url: 'https://github.com/chamomo' },
+  { name: 'SoundCloud', url: 'https://soundcloud.com/chamomo' },
+  { name: 'Instagram', url: 'https://instagram.com/chamomo' },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer-inner">
+    <p class="footer-text">&copy; {year} Chamomo. Remixed with care.</p>
+    <ul class="footer-links">
+      {socialLinks.map(link => (
+        <li><a href={link.url} target="_blank" rel="noopener">{link.name}</a></li>
+      ))}
+    </ul>
+  </div>
+</footer>

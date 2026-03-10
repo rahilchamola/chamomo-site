@@ -1,0 +1,52 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allIdeas = (await getCollection('ideas'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const statusOrder = { mature: 0, growing: 1, seed: 2 };
+const byStatus = [...allIdeas].sort((a, b) =>
+  (statusOrder[a.data.status] ?? 3) - (statusOrder[b.data.status] ?? 3)
+);
+---
+
+<BaseLayout title="Ideas" description="A digital garden of evolving thoughts — seeds, growing ideas, and mature concepts.">
+  <section class="container">
+    <div class="content-header">
+      <p class="hero-greeting animate-in animate-in-1">Ideas</p>
+      <h1 class="animate-in animate-in-2">Digital garden</h1>
+      <p class="content-header-description animate-in animate-in-3">
+        Not every thought needs to be a finished essay. Some are
+        <span class="badge badge--seed" style="display: inline-flex; vertical-align: middle;">seeds</span>,
+        some are <span class="badge badge--growing" style="display: inline-flex; vertical-align: middle;">growing</span>,
+        and a few are <span class="badge badge--mature" style="display: inline-flex; vertical-align: middle;">mature</span>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--compact container">
+    <div class="ideas-list">
+      {byStatus.map((idea) => (
+        <a href={`/ideas/${idea.id}/`} class="idea-row" data-animate>
+          <span class={`badge badge--${idea.data.status}`}>{idea.data.status}</span>
+          <span class="idea-row-title">{idea.data.title}</span>
+          {idea.data.description && (
+            <span style="flex: 2; font-size: var(--text-sm); color: var(--text-tertiary); display: none;" class="idea-desc">
+              {idea.data.description.slice(0, 80)}...
+            </span>
+          )}
+          <span class="idea-row-date">
+            {idea.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  @media (min-width: 768px) {
+    .idea-desc { display: block !important; }
+  }
+</style>

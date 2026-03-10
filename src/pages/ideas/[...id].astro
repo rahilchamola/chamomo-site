@@ -1,0 +1,43 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const ideas = await getCollection('ideas');
+  return ideas.map(i => ({ params: { id: i.id }, props: { idea: i } }));
+}
+
+const { idea } = Astro.props;
+const { Content } = await render(idea);
+---
+
+<BaseLayout title={idea.data.title} description={idea.data.description}>
+  <article class="container">
+    <header class="content-header">
+      <div class="content-header-meta animate-in animate-in-1">
+        <span class={`badge badge--${idea.data.status}`}>{idea.data.status}</span>
+        <time style="font-size: var(--text-sm); color: var(--text-tertiary);">
+          {idea.data.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+        </time>
+      </div>
+      <h1 class="animate-in animate-in-2">{idea.data.title}</h1>
+      {idea.data.description && (
+        <p class="content-header-description animate-in animate-in-3">{idea.data.description}</p>
+      )}
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <div style="max-width: var(--container-narrow); margin: var(--space-16) auto 0;">
+      <div class="divider"></div>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <a href="/ideas/" class="btn btn--ghost">&larr; All ideas</a>
+        <div class="card-tags">
+          {idea.data.tags.map(tag => <span class="tech-pill">{tag}</span>)}
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

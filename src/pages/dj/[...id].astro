@@ -1,0 +1,55 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const dj = await getCollection('dj');
+  return dj.map(d => ({ params: { id: d.id }, props: { entry: d } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description} image={entry.data.image}>
+  <article class="container">
+    <header class="content-header">
+      <div class="content-header-meta animate-in animate-in-1">
+        <span class={`badge badge--${entry.data.type}`}>{entry.data.type}</span>
+        {entry.data.venue && (
+          <span style="font-size: var(--text-sm); color: var(--text-tertiary);">{entry.data.venue}</span>
+        )}
+        {entry.data.duration && (
+          <span style="font-size: var(--text-sm); color: var(--text-tertiary);">{entry.data.duration}</span>
+        )}
+      </div>
+      <h1 class="animate-in animate-in-2">{entry.data.title}</h1>
+      {entry.data.description && (
+        <p class="content-header-description animate-in animate-in-3">{entry.data.description}</p>
+      )}
+    </header>
+
+    {entry.data.image && (
+      <div style="max-width: var(--container-narrow); margin: 0 auto var(--space-10); border-radius: var(--radius-xl); overflow: hidden;">
+        <img src={entry.data.image} alt={entry.data.title} style="width: 100%; aspect-ratio: 16/9; object-fit: cover;" />
+      </div>
+    )}
+
+    {entry.data.soundcloud && (
+      <div style="max-width: var(--container-narrow); margin: 0 auto var(--space-8);">
+        <a href={entry.data.soundcloud} target="_blank" rel="noopener" class="btn btn--primary">
+          Listen on SoundCloud &rarr;
+        </a>
+      </div>
+    )}
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <div style="max-width: var(--container-narrow); margin: var(--space-16) auto 0;">
+      <div class="divider"></div>
+      <a href="/dj/" class="btn btn--ghost">&larr; All DJ</a>
+    </div>
+  </article>
+</BaseLayout>

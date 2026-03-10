@@ -1,0 +1,37 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Card from '@/components/astro/Card.astro';
+import { getCollection } from 'astro:content';
+
+const allDj = (await getCollection('dj'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="DJ" description="Live sets, curated mixes, and gig recaps. Music is how I think.">
+  <section class="container">
+    <div class="content-header">
+      <p class="hero-greeting animate-in animate-in-1">DJ</p>
+      <h1 class="animate-in animate-in-2">Music is how I think</h1>
+      <p class="content-header-description animate-in animate-in-3">
+        Live sets, curated mixes, and gig recaps. DJing taught me about reading rooms,
+        building energy, and creating moments.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--compact container">
+    <div class="card-grid card-grid--2">
+      {allDj.map((set) => (
+        <Card
+          title={set.data.title}
+          description={set.data.description}
+          href={`/dj/${set.id}/`}
+          image={set.data.image}
+          date={set.data.date}
+          type="dj"
+          duration={set.data.duration}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

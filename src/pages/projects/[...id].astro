@@ -1,0 +1,47 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(p => ({ params: { id: p.id }, props: { project: p } }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={project.data.title} description={project.data.description} image={project.data.image}>
+  <article class="container">
+    <header class="content-header">
+      <div class="content-header-meta animate-in animate-in-1">
+        <span class={`badge badge--${project.data.status}`}>{project.data.status}</span>
+        {project.data.featured && <span class="badge badge--mature">Featured</span>}
+      </div>
+      <h1 class="animate-in animate-in-2">{project.data.title}</h1>
+      {project.data.subtitle && (
+        <p class="content-header-description animate-in animate-in-3">{project.data.subtitle}</p>
+      )}
+      {project.data.tech?.length > 0 && (
+        <div class="tech-stack animate-in animate-in-4" style="margin-top: var(--space-4);">
+          {project.data.tech.map(t => <span class="tech-pill">{t}</span>)}
+        </div>
+      )}
+    </header>
+
+    {project.data.image && (
+      <div style="max-width: var(--container-narrow); margin: 0 auto var(--space-10); border-radius: var(--radius-xl); overflow: hidden;">
+        <img src={project.data.image} alt={project.data.title} style="width: 100%; aspect-ratio: 16/9; object-fit: cover;" />
+      </div>
+    )}
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <div style="max-width: var(--container-narrow); margin: var(--space-16) auto 0;">
+      <div class="divider"></div>
+      <a href="/projects/" class="btn btn--ghost">&larr; All projects</a>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,88 @@
+---
+title: "Building Shard, Part 1: The Spark"
+date: 2026-03-11
+categories: [ai, building]
+tags: [building-in-public, shard, ai-gaming, vibe-coding]
+description: "In early March 2026, during a break in my MBA, I sat down and started vibe-coding an AI game engine. 8 days later: 50,000 lines, 10 worlds, 125 commits. This is how it started."
+image: /images/posts/shard-hero-1.svg
+series: "building-shard"
+part: 1
+totalParts: 5
+nextSlug: "building-shard-2-ai-as-game-engine"
+---
+
+import SeriesNav from '../../components/blog/SeriesNav.jsx';
+
+<SeriesNav client:visible current={1} total={5} nextSlug="building-shard-2-ai-as-game-engine" seriesTitle="Building Shard" />
+
+## The question nobody was asking
+
+Most AI products bolt intelligence onto an existing workflow. Smarter search. Better autocomplete. A chatbot that answers questions about your data. The core application stays the same — AI is a feature, not a foundation.
+
+That always bothered me.
+
+Not because those products aren't useful. They are. But because the interesting question isn't "how do we make existing software smarter?" It's: **what entirely new categories of software become possible when AI is the execution layer itself?**
+
+That question is what led to Shard.
+
+## The origin was a break between terms
+
+In early March 2026 — during a break in my MBA program at ISB — I sat down and started vibe-coding.
+
+I'd been thinking about interactive fiction for weeks. Playing Disco Elysium for the second time, reading about the history of text adventures, and wondering why the genre felt frozen in time. The storytelling had improved. The writing was often brilliant. But the underlying architecture hadn't changed since Infocom: a parser, a state machine, and a script.
+
+Modern AI could do something categorically different. Not "better chatbots pretending to be NPCs" — that already existed and felt hollow. But a system where the AI didn't just generate text. It *simulated a world*. Where characters had internal states that evolved. Where consequences propagated through a type system, not a script.
+
+The hypothesis was specific: **if you gave an AI structured state to reason about — typed relationships, quest objectives, world rules — it could maintain coherence across dozens of turns in ways that raw prompting never could.**
+
+The problem was never the model. It was the absence of a state layer.
+
+So on March 3, 2026, I opened my laptop, loaded up Claude and Cursor, and started building.
+
+## What "vibe coding" actually means
+
+Let me be direct about the approach, because it's central to this story.
+
+I'm a PM building a product, not an engineer writing software. The code is the medium. The decisions are the craft.
+
+Vibe coding means AI coding assistants as full development partners. I make the architecture decisions, the product calls, the taste judgments. The AI implements. I review, test, iterate, and decide what to keep, cut, or redesign. We move at conversation speed.
+
+This isn't a confession. It's a thesis. Modern AI tools let a solo product person ship what would have taken a team months. But the tools don't make product judgment calls. They don't know when to stop adding features. They don't know what "alive" feels like versus "functional." Those decisions are still human, and they're what make the difference between a tech demo and a product.
+
+## Day 1: 5,000 lines and a signal
+
+By end of day one — March 3 — I had a working prototype. Not a polished one. The UI was a textarea and a submit button. The AI sometimes forgot character names mid-scene. The JSON parsing failed regularly.
+
+But something worked. When I gave the AI a structured state object — here are the characters, here are their relationships to the player, here's what just happened — the quality of the narrative output jumped dramatically. The AI wasn't hallucinating a story. It was *reasoning about a world* and then describing what it saw.
+
+That was the signal. Not "this is good." But "this is *categorically different* from prompting a chatbot."
+
+## The 33-interface bet
+
+The next thing I did was counterintuitive. Instead of building more features, I spent the rest of Day 1 defining types.
+
+33 TypeScript interfaces. Character states. Relationship dimensions. Quest objectives. World events. Location schemas. Effect types.
+
+This felt slow in a sprint. I wanted to build features. But defining the type system was the single most important product decision of the entire project. Here's why:
+
+Every interface was a design decision made explicit. "A relationship has six dimensions: trust, fear, desire, respect, rivalry, debt." That's not just a data structure — it's a game design document. And because it was typed, the compiler would tell me every time I changed the rules which systems assumed the old shape.
+
+The type system became the source of truth for what the game *was*. Not documentation that drifts. Not a design doc nobody reads. Actual code that breaks if the design changes.
+
+By the end of Day 1, I had my first full 20-turn playthrough with consistent NPC behavior. Characters remembered what you'd done. Relationships shifted based on your choices. The world reacted.
+
+The milestone note in my commit log reads: **"v0.1 — It works. The characters remember."**
+
+6 commits. ~5,000 lines. One world. And a hypothesis that felt more like a conviction.
+
+## What I didn't know yet
+
+At 5,000 lines and a single working world, I thought I might be a day or two from something shippable. I had seven more days of intense building ahead of me.
+
+The architecture decisions I made on Day 1 — the type system, the state mutation engine, the separation of simulation from presentation — would turn out to be the foundation of everything. The decisions I *didn't* make yet — about AI pipelines, about UX, about what "alive" actually means — would fill the remaining week.
+
+But the spark was real. Not "I should build a product." Not "there's a market for this." Just: *this is possible, nobody's doing it this way, and I can't stop thinking about it.*
+
+That's how the best sprints start.
+
+<SeriesNav client:visible current={1} total={5} nextSlug="building-shard-2-ai-as-game-engine" seriesTitle="Building Shard" />

@@ -4,7 +4,7 @@ const technicalItems = [
   "BPM matching",
   "Key compatibility",
   "Energy management",
-  "Gear setup & testing"
+  "Gear setup"
 ];
 
 const intuitiveItems = [
@@ -21,24 +21,10 @@ export default function TwoKindsOfWork() {
   const isLeft = attentionPos <= 30;
   const isRight = attentionPos >= 70;
 
-  const getTechOpacity = () => {
-    if (isLeft) return 1;
-    if (isRight) return 0.3;
-    return 0.5;
-  };
+  const techOpacity = isLeft ? 1 : isRight ? 0.3 : 0.5;
+  const intuitionOpacity = isRight ? 1 : isLeft ? 0.3 : 0.5;
 
-  const getIntuitionOpacity = () => {
-    if (isRight) return 1;
-    if (isLeft) return 0.3;
-    return 0.5;
-  };
-
-  const getConflictLabel = () => {
-    if (isConflict) return "conflict";
-    if (isLeft) return "preparation";
-    if (isRight) return "performance";
-    return "";
-  };
+  const label = isConflict ? "conflict" : isLeft ? "preparation" : isRight ? "performance" : "";
 
   const accent = "#D946A8";
 
@@ -55,182 +41,116 @@ export default function TwoKindsOfWork() {
         Two Kinds of Work in DJing
       </h3>
 
-      {/* Split screen columns */}
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 45px 1fr",
-        gap: "0.75rem",
-        marginBottom: "1rem"
-      }}>
-        {/* Left: Technical Work */}
-        <div style={{
-          padding: "1rem",
-          backgroundColor: "rgba(255,255,255,0.02)",
-          border: `1px solid ${accent}25`,
-          borderRadius: "0.75rem",
-          opacity: getTechOpacity(),
-          transition: "all 0.3s ease"
-        }}>
-          <h4 style={{
-            margin: "0 0 0.75rem 0",
-            fontSize: "0.65rem",
-            fontWeight: 600,
-            color: accent,
-            textTransform: "uppercase",
-            letterSpacing: "0.08em",
-            fontFamily: "monospace"
-          }}>
-            Technical
-          </h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+      {/* Two columns — compact pill layout */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginBottom: "1rem" }}>
+        {/* Technical */}
+        <div style={{ opacity: techOpacity, transition: "opacity 0.3s ease" }}>
+          <div style={{
+            fontSize: "0.65rem", fontWeight: 600, color: accent,
+            textTransform: "uppercase", letterSpacing: "0.08em",
+            fontFamily: "monospace", marginBottom: "0.5rem"
+          }}>Technical</div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
             {technicalItems.map((item, i) => (
-              <div
-                key={i}
-                style={{
-                  padding: "0.5rem 0.75rem",
-                  backgroundColor: `${accent}15`,
-                  borderRadius: "0.5rem",
-                  fontSize: "0.8rem",
-                  color: "#d4d4d8",
-                  lineHeight: 1.4
-                }}
-              >
-                {item}
-              </div>
+              <span key={i} style={{
+                padding: "0.3rem 0.6rem",
+                backgroundColor: `${accent}15`,
+                borderRadius: "1rem",
+                fontSize: "0.75rem",
+                color: "#d4d4d8",
+                whiteSpace: "nowrap"
+              }}>{item}</span>
             ))}
           </div>
         </div>
 
-        {/* Center: Attention slider (range input) */}
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          position: "relative",
-          minHeight: "160px"
-        }}>
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value={attentionPos}
-            onChange={(e) => setAttentionPos(Number(e.target.value))}
-            style={{
-              writingMode: "vertical-lr",
-              direction: "rtl",
-              height: "100%",
-              width: "28px",
-              appearance: "none",
-              WebkitAppearance: "none",
-              background: "transparent",
-              cursor: "pointer"
-            }}
-          />
-          <style>{`
-            input[type="range"]::-webkit-slider-runnable-track {
-              width: 6px;
-              height: 100%;
-              background: linear-gradient(to top, ${accent}, #7C3AED);
-              border-radius: 3px;
-            }
-            input[type="range"]::-webkit-slider-thumb {
-              -webkit-appearance: none;
-              width: 14px;
-              height: 28px;
-              background: #f4f4f5;
-              border: 1px solid ${accent};
-              border-radius: 5px;
-              cursor: grab;
-              box-shadow: 0 0 8px rgba(217,70,168,0.3);
-              margin-left: -4px;
-            }
-            input[type="range"]::-moz-range-track {
-              width: 6px;
-              background: linear-gradient(to top, ${accent}, #7C3AED);
-              border-radius: 3px;
-            }
-            input[type="range"]::-moz-range-thumb {
-              width: 14px;
-              height: 28px;
-              background: #f4f4f5;
-              border: 1px solid ${accent};
-              border-radius: 5px;
-              cursor: grab;
-              box-shadow: 0 0 8px rgba(217,70,168,0.3);
-            }
-          `}</style>
-        </div>
-
-        {/* Right: Intuitive Work */}
-        <div style={{
-          padding: "1rem",
-          backgroundColor: "rgba(255,255,255,0.02)",
-          border: `1px solid ${accent}25`,
-          borderRadius: "0.75rem",
-          opacity: getIntuitionOpacity(),
-          transition: "all 0.3s ease"
-        }}>
-          <h4 style={{
-            margin: "0 0 0.75rem 0",
-            fontSize: "0.65rem",
-            fontWeight: 600,
-            color: accent,
-            textTransform: "uppercase",
-            letterSpacing: "0.08em",
-            fontFamily: "monospace"
-          }}>
-            Intuitive
-          </h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        {/* Intuitive */}
+        <div style={{ opacity: intuitionOpacity, transition: "opacity 0.3s ease" }}>
+          <div style={{
+            fontSize: "0.65rem", fontWeight: 600, color: accent,
+            textTransform: "uppercase", letterSpacing: "0.08em",
+            fontFamily: "monospace", marginBottom: "0.5rem"
+          }}>Intuitive</div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
             {intuitiveItems.map((item, i) => (
-              <div
-                key={i}
-                style={{
-                  padding: "0.5rem 0.75rem",
-                  backgroundColor: `${accent}15`,
-                  borderRadius: "0.5rem",
-                  fontSize: "0.8rem",
-                  color: "#d4d4d8",
-                  lineHeight: 1.4
-                }}
-              >
-                {item}
-              </div>
+              <span key={i} style={{
+                padding: "0.3rem 0.6rem",
+                backgroundColor: `${accent}15`,
+                borderRadius: "1rem",
+                fontSize: "0.75rem",
+                color: "#d4d4d8",
+                whiteSpace: "nowrap"
+              }}>{item}</span>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Status label */}
-      <div style={{
-        padding: "0.75rem 1rem",
-        backgroundColor: `${accent}15`,
-        borderRadius: "0.5rem",
-        fontSize: "0.7rem",
-        textAlign: "center",
-        color: accent,
-        marginBottom: "0.75rem",
-        fontWeight: 600,
-        textTransform: "uppercase",
-        letterSpacing: "0.08em",
-        fontFamily: "monospace"
-      }}>
-        {getConflictLabel()}
+      {/* Horizontal attention slider */}
+      <div style={{ marginBottom: "0.75rem" }}>
+        <div style={{
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+          fontSize: "0.6rem", fontFamily: "monospace", color: "#71717a",
+          textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.35rem"
+        }}>
+          <span>← Prep</span>
+          <span style={{
+            color: accent, fontWeight: 600,
+            fontSize: "0.65rem", letterSpacing: "0.1em"
+          }}>{label}</span>
+          <span>Live →</span>
+        </div>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value={attentionPos}
+          onChange={(e) => setAttentionPos(Number(e.target.value))}
+          style={{
+            width: "100%",
+            height: "6px",
+            appearance: "none",
+            WebkitAppearance: "none",
+            background: `linear-gradient(90deg, ${accent}, #7C3AED)`,
+            borderRadius: "3px",
+            cursor: "pointer",
+            outline: "none"
+          }}
+        />
+        <style>{`
+          input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #f4f4f5;
+            border: 2px solid ${accent};
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 0 8px rgba(217,70,168,0.3);
+          }
+          input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #f4f4f5;
+            border: 2px solid ${accent};
+            border-radius: 50%;
+            cursor: grab;
+            box-shadow: 0 0 8px rgba(217,70,168,0.3);
+          }
+        `}</style>
       </div>
 
       {/* Insight */}
       <div style={{
-        padding: "1rem",
+        padding: "0.75rem 1rem",
         backgroundColor: "rgba(255,255,255,0.02)",
         border: "1px solid rgba(255,255,255,0.06)",
         borderLeft: `3px solid ${accent}`,
         borderRadius: "0.75rem",
-        fontSize: "0.85rem",
+        fontSize: "0.8rem",
         color: "#d4d4d8",
-        lineHeight: 1.6,
-        fontStyle: "italic",
-        fontWeight: 500
+        lineHeight: 1.5,
+        fontStyle: "italic"
       }}>
         <span style={{ color: accent, fontWeight: 600, fontStyle: "normal" }}>Ritmos</span> keeps attention on the left — so during performance, it's fully on the right.
       </div>

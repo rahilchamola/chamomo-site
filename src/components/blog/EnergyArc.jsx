@@ -19,14 +19,19 @@ const phaseMapping = {
   "Resolution": "Denouement"
 };
 
+const accent = "#D946A8";
+
 export default function EnergyArc() {
   const [showNarrative, setShowNarrative] = useState(false);
 
   const viewBoxWidth = 500;
-  const viewBoxHeight = 280;
-  const padding = 45;
-  const chartWidth = viewBoxWidth - padding * 2;
-  const chartHeight = viewBoxHeight - padding * 2;
+  const viewBoxHeight = 240;
+  const padLeft = 40;
+  const padRight = 15;
+  const padTop = 30;
+  const padBottom = 28;
+  const chartWidth = viewBoxWidth - padLeft - padRight;
+  const chartHeight = viewBoxHeight - padTop - padBottom;
 
   const maxMinute = Math.max(...data.map(d => d.minute));
   const minBpm = Math.min(...data.map(d => d.bpm));
@@ -34,8 +39,8 @@ export default function EnergyArc() {
   const bpmRange = maxBpm - minBpm;
 
   const points = data.map(d => ({
-    x: padding + (d.minute / maxMinute) * chartWidth,
-    y: viewBoxHeight - padding - ((d.bpm - minBpm) / bpmRange) * chartHeight,
+    x: padLeft + (d.minute / maxMinute) * chartWidth,
+    y: viewBoxHeight - padBottom - ((d.bpm - minBpm) / bpmRange) * chartHeight,
     ...d
   }));
 
@@ -49,17 +54,20 @@ export default function EnergyArc() {
     return `C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p.x} ${p.y}`;
   }).join(" ");
 
-  const fillPath = pathData + ` L ${points[points.length - 1].x} ${viewBoxHeight - padding} L ${points[0].x} ${viewBoxHeight - padding} Z`;
+  const fillPath = pathData + ` L ${points[points.length - 1].x} ${viewBoxHeight - padBottom} L ${points[0].x} ${viewBoxHeight - padBottom} Z`;
 
-  const phases = Array.from(new Map(data.map(d => [d.phase, d])).values());
-  const phasePositions = phases.map(phase => {
-    const phasePoints = points.filter(p => p.phase === phase.phase);
-    return {
-      phase: phase.phase,
-      x: (phasePoints[0].x + phasePoints[phasePoints.length - 1].x) / 2,
-      y: Math.min(...phasePoints.map(p => p.y)) - 22
-    };
+  // Get unique phases and their center positions
+  const phaseGroups = {};
+  points.forEach(p => {
+    if (!phaseGroups[p.phase]) phaseGroups[p.phase] = [];
+    phaseGroups[p.phase].push(p);
   });
+
+  const phasePositions = Object.entries(phaseGroups).map(([phase, pts]) => ({
+    phase,
+    x: (pts[0].x + pts[pts.length - 1].x) / 2,
+    y: Math.min(...pts.map(p => p.y)) - 14
+  }));
 
   return (
     <div style={{
@@ -70,55 +78,74 @@ export default function EnergyArc() {
       color: "#f4f4f5",
       fontFamily: "system-ui, -apple-system, sans-serif"
     }}>
-      <div style={{ marginBottom: "0.75rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div style={{ marginBottom: "0.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <h3 style={{ margin: 0, fontSize: "1rem", fontWeight: 700, color: "#f4f4f5", lineHeight: 1.3 }}>
           DJ Set Energy Arc
         </h3>
-        <label style={{ display: "flex", alignItems: "center", gap: "0.35rem", cursor: "pointer", fontSize: "0.85rem", color: "#a1a1aa" }}>
-          <input
-            type="checkbox"
-            checked={showNarrative}
-            onChange={(e) => setShowNarrative(e.target.checked)}
-            style={{ cursor: "pointer", accentColor: "#D946A8" }}
-          />
-          <span>Narrative</span>
-        </label>
+        <button
+          onClick={() => setShowNarrative(!showNarrative)}
+          style={{
+            display: "inline-flex", alignItems: "center", gap: "0.35rem",
+            padding: "0.25rem 0.6rem",
+            backgroundColor: showNarrative ? `${accent}20` : "transparent",
+            border: `1px solid ${showNarrative ? accent : "rgba(255,255,255,0.1)"}`,
+            borderRadius: "1rem",
+            cursor: "pointer",
+            fontSize: "0.7rem",
+            fontFamily: "monospace",
+            color: showNarrative ? accent : "#71717a",
+            letterSpacing: "0.05em",
+            transition: "all 0.2s ease"
+          }}
+        >
+          <span style={{
+            width: 6, height: 6, borderRadius: "50%",
+            backgroundColor: showNarrative ? accent : "#52525b",
+            transition: "background-color 0.2s ease"
+          }} />
+          Narrative
+        </button>
       </div>
 
-      <svg width="100%" height="auto" viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", minHeight: "200px" }}>
+      <svg
+        width="100%"
+        viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
+        preserveAspectRatio="xMidYMid meet"
+        style={{ display: "block" }}
+      >
         <defs>
           <linearGradient id="arcGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#D946A8" stopOpacity="0.5" />
-            <stop offset="100%" stopColor="#D946A8" stopOpacity="0.08" />
+            <stop offset="0%" stopColor={accent} stopOpacity="0.4" />
+            <stop offset="100%" stopColor={accent} stopOpacity="0.02" />
           </linearGradient>
         </defs>
 
-        {/* Grid lines */}
-        {[0, 1, 2, 3, 4].map(i => (
+        {/* Subtle grid lines */}
+        {[0, 1, 2, 3].map(i => (
           <line
             key={`hline-${i}`}
-            x1={padding}
-            y1={padding + (i * chartHeight / 4)}
-            x2={viewBoxWidth - padding}
-            y2={padding + (i * chartHeight / 4)}
+            x1={padLeft}
+            y1={padTop + (i * chartHeight / 3)}
+            x2={viewBoxWidth - padRight}
+            y2={padTop + (i * chartHeight / 3)}
             stroke="#52525b"
             strokeWidth="0.5"
-            strokeDasharray="3,2"
-            opacity="0.4"
+            strokeDasharray="2,3"
+            opacity="0.3"
           />
         ))}
 
-        {/* Y-axis labels (BPM) */}
-        {[0, 1, 2, 3, 4].map(i => {
-          const bpm = Math.round(minBpm + (bpmRange / 4) * i);
+        {/* Y-axis BPM labels */}
+        {[0, 1, 2, 3].map(i => {
+          const bpm = Math.round(minBpm + (bpmRange / 3) * i);
           return (
             <text
               key={`ylabel-${i}`}
-              x={padding - 8}
-              y={viewBoxHeight - padding - (i * chartHeight / 4) + 3}
+              x={padLeft - 6}
+              y={viewBoxHeight - padBottom - (i * chartHeight / 3) + 3}
               textAnchor="end"
-              fontSize="9"
-              fill="#71717a"
+              fontSize="8"
+              fill="#52525b"
               fontFamily="monospace"
             >
               {bpm}
@@ -126,17 +153,17 @@ export default function EnergyArc() {
           );
         })}
 
-        {/* X-axis labels (Minutes) */}
+        {/* X-axis minute labels */}
         {[0, 15, 30, 45].map(minute => {
-          const x = padding + (minute / maxMinute) * chartWidth;
+          const x = padLeft + (minute / maxMinute) * chartWidth;
           return (
             <text
               key={`xlabel-${minute}`}
               x={x}
-              y={viewBoxHeight - padding + 14}
+              y={viewBoxHeight - padBottom + 13}
               textAnchor="middle"
-              fontSize="9"
-              fill="#71717a"
+              fontSize="8"
+              fill="#52525b"
               fontFamily="monospace"
             >
               {minute}m
@@ -150,7 +177,7 @@ export default function EnergyArc() {
         {/* Curve line */}
         <path
           d={pathData}
-          stroke="#D946A8"
+          stroke={accent}
           strokeWidth="2"
           fill="none"
           vectorEffect="non-scaling-stroke"
@@ -163,9 +190,9 @@ export default function EnergyArc() {
             cx={p.x}
             cy={p.y}
             r="2.5"
-            fill="#D946A8"
-            stroke="#f4f4f5"
-            strokeWidth="1"
+            fill={accent}
+            stroke="#0a0b10"
+            strokeWidth="1.5"
           />
         ))}
 
@@ -176,19 +203,20 @@ export default function EnergyArc() {
               x={phasePos.x}
               y={phasePos.y}
               textAnchor="middle"
-              fontSize="10"
-              fill="#D946A8"
+              fontSize="9"
+              fill={accent}
               fontWeight="600"
               fontFamily="monospace"
+              letterSpacing="0.5"
             >
               {phasePos.phase}
             </text>
             {showNarrative && (
               <text
                 x={phasePos.x}
-                y={phasePos.y + 12}
+                y={phasePos.y + 11}
                 textAnchor="middle"
-                fontSize="8"
+                fontSize="7.5"
                 fill="#71717a"
                 fontStyle="italic"
               >
@@ -199,13 +227,9 @@ export default function EnergyArc() {
         ))}
 
         {/* Axes */}
-        <line x1={padding} y1={viewBoxHeight - padding} x2={viewBoxWidth - padding} y2={viewBoxHeight - padding} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-        <line x1={padding} y1={padding} x2={padding} y2={viewBoxHeight - padding} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        <line x1={padLeft} y1={viewBoxHeight - padBottom} x2={viewBoxWidth - padRight} y2={viewBoxHeight - padBottom} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        <line x1={padLeft} y1={padTop} x2={padLeft} y2={viewBoxHeight - padBottom} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
       </svg>
-
-      <div style={{ marginTop: "0.5rem", fontSize: "0.7rem", color: "#71717a", fontFamily: "monospace", letterSpacing: "0.08em", textTransform: "uppercase" }}>
-        Time (min) × BPM
-      </div>
     </div>
   );
 }

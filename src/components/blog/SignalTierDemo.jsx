@@ -163,13 +163,11 @@ export default function SignalTierDemo() {
     feedbackTitle: {
       fontWeight: "600",
       marginBottom: "0.35rem",
-      color: correct => correct ? "#3EAE7C" : "#EF4444",
     },
     feedbackExplanation: {
       fontSize: "0.8rem",
       lineHeight: 1.5,
       marginTop: "0.5rem",
-      color: correct => correct ? "#a1a1aa" : "#a1a1aa",
     },
     clearButton: {
       marginTop: "0.75rem",
@@ -191,7 +189,7 @@ export default function SignalTierDemo() {
       {/* Tier Definitions */}
       <div style={demoStyles.tiersContainer}>
         {tiers.map((tier, idx) => {
-          const tierIcons = { ALERT: "🔴", SIGNAL: "🌤️", INSIGHT: "🧭" };
+          const tierIcons = { ALERT: "◉", SIGNAL: "◈", INSIGHT: "◇" };
           return (
             <div key={idx} style={demoStyles.tierCard(tier.color)}>
               <div style={demoStyles.tierHeader}>

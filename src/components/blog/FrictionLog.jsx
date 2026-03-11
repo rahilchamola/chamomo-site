@@ -3,6 +3,8 @@ import { useState } from 'react';
 export default function FrictionLog() {
   const [expandedItem, setExpandedItem] = useState(null);
 
+  const accent = '#D4920A';
+
   const frictionPoints = [
     { day: "Mon", time: "8:12am", friction: "Opened app, saw 6 tasks. Closed app.", category: "ux", resolved: true },
     { day: "Mon", time: "2:30pm", friction: "AI suggested deep work during 15-min calendar gap", category: "logic", resolved: true },
@@ -14,10 +16,10 @@ export default function FrictionLog() {
   ];
 
   const categoryInfo = {
-    ux: { label: 'UX', color: '#6495ed' },
-    logic: { label: 'Logic', color: '#9370db' },
-    performance: { label: 'Perf', color: '#ff9500' },
-    missing: { label: 'Missing', color: '#ff6b6b' }
+    ux: { label: 'UX', color: accent },
+    logic: { label: 'Logic', color: accent },
+    performance: { label: 'Perf', color: accent },
+    missing: { label: 'Missing', color: accent }
   };
 
   const groupedByDay = frictionPoints.reduce((acc, point) => {
@@ -27,7 +29,6 @@ export default function FrictionLog() {
   }, {});
 
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const accent = '#D4920A';
 
   return (
     <div style={{ padding: '2rem 0' }}>
@@ -136,8 +137,8 @@ export default function FrictionLog() {
                 </div>
 
                 <div style={{
-                  background: categoryInfo[point.category].color,
-                  color: '#000',
+                  background: `${accent}15`,
+                  color: accent,
                   padding: '0.3rem 0.7rem',
                   borderRadius: '0.4rem',
                   fontSize: '0.65rem',
@@ -145,8 +146,9 @@ export default function FrictionLog() {
                   textTransform: 'uppercase',
                   whiteSpace: 'nowrap',
                   letterSpacing: '0.05em',
-                  opacity: 0.85,
-                  flexShrink: 0
+                  flexShrink: 0,
+                  fontFamily: 'monospace',
+                  border: `1px solid ${accent}25`
                 }}>
                   {categoryInfo[point.category].label}
                 </div>

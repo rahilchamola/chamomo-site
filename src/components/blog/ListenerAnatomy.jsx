@@ -20,236 +20,181 @@ export default function ListenerAnatomy() {
   ];
 
   const current = listeners[selectedListener];
+  const accent = "#3EAE7C";
 
-  const layerStyles = {
-    container: {
-      maxWidth: "56rem",
-      margin: "3rem auto",
-      fontFamily: "system-ui, -apple-system, sans-serif",
-    },
-    header: {
-      textAlign: "center",
-      marginBottom: "2rem",
-    },
-    title: {
-      fontSize: "1.05rem",
-      fontWeight: "700",
-      color: "#f4f4f5",
-      margin: "0 0 1rem 0",
-      lineHeight: 1.3,
-    },
-    toggles: {
-      display: "flex",
-      gap: "0.75rem",
-      justifyContent: "center",
-      marginBottom: "2rem",
-      flexWrap: "wrap",
-    },
-    toggleButton: (isActive) => ({
-      padding: "0.5rem 1rem",
-      border: `1px solid ${isActive ? "#3EAE7C40" : "rgba(255,255,255,0.06)"}`,
-      backgroundColor: isActive ? "#3EAE7C08" : "rgba(255,255,255,0.02)",
-      color: isActive ? "#3EAE7C" : "#d4d4d8",
-      borderRadius: "0.5rem",
-      cursor: "pointer",
-      fontSize: "0.85rem",
-      fontWeight: "500",
-      transition: "all 0.3s ease",
-    }),
-    diagram: {
-      position: "relative",
-      width: "300px",
-      height: "300px",
-      margin: "0 auto 2rem",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    ring: (layerType) => ({
-      position: "absolute",
-      borderRadius: "50%",
-      border: `2px solid ${layerType === 'outer' ? 'rgba(62, 174, 124, 0.3)' : layerType === 'middle' ? 'rgba(62, 174, 124, 0.5)' : '#3EAE7C'}`,
-      cursor: "pointer",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      transition: "all 0.3s ease",
-    }),
-    ringOuter: {
-      width: "280px",
-      height: "280px",
-    },
-    ringMiddle: {
-      width: "180px",
-      height: "180px",
-    },
-    ringInner: {
-      width: "100px",
-      height: "100px",
-    },
-    ringLabel: {
-      textAlign: "center",
-      fontSize: "0.75rem",
-      fontWeight: "600",
-      padding: "0.75rem",
-      color: "#f4f4f5",
-    },
-    ringSubLabel: {
-      fontSize: "0.7rem",
-      color: "#a1a1aa",
-      marginTop: "0.35rem",
-    },
-    expandedContent: {
-      backgroundColor: "rgba(255,255,255,0.02)",
-      border: "1px solid #3EAE7C40",
-      borderRadius: "1rem",
-      padding: "1.25rem 1.5rem",
-      marginTop: "1.5rem",
-    },
-    expandedSection: {
-      marginBottom: "0.75rem",
-    },
-    expandedTitle: {
-      fontSize: "0.7rem",
-      fontWeight: "600",
-      color: "#3EAE7C",
-      marginBottom: "0.5rem",
-      textTransform: "uppercase",
-      letterSpacing: "0.08em",
-      fontFamily: "monospace",
-    },
-    expandedList: {
-      listStyle: "none",
-      padding: "0",
-      margin: "0",
-    },
-    expandedItem: {
-      fontSize: "0.85rem",
-      color: "#d4d4d8",
-      marginBottom: "0.35rem",
-      paddingLeft: "1rem",
-      position: "relative",
-      lineHeight: 1.5,
-    },
-    expandedItemBullet: {
-      position: "absolute",
-      left: "0",
-      color: "#3EAE7C",
-      fontWeight: "bold",
-    },
-  };
+  const layers = [
+    { key: "entities", label: "Entities", badge: "L1", sublabel: "what you watch", items: current.entities },
+    { key: "signals", label: "Signal Types", badge: "L2", sublabel: "what matters", items: current.signalTypes },
+    { key: "goal", label: "Learning Goal", badge: "L3", sublabel: "the question", items: null, text: current.learningGoal },
+  ];
 
   return (
-    <div style={layerStyles.container}>
-      <div style={layerStyles.header}>
-        <h3 style={layerStyles.title}>Listener Anatomy</h3>
-        <div style={layerStyles.toggles}>
-          {listeners.map((listener, idx) => (
+    <div style={{
+      maxWidth: "56rem",
+      margin: "3rem auto",
+      fontFamily: "system-ui, -apple-system, sans-serif"
+    }}>
+      <h3 style={{
+        fontSize: "1.05rem",
+        fontWeight: 700,
+        color: "#f4f4f5",
+        margin: "0 0 1rem 0",
+        textAlign: "center",
+        lineHeight: 1.3
+      }}>Listener Anatomy</h3>
+
+      {/* Listener toggle */}
+      <div style={{
+        display: "flex",
+        gap: "0.5rem",
+        justifyContent: "center",
+        marginBottom: "2rem",
+        flexWrap: "wrap"
+      }}>
+        {listeners.map((listener, idx) => (
+          <button
+            key={idx}
+            onClick={() => { setSelectedListener(idx); setExpandedLayer(null); }}
+            style={{
+              padding: "0.35rem 0.85rem",
+              borderRadius: "9999px",
+              border: `1px solid ${idx === selectedListener ? `${accent}40` : "rgba(255,255,255,0.06)"}`,
+              backgroundColor: idx === selectedListener ? `${accent}08` : "rgba(255,255,255,0.02)",
+              color: idx === selectedListener ? accent : "#a1a1aa",
+              fontSize: "0.8rem",
+              fontWeight: 500,
+              cursor: "pointer",
+              transition: "all 0.2s ease"
+            }}
+          >
+            {listener.name}
+          </button>
+        ))}
+      </div>
+
+      {/* Stacked layers */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        {layers.map((layer, idx) => {
+          const isExpanded = expandedLayer === layer.key;
+          return (
             <button
-              key={idx}
-              style={layerStyles.toggleButton(idx === selectedListener)}
-              onClick={() => {
-                setSelectedListener(idx);
-                setExpandedLayer(null);
+              key={layer.key}
+              onClick={() => setExpandedLayer(isExpanded ? null : layer.key)}
+              style={{
+                backgroundColor: isExpanded ? `${accent}08` : "rgba(255,255,255,0.02)",
+                border: `1px solid ${isExpanded ? `${accent}40` : "rgba(255,255,255,0.06)"}`,
+                borderRadius: "1rem",
+                padding: "1.25rem 1.5rem",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+                textAlign: "left",
+                display: "block",
+                width: "100%"
               }}
             >
-              {listener.name}
+              <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                {/* Layer badge */}
+                <div style={{
+                  width: "2.5rem",
+                  height: "2.5rem",
+                  borderRadius: "0.75rem",
+                  backgroundColor: `${accent}15`,
+                  border: `1px solid ${accent}25`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0
+                }}>
+                  <span style={{
+                    fontSize: "0.7rem",
+                    fontWeight: 700,
+                    color: accent,
+                    fontFamily: "monospace"
+                  }}>{layer.badge}</span>
+                </div>
+
+                <div style={{ flex: 1 }}>
+                  <div style={{
+                    fontSize: "0.95rem",
+                    fontWeight: 700,
+                    color: "#f4f4f5",
+                    lineHeight: 1.3
+                  }}>{layer.label}</div>
+                  <div style={{
+                    fontSize: "0.75rem",
+                    color: "#71717a",
+                    marginTop: "0.15rem"
+                  }}>{layer.sublabel}</div>
+                </div>
+
+                <span style={{
+                  fontSize: "0.75rem",
+                  color: "#52525b",
+                  transition: "transform 0.2s ease",
+                  transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)"
+                }}>▾</span>
+              </div>
+
+              {/* Expanded content */}
+              {isExpanded && (
+                <div style={{
+                  marginTop: "1rem",
+                  paddingTop: "1rem",
+                  paddingLeft: "3.5rem",
+                  borderTop: `1px solid ${accent}15`
+                }}>
+                  {layer.items ? (
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+                      {layer.items.map((item, i) => (
+                        <div key={i} style={{
+                          fontSize: "0.85rem",
+                          color: "#d4d4d8",
+                          lineHeight: 1.5,
+                          position: "relative",
+                          paddingLeft: "1rem"
+                        }}>
+                          <span style={{
+                            position: "absolute",
+                            left: 0,
+                            color: accent,
+                            fontWeight: "bold"
+                          }}>·</span>
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div style={{
+                      fontSize: "0.9rem",
+                      color: "#f4f4f5",
+                      fontStyle: "italic",
+                      fontWeight: 500,
+                      lineHeight: 1.6
+                    }}>
+                      "{layer.text}"
+                    </div>
+                  )}
+                </div>
+              )}
             </button>
-          ))}
-        </div>
+          );
+        })}
       </div>
 
-      <div style={layerStyles.diagram}>
-        {/* Outer ring - Entities */}
-        <div
-          style={{
-            ...layerStyles.ring('outer'),
-            ...layerStyles.ringOuter,
-          }}
-          onClick={() => setExpandedLayer(expandedLayer === 'entities' ? null : 'entities')}
-        >
-          <div style={layerStyles.ringLabel}>
-            <div style={{ fontWeight: "700" }}>ENTITIES</div>
-            <div style={layerStyles.ringSubLabel}>what you watch</div>
-          </div>
-        </div>
-
-        {/* Middle ring - Signal Types */}
-        <div
-          style={{
-            ...layerStyles.ring('middle'),
-            ...layerStyles.ringMiddle,
-          }}
-          onClick={() => setExpandedLayer(expandedLayer === 'signals' ? null : 'signals')}
-        >
-          <div style={layerStyles.ringLabel}>
-            <div style={{ fontWeight: "700" }}>SIGNALS</div>
-            <div style={layerStyles.ringSubLabel}>what matters</div>
-          </div>
-        </div>
-
-        {/* Inner ring - Learning Goal */}
-        <div
-          style={{
-            ...layerStyles.ring('inner'),
-            ...layerStyles.ringInner,
-            boxShadow: "0 0 16px #3EAE7C40",
-          }}
-          onClick={() => setExpandedLayer(expandedLayer === 'goal' ? null : 'goal')}
-        >
-          <div style={layerStyles.ringLabel}>
-            <div style={{ fontSize: "0.7rem", fontWeight: "700" }}>THE</div>
-            <div style={{ fontSize: "0.65rem", fontWeight: "700" }}>QUESTION</div>
-          </div>
-        </div>
+      {/* Connector hint */}
+      <div style={{
+        marginTop: "1.25rem",
+        padding: "0.85rem 1.25rem",
+        backgroundColor: "rgba(255,255,255,0.02)",
+        border: "1px solid rgba(255,255,255,0.06)",
+        borderRadius: "0.75rem",
+        fontSize: "0.8rem",
+        color: "#71717a",
+        textAlign: "center",
+        lineHeight: 1.6
+      }}>
+        <strong style={{ color: "#f4f4f5" }}>Outer → Inner:</strong> Entities define scope. Signals filter noise. The Question keeps it honest.
       </div>
-
-      {expandedLayer && (
-        <div style={layerStyles.expandedContent}>
-          {expandedLayer === 'entities' && (
-            <div>
-              <div style={layerStyles.expandedSection}>
-                <div style={layerStyles.expandedTitle}>Entities</div>
-                <ul style={layerStyles.expandedList}>
-                  {current.entities.map((entity, idx) => (
-                    <li key={idx} style={layerStyles.expandedItem}>
-                      <span style={layerStyles.expandedItemBullet}>•</span>
-                      {entity}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          )}
-
-          {expandedLayer === 'signals' && (
-            <div>
-              <div style={layerStyles.expandedSection}>
-                <div style={layerStyles.expandedTitle}>Signal Types</div>
-                <ul style={layerStyles.expandedList}>
-                  {current.signalTypes.map((signal, idx) => (
-                    <li key={idx} style={layerStyles.expandedItem}>
-                      <span style={layerStyles.expandedItemBullet}>•</span>
-                      {signal}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          )}
-
-          {expandedLayer === 'goal' && (
-            <div>
-              <div style={layerStyles.expandedSection}>
-                <div style={layerStyles.expandedTitle}>Learning Goal</div>
-                <p style={{ fontSize: "0.85rem", color: "#f4f4f5", margin: "0", fontStyle: "italic", fontWeight: 500, lineHeight: 1.6 }}>
-                  "{current.learningGoal}"
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }

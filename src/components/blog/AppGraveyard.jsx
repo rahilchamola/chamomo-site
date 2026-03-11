@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function AppGraveyard() {
-  const [expanded, setExpanded] = useState({});
+  const [filter, setFilter] = useState("all");
 
   const apps = [
     { name: "Todoist", category: "Tasks", failureMode: "Manages tasks without knowing your energy, habits, or calendar", weeksUsed: 8 },
@@ -14,117 +14,120 @@ export default function AppGraveyard() {
     { name: "Obsidian", category: "Knowledge", failureMode: "Second brain that never tells you what to do with what you know", weeksUsed: 5 }
   ];
 
-  const toggleExpanded = (name) => {
-    setExpanded(prev => ({
-      ...prev,
-      [name]: !prev[name]
-    }));
-  };
-
   const accent = '#D4920A';
+  const categories = ["all", ...new Set(apps.map(a => a.category))];
+  const filtered = filter === "all" ? apps : apps.filter(a => a.category === filter);
 
   return (
-    <div style={{ padding: '2rem 0' }}>
+    <div style={{
+      maxWidth: "56rem",
+      margin: "3rem auto",
+      fontFamily: "system-ui, -apple-system, sans-serif"
+    }}>
+      {/* Filter pills */}
       <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-        gap: '0.75rem',
-        width: '100%'
+        display: "flex",
+        gap: "0.5rem",
+        marginBottom: "1.5rem",
+        flexWrap: "wrap",
+        justifyContent: "center"
       }}>
-        {apps.map(app => (
+        {categories.map(cat => (
           <button
-            key={app.name}
-            onClick={() => toggleExpanded(app.name)}
+            key={cat}
+            onClick={() => setFilter(cat)}
             style={{
-              background: expanded[app.name] ? `${accent}08` : 'rgba(255,255,255,0.02)',
-              border: expanded[app.name] ? `1px solid ${accent}40` : '1px solid rgba(255,255,255,0.06)',
-              borderRadius: '1rem',
-              padding: '1.25rem 1.5rem',
-              cursor: 'pointer',
-              minHeight: expanded[app.name] ? '160px' : '140px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              transition: 'all 0.3s ease',
-              position: 'relative',
-              overflow: 'hidden',
-              textAlign: 'left'
+              padding: "0.35rem 0.85rem",
+              borderRadius: "9999px",
+              border: `1px solid ${filter === cat ? `${accent}40` : "rgba(255,255,255,0.06)"}`,
+              backgroundColor: filter === cat ? `${accent}08` : "rgba(255,255,255,0.02)",
+              color: filter === cat ? accent : "#a1a1aa",
+              fontSize: "0.75rem",
+              fontWeight: 500,
+              cursor: "pointer",
+              transition: "all 0.2s ease",
+              textTransform: "capitalize"
             }}
           >
-            {!expanded[app.name] ? (
-              <>
-                <div>
-                  <div style={{
-                    fontFamily: 'monospace',
-                    fontSize: '0.65rem',
-                    fontWeight: 600,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.1em',
-                    color: accent,
-                    marginBottom: '0.5rem'
-                  }}>
-                    {app.category}
-                  </div>
-                  <h3 style={{
-                    margin: 0,
-                    fontSize: '1rem',
-                    fontWeight: 700,
-                    color: '#f4f4f5',
-                    lineHeight: 1.3
-                  }}>
-                    {app.name}
-                  </h3>
-                </div>
-                <div style={{
-                  fontSize: '0.75rem',
-                  color: '#a1a1aa',
-                  paddingTop: '0.75rem',
-                  borderTop: '1px solid rgba(255,255,255,0.06)'
-                }}>
-                  {app.weeksUsed} weeks used
-                </div>
-              </>
-            ) : (
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                height: '100%'
-              }}>
-                <div style={{
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  color: accent,
-                  marginBottom: '0.75rem'
-                }}>
-                  Why it failed
-                </div>
-                <p style={{
-                  margin: 0,
-                  fontSize: '0.85rem',
-                  color: '#f4f4f5',
-                  lineHeight: 1.5,
-                  fontStyle: 'italic',
-                  fontWeight: 500
-                }}>
-                  {app.failureMode}
-                </p>
-              </div>
-            )}
+            {cat}
           </button>
         ))}
       </div>
-      <p style={{
-        marginTop: '1.5rem',
-        fontSize: '0.85rem',
-        color: '#a1a1aa',
-        textAlign: 'center',
-        fontStyle: 'italic'
-      }}>
-        Click a card to see why it failed
-      </p>
+
+      {/* Vertical list — no hidden content */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        {filtered.map(app => (
+          <div
+            key={app.name}
+            style={{
+              backgroundColor: "rgba(255,255,255,0.02)",
+              border: "1px solid rgba(255,255,255,0.06)",
+              borderRadius: "1rem",
+              padding: "1.25rem 1.5rem",
+              display: "flex",
+              alignItems: "flex-start",
+              gap: "1.25rem",
+              transition: "all 0.2s ease"
+            }}
+          >
+            {/* Weeks badge */}
+            <div style={{
+              minWidth: "3rem",
+              height: "3rem",
+              borderRadius: "0.75rem",
+              backgroundColor: `${accent}15`,
+              border: `1px solid ${accent}25`,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0
+            }}>
+              <span style={{
+                fontSize: "1rem",
+                fontWeight: 700,
+                color: accent,
+                lineHeight: 1,
+                fontFamily: "monospace"
+              }}>{app.weeksUsed}</span>
+              <span style={{
+                fontSize: "0.5rem",
+                color: "#71717a",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                fontFamily: "monospace"
+              }}>wks</span>
+            </div>
+
+            {/* Content */}
+            <div style={{ flex: 1 }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: "0.4rem" }}>
+                <span style={{
+                  fontSize: "0.95rem",
+                  fontWeight: 700,
+                  color: "#f4f4f5"
+                }}>{app.name}</span>
+                <span style={{
+                  fontSize: "0.6rem",
+                  fontWeight: 600,
+                  color: accent,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  fontFamily: "monospace"
+                }}>{app.category}</span>
+              </div>
+              <p style={{
+                margin: 0,
+                fontSize: "0.85rem",
+                color: "#a1a1aa",
+                lineHeight: 1.6
+              }}>
+                {app.failureMode}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

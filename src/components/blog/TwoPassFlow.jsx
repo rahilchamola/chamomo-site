@@ -176,7 +176,7 @@ export default function TwoPassFlow() {
         {/* Pass 1 */}
         <div style={flowStyles.passContainer}>
           <div style={flowStyles.passHeader}>
-            <span style={flowStyles.passIcon}>📡</span>
+            <span style={flowStyles.passIcon}>◈</span>
             <span style={flowStyles.passLabel("#3EAE7C")}>RETRIEVAL</span>
           </div>
           <div style={flowStyles.passZone("#3EAE7C")}>
@@ -192,7 +192,7 @@ export default function TwoPassFlow() {
         {/* Pass 2 */}
         <div style={flowStyles.passContainer}>
           <div style={flowStyles.passHeader}>
-            <span style={flowStyles.passIcon}>🧠</span>
+            <span style={flowStyles.passIcon}>◉</span>
             <span style={flowStyles.passLabel("#3EAE7C")}>CLASSIFICATION</span>
           </div>
           <div style={flowStyles.passZone("#3EAE7C")}>

@@ -18,8 +18,8 @@ export default function TwoKindsOfWork() {
   const [attentionPos, setAttentionPos] = useState(50);
 
   const isConflict = attentionPos > 30 && attentionPos < 70;
-  const isLeft = attentionPos < 30;
-  const isRight = attentionPos > 70;
+  const isLeft = attentionPos <= 30;
+  const isRight = attentionPos >= 70;
 
   const getTechOpacity = () => {
     if (isLeft) return 1;
@@ -39,6 +39,8 @@ export default function TwoKindsOfWork() {
     if (isRight) return "performance";
     return "";
   };
+
+  const accent = "#D946A8";
 
   return (
     <div style={{
@@ -64,7 +66,7 @@ export default function TwoKindsOfWork() {
         <div style={{
           padding: "1rem",
           backgroundColor: "rgba(255,255,255,0.02)",
-          border: "1px solid rgba(217,70,168,0.25)",
+          border: `1px solid ${accent}25`,
           borderRadius: "0.75rem",
           opacity: getTechOpacity(),
           transition: "all 0.3s ease"
@@ -73,7 +75,7 @@ export default function TwoKindsOfWork() {
             margin: "0 0 0.75rem 0",
             fontSize: "0.65rem",
             fontWeight: 600,
-            color: "#D946A8",
+            color: accent,
             textTransform: "uppercase",
             letterSpacing: "0.08em",
             fontFamily: "monospace"
@@ -86,7 +88,7 @@ export default function TwoKindsOfWork() {
                 key={i}
                 style={{
                   padding: "0.5rem 0.75rem",
-                  backgroundColor: "#D946A815",
+                  backgroundColor: `${accent}15`,
                   borderRadius: "0.5rem",
                   fontSize: "0.8rem",
                   color: "#d4d4d8",
@@ -99,7 +101,7 @@ export default function TwoKindsOfWork() {
           </div>
         </div>
 
-        {/* Center: Attention bar */}
+        {/* Center: Attention slider (range input) */}
         <div style={{
           display: "flex",
           flexDirection: "column",
@@ -108,57 +110,63 @@ export default function TwoKindsOfWork() {
           position: "relative",
           minHeight: "160px"
         }}>
-          {/* Bar background */}
-          <div style={{
-            position: "absolute",
-            width: "6px",
-            height: "100%",
-            backgroundColor: "rgba(255,255,255,0.03)",
-            borderRadius: "3px"
-          }} />
-
-          {/* Filled portion gradient */}
-          <svg width="6" height="100%" style={{ position: "absolute", inset: 0 }} preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="attentionGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset={`${attentionPos}%`} stopColor="#D946A8" />
-                <stop offset={`${attentionPos}%`} stopColor="#7C3AED" />
-              </linearGradient>
-            </defs>
-            <rect width="6" height="100%" fill="url(#attentionGradient)" />
-          </svg>
-
-          {/* Draggable thumb */}
-          <div
-            draggable
-            onDragStart={(e) => e.dataTransfer.effectAllowed = "move"}
-            onDrag={(e) => {
-              if (e.clientY === 0) return;
-              const container = e.currentTarget.parentElement;
-              const rect = container.getBoundingClientRect();
-              const newPos = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
-              setAttentionPos(newPos);
-            }}
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={attentionPos}
+            onChange={(e) => setAttentionPos(Number(e.target.value))}
             style={{
-              position: "absolute",
+              writingMode: "vertical-lr",
+              direction: "rtl",
+              height: "100%",
               width: "28px",
-              height: "10px",
-              backgroundColor: "#f4f4f5",
-              borderRadius: "5px",
-              cursor: "grab",
-              top: `calc(${100 - attentionPos}% - 5px)`,
-              border: "1px solid #D946A8",
-              zIndex: 10,
-              boxShadow: "0 0 8px rgba(217,70,168,0.3)"
+              appearance: "none",
+              WebkitAppearance: "none",
+              background: "transparent",
+              cursor: "pointer"
             }}
           />
+          <style>{`
+            input[type="range"]::-webkit-slider-runnable-track {
+              width: 6px;
+              height: 100%;
+              background: linear-gradient(to top, ${accent}, #7C3AED);
+              border-radius: 3px;
+            }
+            input[type="range"]::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              width: 14px;
+              height: 28px;
+              background: #f4f4f5;
+              border: 1px solid ${accent};
+              border-radius: 5px;
+              cursor: grab;
+              box-shadow: 0 0 8px rgba(217,70,168,0.3);
+              margin-left: -4px;
+            }
+            input[type="range"]::-moz-range-track {
+              width: 6px;
+              background: linear-gradient(to top, ${accent}, #7C3AED);
+              border-radius: 3px;
+            }
+            input[type="range"]::-moz-range-thumb {
+              width: 14px;
+              height: 28px;
+              background: #f4f4f5;
+              border: 1px solid ${accent};
+              border-radius: 5px;
+              cursor: grab;
+              box-shadow: 0 0 8px rgba(217,70,168,0.3);
+            }
+          `}</style>
         </div>
 
         {/* Right: Intuitive Work */}
         <div style={{
           padding: "1rem",
           backgroundColor: "rgba(255,255,255,0.02)",
-          border: "1px solid rgba(217,70,168,0.25)",
+          border: `1px solid ${accent}25`,
           borderRadius: "0.75rem",
           opacity: getIntuitionOpacity(),
           transition: "all 0.3s ease"
@@ -167,7 +175,7 @@ export default function TwoKindsOfWork() {
             margin: "0 0 0.75rem 0",
             fontSize: "0.65rem",
             fontWeight: 600,
-            color: "#D946A8",
+            color: accent,
             textTransform: "uppercase",
             letterSpacing: "0.08em",
             fontFamily: "monospace"
@@ -180,7 +188,7 @@ export default function TwoKindsOfWork() {
                 key={i}
                 style={{
                   padding: "0.5rem 0.75rem",
-                  backgroundColor: "#D946A815",
+                  backgroundColor: `${accent}15`,
                   borderRadius: "0.5rem",
                   fontSize: "0.8rem",
                   color: "#d4d4d8",
@@ -197,11 +205,11 @@ export default function TwoKindsOfWork() {
       {/* Status label */}
       <div style={{
         padding: "0.75rem 1rem",
-        backgroundColor: isConflict ? "#D946A820" : isLeft ? "rgba(217,70,168,0.15)" : "rgba(217,70,168,0.15)",
+        backgroundColor: `${accent}15`,
         borderRadius: "0.5rem",
         fontSize: "0.7rem",
         textAlign: "center",
-        color: "#D946A8",
+        color: accent,
         marginBottom: "0.75rem",
         fontWeight: 600,
         textTransform: "uppercase",
@@ -215,8 +223,8 @@ export default function TwoKindsOfWork() {
       <div style={{
         padding: "1rem",
         backgroundColor: "rgba(255,255,255,0.02)",
-        border: "3px solid rgba(217,70,168,0.5)",
-        borderLeft: "3px solid #D946A8",
+        border: "1px solid rgba(255,255,255,0.06)",
+        borderLeft: `3px solid ${accent}`,
         borderRadius: "0.75rem",
         fontSize: "0.85rem",
         color: "#d4d4d8",
@@ -224,7 +232,7 @@ export default function TwoKindsOfWork() {
         fontStyle: "italic",
         fontWeight: 500
       }}>
-        <span style={{ color: "#D946A8", fontWeight: 600, fontStyle: "normal" }}>Ritmos</span> keeps attention on the left — so during performance, it's fully on the right.
+        <span style={{ color: accent, fontWeight: 600, fontStyle: "normal" }}>Ritmos</span> keeps attention on the left — so during performance, it's fully on the right.
       </div>
     </div>
   );

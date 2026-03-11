@@ -36,7 +36,7 @@ export default function FederatedVsUnified() {
         justifyContent: 'center',
         marginBottom: '2rem'
       }}>
-        <svg width={svgDims.width} height={svgDims.height} style={{ overflow: 'visible' }}>
+        <svg width="100%" viewBox={`0 0 ${svgDims.width} ${svgDims.height}`} preserveAspectRatio="xMidYMid meet" style={{ display: 'block', overflow: 'visible' }}>
           {!unified ? (
             <>
               <line x1="50" y1="50" x2="200" y2="150" stroke={`${accent}20`} strokeWidth="1" strokeDasharray="4,4" />

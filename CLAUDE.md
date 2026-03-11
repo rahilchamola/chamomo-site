@@ -1,67 +1,83 @@
-# CLAUDE.md — Chamomo Astro Site
+# CLAUDE.md — Chamomo Site
 
-> This file gives Claude instant context about this site.
+> Instant context for any Claude session editing this site.
 
 ## What This Is
-Personal website for Rahil Chamola (Chamomo). Built with Jekyll. Covers writing, projects, DJ content, ideas/notes.
+Personal website for Rahil Chamola (Chamomo). Built with **Astro 5.7** + React 19 islands. Deployed on **Vercel**. Covers writing (essays + series), projects, ideas, DJ content.
+
+**URL:** chamomo.vercel.app
+**Repo:** github.com/rahilchamola/chamomo-site
+**Branch workflow:** Edit on `draft` → preview → merge to `master` to ship
 
 ## Brand in One Line
 "Remix artist across domains — AI, music, product, building. Makes technology feel human."
 
+## Editing Skill
+If the `chamomo-editor` skill is available, USE IT. It has the full voice guide, site structure reference, and the draft-branch workflow baked in. It's the right way to edit this site.
+
 ## Quick Reference
 
-### To create a new blog post:
-```
-_posts/YYYY-MM-DD-slug-title.md
-```
-Front matter: layout, title, date, categories, tags, description, image
+### New blog post
+`src/content/posts/YYYY-MM-DD-slug-title.md` (or `.mdx` for interactive components)
 
-### To create a new project:
-```
-_projects/project-name.md
-```
-Front matter: layout, title, subtitle, date, status, featured, image, links, tech
+Required frontmatter: title, date, categories, tags, description, image
+Optional: series, part, totalParts, nextSlug, prevSlug, draft
 
-### To create a new idea:
-```
-_ideas/idea-slug.md
-```
-Front matter: layout, title, date, tags, status (seed/growing/mature)
+### New project
+`src/content/projects/project-slug.md`
 
-### To create new DJ content:
-```
-_dj/set-name.md
-```
-Front matter: layout, title, date, type (set/playlist/recap), venue, duration, soundcloud
+Required: title, date
+Optional: subtitle, status (active/completed/paused/archive), featured, image, description, links, tech, tags
+
+### New idea
+`src/content/ideas/idea-slug.md`
+
+Required: title, date
+Optional: tags, status (seed/growing/mature), description
+
+### New DJ entry
+`src/content/dj/entry-slug.md`
+
+Required: title, date
+Optional: type (set/playlist/recap), venue, duration, description, image, tags, soundcloud
 
 ## Content Conventions
-- Tags: lowercase, hyphenated. Check existing tags before creating new ones.
 - Categories: ai, creativity, product, music, building, thinking
-- Images: `assets/images/<section>/` — 1200x630 for heroes
-- File names: lowercase, hyphenated, descriptive
+- Tags: lowercase, hyphenated. Check existing tags before inventing new ones.
+- Images: `public/images/<section>/` — SVG preferred, 800x420 viewBox
+- File names: lowercase, hyphenated, date-prefixed for posts
 
 ## Architecture
-- `_config.yml` — site settings, collections, defaults
-- `_layouts/` — page templates
-- `_includes/` — reusable components
-- `_data/` — structured data (navigation.yml, social.yml)
-- `_sass/` → `assets/css/` — styles
-- `pages/` — standalone pages (about, now, contact)
+```
+src/
+├── content/           # Collections: posts, projects, ideas, dj
+├── content.config.ts  # Collection schemas (Zod)
+├── pages/             # Routes (.astro files, [...id] for dynamic)
+├── layouts/           # BaseLayout.astro (master wrapper)
+├── components/
+│   ├── astro/         # Card, Nav, Footer
+│   ├── blog/          # 20+ React islands for interactive post content
+│   └── react/         # HeroScene homepage animation
+├── styles/
+│   └── global.css     # Design system (CSS custom properties, 937 lines)
+└── data/              # JSON data files (timeline, growth metrics)
+```
 
-## Deployment
-[TODO: Fill in when deployment is configured]
-- Platform:
-- Repo:
-- Build command:
-- Domain:
+## Build & Deploy
+- **Build:** `npx astro build` (static output)
+- **Dev:** `npx astro dev`
+- **Platform:** Vercel (auto-deploys from master, preview deploys from branches)
+- **Build workaround:** rsync to /tmp, npm install, build there (avoids Vite EPERM on mounted FS)
 
-## When Editing
-- Always run `bundle exec jekyll serve --livereload` to test locally
-- Check front matter syntax (spaces not tabs, quoted strings with colons)
-- Update `_data/navigation.yml` if adding new top-level pages
-- Update `references/site-context.md` if changing structure
+## Design System
+- Dark theme: `--bg-primary: #0a0b10`
+- Category colors: ai=#a855f7, creativity=#f472b6, product=#06b6d4, music=#fb923c, building=#34d399, thinking=#818cf8
+- Fluid typography: clamp() scale from --text-xs to --text-5xl
+- Fonts: Inter (body), JetBrains Mono (code)
 
 ## Don't Touch Without Asking
-- `_config.yml` collection definitions
-- Layout inheritance chain
-- Permalink patterns (breaks existing URLs)
+- `astro.config.mjs` — build configuration
+- `src/content.config.ts` — collection schemas
+- `src/layouts/BaseLayout.astro` — master layout
+- Routing patterns in `[...id].astro` files
+- `package.json` dependencies

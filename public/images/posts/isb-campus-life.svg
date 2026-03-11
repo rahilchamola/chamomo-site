@@ -1,13 +1,74 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#2d132c;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#c56cf0;stop-opacity:1" />
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c0a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a2e;stop-opacity:1" />
     </linearGradient>
   </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <circle cx="900" cy="200" r="180" fill="#c56cf0" opacity="0.15"/>
-  <circle cx="300" cy="450" r="120" fill="#2d132c" opacity="0.3"/>
-  <text x="600" y="290" font-family="system-ui,-apple-system,sans-serif" font-size="72" font-weight="700" fill="white" text-anchor="middle" opacity="0.9">ISB</text>
-  <text x="600" y="370" font-family="system-ui,-apple-system,sans-serif" font-size="24" fill="white" text-anchor="middle" opacity="0.5">chamomo</text>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <!-- Large background blobs for depth (green, low opacity) -->
+  <circle cx="200" cy="200" r="200" fill="#34d399" opacity="0.04"/>
+  <circle cx="1000" cy="500" r="190" fill="#34d399" opacity="0.05"/>
+  <ellipse cx="600" cy="800" rx="320" ry="220" fill="#34d399" opacity="0.03"/>
+  <!-- Terminal/code aesthetic patterns -->
+  <!-- Top-left code block -->
+  <g font-family="monospace" font-size="11" fill="#34d399" opacity="0.3">
+    <text x="50" y="80">{"type": "nested"}</text>
+    <text x="50" y="100">  [</text>
+    <text x="50" y="120">    "array",</text>
+    <text x="50" y="140">    "values"</text>
+    <text x="50" y="160">  ]</text>
+  </g>
+  <!-- Bracket shapes scattered -->
+  <g stroke="#34d399" stroke-width="2" fill="none" opacity="0.25">
+    <polyline points="350,100 320,100 320,180 350,180"/>
+    <polyline points="850,80 880,80 880,160 850,160"/>
+  </g>
+  <!-- Center code block -->
+  <g font-family="monospace" font-size="10" fill="#34d399" opacity="0.25">
+    <text x="500" y="350">&lt;config&gt;</text>
+    <text x="510" y="370">  version: "1.0"</text>
+    <text x="510" y="390">  enabled: true</text>
+    <text x="500" y="410">&lt;/config&gt;</text>
+  </g>
+  <!-- Right side code fragments -->
+  <g font-family="monospace" font-size="9" fill="#34d399" opacity="0.28">
+    <text x="950" y="300">def execute():</text>
+    <text x="960" y="320">  return data</text>
+  </g>
+  <!-- Bracket elements -->
+  <g stroke="#34d399" stroke-width="1.5" fill="none" opacity="0.3">
+    <!-- Top right brackets -->
+    <line x1="900" y1="50" x2="900" y2="120"/>
+    <line x1="900" y1="50" x2="920" y2="50"/>
+    <line x1="900" y1="120" x2="920" y2="120"/>
+    <!-- Bottom left brackets -->
+    <line x1="120" y1="480" x2="120" y2="550"/>
+    <line x1="120" y1="480" x2="140" y2="480"/>
+    <line x1="120" y1="550" x2="140" y2="550"/>
+    <!-- Center vertical bracket -->
+    <line x1="780" y1="250" x2="800" y2="250"/>
+    <line x1="780" y1="250" x2="780" y2="320"/>
+    <line x1="780" y1="320" x2="800" y2="320"/>
+  </g>
+  <!-- Underscore/line separator patterns -->
+  <g stroke="#34d399" stroke-width="1" fill="none" opacity="0.2">
+    <line x1="50" y1="175" x2="280" y2="175"/>
+    <line x1="480" y1="425" x2="680" y2="425"/>
+    <line x1="920" y1="335" x2="1080" y2="335"/>
+  </g>
+  <!-- Scattered dot patterns (cursor-like) -->
+  <g fill="#34d399" opacity="0.35">
+    <rect x="270" y="80" width="4" height="12"/>
+    <rect x="680" y="410" width="4" height="12"/>
+    <rect x="1100" y="320" width="4" height="12"/>
+  </g>
+  <!-- Additional bracket clusters -->
+  <g stroke="#34d399" stroke-width="1" fill="none" opacity="0.15">
+    <polyline points="650,500 620,500 620,560 650,560"/>
+    <polyline points="350,550 370,550 370,600 350,600"/>
+  </g>
+  <!-- Watermark -->
+  <text x="600" y="600" font-family="monospace" font-size="14" fill="#34d399" opacity="0.3" text-anchor="middle">chamomo</text>
 </svg>

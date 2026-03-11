@@ -1,13 +1,84 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#222f3e;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#c8d6e5;stop-opacity:1" />
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c0a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a2e;stop-opacity:1" />
     </linearGradient>
   </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <circle cx="900" cy="200" r="180" fill="#c8d6e5" opacity="0.15"/>
-  <circle cx="300" cy="450" r="120" fill="#222f3e" opacity="0.3"/>
-  <text x="600" y="290" font-family="system-ui,-apple-system,sans-serif" font-size="72" font-weight="700" fill="white" text-anchor="middle" opacity="0.9">Product</text>
-  <text x="600" y="370" font-family="system-ui,-apple-system,sans-serif" font-size="24" fill="white" text-anchor="middle" opacity="0.5">chamomo</text>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <!-- Large background blobs for depth (cyan, low opacity) -->
+  <circle cx="150" cy="300" r="200" fill="#06b6d4" opacity="0.04"/>
+  <circle cx="1050" cy="200" r="180" fill="#06b6d4" opacity="0.05"/>
+  <ellipse cx="600" cy="650" rx="280" ry="200" fill="#06b6d4" opacity="0.03"/>
+  <!-- Grid framework pattern -->
+  <g stroke="#06b6d4" stroke-width="1.5" fill="none" opacity="0.15">
+    <!-- Vertical lines -->
+    <line x1="100" y1="50" x2="100" y2="250"/>
+    <line x1="150" y1="50" x2="150" y2="250"/>
+    <line x1="200" y1="50" x2="200" y2="250"/>
+    <line x1="250" y1="50" x2="250" y2="250"/>
+    <!-- Horizontal lines -->
+    <line x1="100" y1="80" x2="250" y2="80"/>
+    <line x1="100" y1="130" x2="250" y2="130"/>
+    <line x1="100" y1="180" x2="250" y2="180"/>
+    <line x1="100" y1="230" x2="250" y2="230"/>
+  </g>
+  <!-- Grid boxes (interconnected rectangles) -->
+  <g stroke="#06b6d4" stroke-width="1" fill="none" opacity="0.3">
+    <!-- Top right grid cluster -->
+    <rect x="900" y="50" width="60" height="50"/>
+    <rect x="970" y="50" width="60" height="50"/>
+    <rect x="1040" y="50" width="60" height="50"/>
+    <rect x="900" y="110" width="60" height="50"/>
+    <rect x="970" y="110" width="60" height="50"/>
+    <rect x="1040" y="110" width="60" height="50"/>
+    <!-- Connection lines between grid clusters -->
+    <line x1="1040" y1="100" x2="1100" y2="140"/>
+    <line x1="970" y1="160" x2="1010" y2="210"/>
+    <!-- Bottom left grid cluster -->
+    <rect x="80" y="400" width="50" height="50"/>
+    <rect x="140" y="400" width="50" height="50"/>
+    <rect x="200" y="400" width="50" height="50"/>
+    <rect x="80" y="460" width="50" height="50"/>
+    <rect x="140" y="460" width="50" height="50"/>
+    <rect x="200" y="460" width="50" height="50"/>
+    <!-- Center grid cluster -->
+    <rect x="500" y="300" width="50" height="50"/>
+    <rect x="560" y="300" width="50" height="50"/>
+    <rect x="620" y="300" width="50" height="50"/>
+    <rect x="500" y="360" width="50" height="50"/>
+    <rect x="560" y="360" width="50" height="50"/>
+    <rect x="620" y="360" width="50" height="50"/>
+  </g>
+  <!-- Flowchart-like connector paths -->
+  <g stroke="#06b6d4" stroke-width="1" fill="none" opacity="0.25" stroke-dasharray="3,3">
+    <path d="M 250 150 L 350 150 L 350 250 L 450 250"/>
+    <path d="M 480 450 L 500 450"/>
+    <path d="M 650 330 L 750 330 L 750 200 L 900 200"/>
+    <path d="M 570 410 L 700 410 L 700 500 L 800 500"/>
+  </g>
+  <!-- Accent dots at grid intersections -->
+  <g fill="#06b6d4" opacity="0.4">
+    <circle cx="910" cy="50" r="3"/>
+    <circle cx="980" cy="50" r="3"/>
+    <circle cx="1050" cy="50" r="3"/>
+    <circle cx="910" cy="110" r="3"/>
+    <circle cx="1050" cy="110" r="3"/>
+    <circle cx="80" cy="400" r="3"/>
+    <circle cx="200" cy="400" r="3"/>
+    <circle cx="80" cy="460" r="3"/>
+    <circle cx="200" cy="460" r="3"/>
+    <circle cx="500" cy="300" r="3"/>
+    <circle cx="620" cy="300" r="3"/>
+    <circle cx="500" cy="360" r="3"/>
+    <circle cx="620" cy="360" r="3"/>
+  </g>
+  <!-- Additional scattered boxes -->
+  <g stroke="#06b6d4" stroke-width="1" fill="none" opacity="0.2">
+    <rect x="350" y="500" width="45" height="45"/>
+    <rect x="750" y="550" width="40" height="40"/>
+  </g>
+  <!-- Watermark -->
+  <text x="600" y="600" font-family="monospace" font-size="14" fill="#06b6d4" opacity="0.3" text-anchor="middle">chamomo</text>
 </svg>

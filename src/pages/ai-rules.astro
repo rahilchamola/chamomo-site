@@ -1,0 +1,179 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const rules = [
+  {
+    num: 1,
+    title: "The best AI tool is the one you have",
+    body: "Don't wait for the perfect model, the ideal workflow, or the next upgrade. The best tool is the one you'll actually use today. I've watched people spend months evaluating AI tools instead of building with them. Ship with what's available. Iterate from there.",
+    icon: "◎",
+  },
+  {
+    num: 2,
+    title: "AI extends taste, it doesn't replace it",
+    body: "If you don't know what good looks like, AI will give you mediocre output and you won't notice. Develop your taste first — through reading, making, failing, studying craft. Then use AI to produce at the speed of your taste. The human is the quality function.",
+    icon: "◇",
+  },
+  {
+    num: 3,
+    title: "Inject perspective, not prompts",
+    body: "The difference between generic AI output and something that sounds like you is perspective injection — feeding the model your worldview, your frameworks, your examples, your constraints. Don't ask AI to 'write a blog post.' Give it your thesis, your voice, your angle, and let it help you express what you already think.",
+    icon: "◈",
+  },
+  {
+    num: 4,
+    title: "Separate creation from production",
+    body: "Ideas, frameworks, and taste are creation — that's yours. Prose, formatting, code, and polish are production — that's where AI accelerates you. Keep these distinct. When you blur the line, you lose your voice. When you maintain it, you gain leverage.",
+    icon: "◐",
+  },
+  {
+    num: 5,
+    title: "Refine relentlessly",
+    body: "AI drafts are raw material, not finished work. The refinement loop — cutting, reshaping, rewriting, redirecting — is where your voice emerges. Never publish a first draft. The number of passes you make is directly proportional to how much the output sounds like you.",
+    icon: "⟳",
+  },
+  {
+    num: 6,
+    title: "Transparency is strength, not vulnerability",
+    body: "Disclose your process. Not because you have to, but because honesty about your tools is a competitive advantage when everyone else is pretending they don't use them. The creators who will win long-term are the ones who are honest about how they work.",
+    icon: "⬡",
+  },
+  {
+    num: 7,
+    title: "Use AI to raise the floor, not lower the ceiling",
+    body: "AI should handle the tedious parts — boilerplate, formatting, initial structure — so you can spend more time on the hard parts. If AI is making your best work worse, you're using it wrong. If it's making your worst work better, you're using it right.",
+    icon: "⟐",
+  },
+  {
+    num: 8,
+    title: "Build systems, not one-offs",
+    body: "A single AI-assisted output is a novelty. A repeatable AI-augmented workflow is a superpower. Invest time in building reusable systems — templates, skill files, context documents, feedback loops — that compound over time. The workflow is the product.",
+    icon: "◉",
+  },
+  {
+    num: 9,
+    title: "AI should make you more accountable, not less",
+    body: "When you remove execution friction, you remove your best excuse. If you can produce at speed, you have to confront whether your ideas are actually good. That's uncomfortable. It's also the fastest path to growth. Use AI to close the gap between thinking and shipping.",
+    icon: "△",
+  },
+  {
+    num: 10,
+    title: "The human is always the editor-in-chief",
+    body: "AI proposes. You dispose. Every claim, every argument, every sentence gets approved by you — the person with the reputation, the relationships, and the accountability. You sign your name on the output. Act like it.",
+    icon: "◎",
+  },
+];
+---
+
+<BaseLayout title="Rahil's 10 Rules of Using AI" description="Principles for using AI as a creative collaborator — not a replacement, but an amplifier.">
+  <section class="container">
+    <div class="content-header">
+      <p class="hero-greeting animate-in animate-in-1">Principles</p>
+      <h1 class="animate-in animate-in-2" style="max-width: 18ch;">Rahil's 10 rules of using AI</h1>
+      <p class="content-header-description animate-in animate-in-3">
+        I use AI to extend my creativity, not replace it. These are the principles I've developed through building, writing, and creating with AI every day.
+      </p>
+    </div>
+  </section>
+
+  <section class="section--compact container">
+    <div class="rules-list">
+      {rules.map((rule, i) => (
+        <div class="rule-card" data-animate style={`animation-delay: ${i * 60}ms;`}>
+          <div class="rule-num-col">
+            <span class="rule-icon">{rule.icon}</span>
+            <span class="rule-num">{String(rule.num).padStart(2, '0')}</span>
+          </div>
+          <div class="rule-content">
+            <h3 class="rule-title">{rule.title}</h3>
+            <p class="rule-body">{rule.body}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="rules-footer" data-animate>
+      <div class="rules-footer-inner">
+        <p>These rules aren't theoretical. They're extracted from building this entire website, writing every article, and creating every interactive component through human-AI collaboration.</p>
+        <p>Want to understand the full process? Read <a href="/co-created/">how this site is co-created with Claude</a>.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .rules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 52rem;
+    margin: 0 auto;
+  }
+  .rule-card {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.015);
+    transition: all 0.25s;
+  }
+  .rule-card:hover {
+    border-color: rgba(168,85,247,0.15);
+    background: rgba(168,85,247,0.03);
+  }
+  .rule-num-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+    width: 2.5rem;
+    padding-top: 0.15rem;
+  }
+  .rule-icon {
+    font-size: 1.1rem;
+    color: var(--accent-purple);
+    line-height: 1;
+  }
+  .rule-num {
+    font-size: 0.6rem;
+    font-family: var(--font-mono);
+    color: var(--text-tertiary);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .rule-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .rule-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .rule-body {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 0;
+  }
+  .rules-footer {
+    max-width: 52rem;
+    margin: 3rem auto 0;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .rules-footer-inner {
+    font-size: var(--text-sm);
+    color: var(--text-tertiary);
+    line-height: 1.7;
+  }
+  .rules-footer-inner p { margin-bottom: 0.75rem; }
+  .rules-footer-inner a { color: var(--accent-purple); }
+  @media (max-width: 768px) {
+    .rule-card { padding: 1.25rem 1rem; gap: 1rem; }
+  }
+</style>

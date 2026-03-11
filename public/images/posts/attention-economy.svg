@@ -1,13 +1,51 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1e272e;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#ffa502;stop-opacity:1" />
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c0a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a2e;stop-opacity:1" />
     </linearGradient>
   </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <circle cx="900" cy="200" r="180" fill="#ffa502" opacity="0.15"/>
-  <circle cx="300" cy="450" r="120" fill="#1e272e" opacity="0.3"/>
-  <text x="600" y="290" font-family="system-ui,-apple-system,sans-serif" font-size="72" font-weight="700" fill="white" text-anchor="middle" opacity="0.9">Attention</text>
-  <text x="600" y="370" font-family="system-ui,-apple-system,sans-serif" font-size="24" fill="white" text-anchor="middle" opacity="0.5">chamomo</text>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <!-- Large background blobs for depth (orange, low opacity) -->
+  <circle cx="200" cy="150" r="180" fill="#fb923c" opacity="0.05"/>
+  <circle cx="1000" cy="500" r="200" fill="#fb923c" opacity="0.04"/>
+  <ellipse cx="600" cy="800" rx="300" ry="250" fill="#fb923c" opacity="0.03"/>
+  <!-- Waveform pattern 1 (left side) -->
+  <g stroke="#fb923c" stroke-width="2" fill="none" opacity="0.4">
+    <path d="M 50 200 Q 100 150, 150 200 T 250 200 T 350 200 T 450 200"/>
+    <path d="M 50 240 Q 100 180, 150 240 T 250 240 T 350 240 T 450 240"/>
+    <path d="M 50 280 Q 100 210, 150 280 T 250 280 T 350 280 T 450 280"/>
+  </g>
+  <!-- EQ bars pattern -->
+  <g fill="#fb923c" opacity="0.35">
+    <rect x="550" y="300" width="12" height="80"/>
+    <rect x="570" y="280" width="12" height="100"/>
+    <rect x="590" y="320" width="12" height="60"/>
+    <rect x="610" y="250" width="12" height="130"/>
+    <rect x="630" y="290" width="12" height="90"/>
+    <rect x="650" y="310" width="12" height="70"/>
+    <rect x="670" y="260" width="12" height="120"/>
+  </g>
+  <!-- Waveform pattern 2 (right side) -->
+  <g stroke="#fb923c" stroke-width="2" fill="none" opacity="0.35">
+    <path d="M 800 350 Q 850 300, 900 350 T 1000 350 T 1100 350 T 1200 350"/>
+    <path d="M 800 400 Q 850 330, 900 400 T 1000 400 T 1100 400 T 1200 400"/>
+    <path d="M 800 450 Q 850 370, 900 450 T 1000 450 T 1100 450 T 1200 450"/>
+  </g>
+  <!-- Frequency spectrum bars scattered -->
+  <g fill="#fb923c" opacity="0.3">
+    <rect x="100" y="450" width="8" height="60"/>
+    <rect x="115" y="430" width="8" height="80"/>
+    <rect x="130" y="470" width="8" height="40"/>
+    <rect x="145" y="410" width="8" height="100"/>
+    <rect x="160" y="460" width="8" height="50"/>
+    <rect x="950" y="100" width="8" height="70"/>
+    <rect x="965" y="80" width="8" height="90"/>
+    <rect x="980" y="110" width="8" height="60"/>
+    <rect x="995" y="70" width="8" height="100"/>
+    <rect x="1010" y="100" width="8" height="70"/>
+  </g>
+  <!-- Watermark -->
+  <text x="600" y="600" font-family="monospace" font-size="14" fill="#fb923c" opacity="0.3" text-anchor="middle">chamomo</text>
 </svg>

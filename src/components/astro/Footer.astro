@@ -12,7 +12,14 @@ const year = new Date().getFullYear();
 
 <footer class="footer">
   <div class="footer-inner">
-    <p class="footer-text">&copy; {year} Chamomo. Remixed with care.</p>
+    <div class="footer-left">
+      <p class="footer-text">&copy; {year} Chamomo. Remixed with care.</p>
+      <p class="footer-attribution">
+        <a href="/co-created/">Co-created with Claude</a>
+        <span class="footer-sep">·</span>
+        <a href="/ai-rules/">AI Rules</a>
+      </p>
+    </div>
     <ul class="footer-links">
       {socialLinks.map(link => (
         <li><a href={link.url} target="_blank" rel="noopener">{link.name}</a></li>
@@ -20,3 +27,29 @@ const year = new Date().getFullYear();
     </ul>
   </div>
 </footer>
+
+<style>
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .footer-attribution {
+    font-size: var(--text-xs);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .footer-attribution a {
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .footer-attribution a:hover {
+    color: var(--accent-purple);
+  }
+  .footer-sep {
+    color: var(--text-tertiary);
+    opacity: 0.3;
+  }
+</style>

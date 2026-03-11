@@ -1,13 +1,77 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1b262c;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#3282b8;stop-opacity:1" />
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c0a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a2e;stop-opacity:1" />
     </linearGradient>
   </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <circle cx="900" cy="200" r="180" fill="#3282b8" opacity="0.15"/>
-  <circle cx="300" cy="450" r="120" fill="#1b262c" opacity="0.3"/>
-  <text x="600" y="290" font-family="system-ui,-apple-system,sans-serif" font-size="72" font-weight="700" fill="white" text-anchor="middle" opacity="0.9">Building</text>
-  <text x="600" y="370" font-family="system-ui,-apple-system,sans-serif" font-size="24" fill="white" text-anchor="middle" opacity="0.5">chamomo</text>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <!-- Large background blobs for depth (green, low opacity) -->
+  <circle cx="250" cy="300" r="210" fill="#34d399" opacity="0.04"/>
+  <circle cx="1050" cy="150" r="190" fill="#34d399" opacity="0.05"/>
+  <ellipse cx="600" cy="750" rx="330" ry="230" fill="#34d399" opacity="0.03"/>
+  <!-- Terminal-style code blocks and text -->
+  <g font-family="monospace" font-size="12" fill="#34d399" opacity="0.32">
+    <text x="60" y="90">> build --production</text>
+    <text x="60" y="115">✓ compiled successfully</text>
+    <text x="60" y="140">✓ assets optimized</text>
+  </g>
+  <!-- Bracket structures -->
+  <g stroke="#34d399" stroke-width="2" fill="none" opacity="0.28">
+    <!-- Top-left bracket group -->
+    <polyline points="450,80 420,80 420,200 450,200"/>
+    <polyline points="470,80 500,80 500,200 470,200"/>
+    <!-- Bottom-left bracket group -->
+    <polyline points="100,450 70,450 70,580 100,580"/>
+    <polyline points="130,450 160,450 160,580 130,580"/>
+    <!-- Right-center bracket group -->
+    <polyline points="950,300 920,300 920,430 950,430"/>
+    <polyline points="980,300 1010,300 1010,430 980,430"/>
+  </g>
+  <!-- Code-like text fragments -->
+  <g font-family="monospace" font-size="10" fill="#34d399" opacity="0.25">
+    <text x="500" y="350">&lt;module&gt;</text>
+    <text x="510" y="370">  const version = "1.0"</text>
+    <text x="510" y="390">  export { build }</text>
+    <text x="500" y="410">&lt;/module&gt;</text>
+  </g>
+  <!-- Right side code snippet -->
+  <g font-family="monospace" font-size="9" fill="#34d399" opacity="0.28">
+    <text x="950" y="250">function deploy() {</text>
+    <text x="960" y="270">  run(tasks)</text>
+    <text x="960" y="290">  return status</text>
+    <text x="950" y="310">}</text>
+  </g>
+  <!-- Underscore/line separators -->
+  <g stroke="#34d399" stroke-width="1" fill="none" opacity="0.22">
+    <line x1="55" y1="155" x2="280" y2="155"/>
+    <line x1="490" y1="425" x2="720" y2="425"/>
+    <line x1="940" y1="320" x2="1100" y2="320"/>
+  </g>
+  <!-- Cursor/blinking line indicators -->
+  <g fill="#34d399" opacity="0.38">
+    <rect x="280" y="85" width="3" height="14"/>
+    <rect x="720" y="415" width="3" height="14"/>
+    <rect x="1100" y="310" width="3" height="14"/>
+  </g>
+  <!-- Bracket corner elements (structural) -->
+  <g stroke="#34d399" stroke-width="1.5" fill="none" opacity="0.2">
+    <!-- Top right corner -->
+    <line x1="850" y1="50" x2="850" y2="120"/>
+    <line x1="850" y1="50" x2="880" y2="50"/>
+    <!-- Bottom center corner -->
+    <line x1="550" y1="520" x2="580" y2="520"/>
+    <line x1="550" y1="520" x2="550" y2="570"/>
+    <!-- Right edge -->
+    <line x1="1100" y1="140" x2="1100" y2="180"/>
+    <line x1="1070" y1="140" x2="1100" y2="140"/>
+  </g>
+  <!-- Additional scattered code elements -->
+  <g font-family="monospace" font-size="8" fill="#34d399" opacity="0.2">
+    <text x="350" y="500">$ npm run build</text>
+    <text x="800" y="180">return data</text>
+  </g>
+  <!-- Watermark -->
+  <text x="600" y="600" font-family="monospace" font-size="14" fill="#34d399" opacity="0.3" text-anchor="middle">chamomo</text>
 </svg>

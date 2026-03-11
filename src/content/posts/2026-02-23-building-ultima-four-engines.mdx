@@ -1,0 +1,128 @@
+---
+title: "Building Ultima, Part 2: Four Engines, One Brain"
+date: 2026-02-23
+categories: [building]
+tags: [ai, productivity, adhd, ultima]
+description: "Four modules that are each worse than dedicated apps at launch — and why that's exactly right. The value isn't in any one engine. It's in what happens when all four share a database."
+image: "/images/posts/ultima-pt2-four-engines.svg"
+series: "Building Ultima"
+part: 2
+totalParts: 3
+prevSlug: "2026-02-23-building-ultima-the-last-one"
+nextSlug: "2026-02-23-building-ultima-lessons"
+---
+
+import SeriesNav from '@/components/blog/SeriesNav';
+import ContextSnapshot from '@/components/blog/ContextSnapshot';
+import ADHDDesignCards from '@/components/blog/ADHDDesignCards';
+
+<SeriesNav client:load current={2} total={3} prevSlug="2026-02-23-building-ultima-the-last-one" nextSlug="2026-02-23-building-ultima-lessons" seriesTitle="Building Ultima" />
+
+Each of the four modules in Ultima is, on its own, worse than what you could get from a dedicated app.
+
+The todo engine will never be as clean as Things 3. The habit tracker won't have Habitica's gamification. The journal won't match Day One's templates. The calendar won't beat Fantastical's parsing and sync.
+
+This is completely intentional.
+
+The value isn't in any one engine being exceptional. The value is in what becomes possible when all four share a database and a unified context assembler.
+
+When the system knows you journaled about feeling overwhelmed, skipped three habits because you were tired, have no meetings until 2pm, and your energy pattern shows you crash hard after 4pm, it can make a recommendation that's impossible for any single app to make: "Here's a low-energy task that moves you toward your goals, set in the next 90 minutes, before your evening drain kicks in."
+
+No single app sees enough to make that call. Federated apps can't correlate. Only unified context can.
+
+## The honest comparison
+
+At launch, Ultima's todo engine is a worse task manager than Todoist. I'm not pretending otherwise.
+
+Todoist has natural language parsing that can understand "send invoice to client on friday at 2pm" and extract the due date, the time, the task, and the person. Ultima has a text field and a date picker. Todoist has repeating task logic that can handle "every three weeks on a Monday." Ultima has on/off for daily, weekly, monthly. Todoist has thousands of integration points. Ultima has none.
+
+But Ultima has a hard constraint: you can only have one active task at a time. Not "in focus." Truly one. You open the app, and it shows you the single thing you should be working on right now, based on everything the system knows about you.
+
+Todoist shows you your inbox of 47 tasks and makes you choose. Ultima makes the choice.
+
+For ADHD brains, that's not a limitation. That's liberation. The decision cost of "which task should I do?" is gone. The system answers it.
+
+Similarly, the habit engine is worse than Habitica at streaks. Habitica will give you a visual dragon that's dying if you miss days. Ultima doesn't care about streaks. It tracks frequency. It aims for 71% consistency. Miss two weeks in a month? That's fine. You're not at 0% and losing everything. You're at 50% for the month. Can you hit 71% by doing it twice this week?
+
+This is explicitly designed for ADHD brains, where perfectionistic streaks are a trap. A 100-day streak broken by a single missed day doesn't mean failure. It means you're back to zero and the shame spiral starts. Ultima has no streak. It has patterns. Miss five days? Your monthly frequency dropped to 65%. You're still winning.
+
+The journal engine generates prompts based on your day instead of offering templates. What did you do today? What surprised you? What wore you out? These prompts come from the calendar (what events happened) and the todos (what did you actually complete) and the habits (what patterns emerged). The journal is a mirror of your actual life, not a template for your ideal self.
+
+The calendar isn't a replacement for Google Calendar. It's a lens on it. You keep your schedule in Google Calendar because that's where collaborators expect it to be. Ultima reads it. The system understands your committed time and uses it in the context assembler. But you're not double-entering events into two systems. One source of truth for your schedule. One system that pays attention to it.
+
+## The context assembler: one question, complete context
+
+At the core is a function that runs once per day (or on demand). It reads the current state from all four modules:
+
+- What's my active task and what's its priority?
+- Which habits did I hit this week?
+- What patterns did I journal about in the last three days?
+- What's on my calendar today and tomorrow?
+
+<ContextSnapshot client:visible />
+
+Then it structures all of that into a prompt: "It's 8:00 AM on a Tuesday. Rahil has three incomplete todos, skipped habits twice this week, journaled about feeling overwhelmed yesterday, and has a clear schedule until 2pm. Energy patterns suggest a 4pm drop. What should they do right now?"
+
+Claude Haiku answers in milliseconds: "Low-energy deep work that maps to your goal of shipping Ultima. Here's why this matters right now. Here's the specific todo to activate."
+
+The LLM doesn't choose from a hundred options. It understands one integrated human state and makes one recommendation.
+
+That integration is the entire product.
+
+## Designing for ADHD failure modes
+
+I've lived with ADHD for 27 years. I know the failure modes intimately.
+
+The first failure mode: decision paralysis. Too many options, too much cognitive load to choose between them, so you pick none. Traditional productivity apps present you with your inbox and say "choose." Ultima says "here's your next task." Decision made.
+
+The second failure mode: perfectionism collapse. Miss your streak, lose your motivation entirely. Habitica will make you feel like you've failed. Ultima tracks patterns, not perfection. A 71% consistency model says "you're human, sometimes you miss days, here's the rhythm anyway."
+
+The third failure mode: context switching tax. Moving between apps costs executive function. Every app boundary is a death. Ultima is one app. One context. No switching.
+
+The fourth failure mode: blindness to holistic state. No single app knows if you're tired, busy, emotionally drained, or in flow. Federated apps can't know. Unified systems can.
+
+<ADHDDesignCards client:visible />
+
+Every design decision in Ultima maps to one of these failure modes. The hard cap at one active task. The frequency model instead of streaks. The single app. The context assembler. These aren't features. They're structural responses to how ADHD breaks traditional productivity tools.
+
+## Vibe-coding for four modules
+
+The discovery process for Ultima was different from Shard. With Shard, I designed the entire game in TypeScript interfaces before writing a single prompt.
+
+With Ultima, I specified behavior before code. Functional narratives, not requirements documents. For each module, I wrote scenarios:
+
+"It's 8am Monday. User has journaled about burnout. They have three overdue tasks, skipped habits twice. What does the system show them?" Then I traced what the system should do. Not how. What.
+
+"User opens at midnight and can't sleep. They have low energy markers. What should the journal do?" Again—what happens, not how.
+
+"User has 90 minutes free and four habits they could do. How does the system rank them?" Not the implementation. The behavior.
+
+These scenarios became the contract. When I handed off to code, each module had a specification: "You will be invoked with this state. You will output that behavior. Here's the test case."
+
+This vibe-coding approach worked because I wasn't attached to implementation. Non-engineer bias: no ego in the code means I could ask "does this behavior actually serve the ADHD user, or does it serve the database schema?" And I was willing to rethink behavior entirely.
+
+The todo limit started at 5. Testing showed users got anxious with 5. Raised it to 10. Still anxious. Raised to 15. Felt right. So the hard constraint is 15 active todos, displayed in priority order, one of them highlighted as "do this now." Not because 15 is a magical number. Because that's where user testing stopped showing anxiety.
+
+## Four modules, one database
+
+The architecture is simple because it doesn't try to be clever.
+
+Each module writes to the same Supabase schema. Todos table. Habits table. Journal entries. Calendar reads (from Google Calendar API). The context assembler is a function that queries all four and structures the output.
+
+When you complete a todo, it updates the todos table. The context assembler sees it next call and can account for "you completed a task today, momentum building." When you skip a habit, it updates. The context assembler sees it and accounts for "frequency dropped, but still in healthy range."
+
+This is not distributed systems. It's not event-driven architecture. It's boring, simple, deterministic. One database. One schema. One source of truth.
+
+Boring is correct for productivity tools. The innovation is in behavior, not infrastructure.
+
+## The vibe-coding principle
+
+The same principle from Shard applies here: AI generates recommendations, pure functions govern state.
+
+The LLM suggests what to do. The system verifies it against reality. If the recommendation is "do this low-energy task," but the task has a hard 2pm deadline and it's 1:50pm, the system rejects it and asks for a new recommendation. The LLM proposes. The functions dispose.
+
+A productivity tool that lets the AI hallucinate is a broken tool. A productivity tool where the AI operates within guardrails that the system enforces is a tool you can trust.
+
+Four engines. One brain. One database. One question: "What should I do right now?" Everything else is the infrastructure to answer it well.
+
+<SeriesNav client:load current={2} total={3} prevSlug="2026-02-23-building-ultima-the-last-one" nextSlug="2026-02-23-building-ultima-lessons" seriesTitle="Building Ultima" />

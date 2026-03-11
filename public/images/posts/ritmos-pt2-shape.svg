@@ -1,0 +1,91 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-ritmos-pt2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A0A14;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2D1020;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent-ritmos-pt2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#D946A8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C4179D;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="20" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow-sm">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg-ritmos-pt2)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.04" stroke="#D946A8" stroke-width="1">
+    <line x1="0" y1="0" x2="0" y2="630"/><line x1="60" y1="0" x2="60" y2="630"/><line x1="120" y1="0" x2="120" y2="630"/><line x1="180" y1="0" x2="180" y2="630"/><line x1="240" y1="0" x2="240" y2="630"/><line x1="300" y1="0" x2="300" y2="630"/><line x1="360" y1="0" x2="360" y2="630"/><line x1="420" y1="0" x2="420" y2="630"/><line x1="480" y1="0" x2="480" y2="630"/><line x1="540" y1="0" x2="540" y2="630"/><line x1="600" y1="0" x2="600" y2="630"/><line x1="660" y1="0" x2="660" y2="630"/><line x1="720" y1="0" x2="720" y2="630"/><line x1="780" y1="0" x2="780" y2="630"/><line x1="840" y1="0" x2="840" y2="630"/><line x1="900" y1="0" x2="900" y2="630"/><line x1="960" y1="0" x2="960" y2="630"/><line x1="1020" y1="0" x2="1020" y2="630"/><line x1="1080" y1="0" x2="1080" y2="630"/><line x1="1140" y1="0" x2="1140" y2="630"/>
+    <line x1="0" y1="60" x2="1200" y2="60"/><line x1="0" y1="120" x2="1200" y2="120"/><line x1="0" y1="180" x2="1200" y2="180"/><line x1="0" y1="240" x2="1200" y2="240"/><line x1="0" y1="300" x2="1200" y2="300"/><line x1="0" y1="360" x2="1200" y2="360"/><line x1="0" y1="420" x2="1200" y2="420"/><line x1="0" y1="480" x2="1200" y2="480"/><line x1="0" y1="540" x2="1200" y2="540"/><line x1="0" y1="600" x2="1200" y2="600"/>
+  </g>
+
+  <!-- Glowing orbs -->
+  <circle cx="240" cy="150" r="125" fill="#D946A8" opacity="0.06" filter="url(#glow)"/>
+  <circle cx="960" cy="460" r="155" fill="#C4179D" opacity="0.05" filter="url(#glow)"/>
+
+  <!-- Large part number -->
+  <text x="600" y="320" text-anchor="middle" font-family="monospace" font-size="220" font-weight="900" fill="url(#accent-ritmos-pt2)" opacity="0.07" filter="url(#glow)">2</text>
+
+  <!-- Waveform with data points and transition arrows -->
+  <g transform="translate(600,240)" filter="url(#glow-sm)">
+    <!-- Base energy arc -->
+    <path d="M -55,15 Q -35,-28 0,-40 Q 35,-28 55,15" fill="none" stroke="url(#accent-ritmos-pt2)" stroke-width="2" stroke-linecap="round"/>
+    <!-- Inner arc -->
+    <path d="M -45,12 Q -28,-18 0,-28 Q 28,-18 45,12" fill="none" stroke="#D946A8" stroke-width="0.8" opacity="0.4" stroke-linecap="round"/>
+
+    <!-- Data points on wave -->
+    <circle cx="-55" cy="15" r="3" fill="#D946A8" opacity="0.8"/>
+    <circle cx="-28" cy="-20" r="2.5" fill="#D946A8" opacity="0.7"/>
+    <circle cx="0" cy="-40" r="3.5" fill="#D946A8" opacity="1"/>
+    <circle cx="28" cy="-20" r="2.5" fill="#D946A8" opacity="0.7"/>
+    <circle cx="55" cy="15" r="3" fill="#D946A8" opacity="0.8"/>
+
+    <!-- Transition arrows showing flow -->
+    <path d="M -35,-8 L -20,-15" stroke="#D946A8" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <path d="M -15,-15 L 0,-25" stroke="#D946A8" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <path d="M 5,-25 L 20,-15" stroke="#D946A8" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <path d="M 25,-15 L 40,-8" stroke="#D946A8" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.6"/>
+
+    <!-- Arrow heads -->
+    <polygon points="-15,-15 -18,-12 -12,-13" fill="#D946A8" opacity="0.6"/>
+    <polygon points="5,-25 2,-22 8,-23" fill="#D946A8" opacity="0.6"/>
+    <polygon points="25,-15 22,-12 28,-13" fill="#D946A8" opacity="0.6"/>
+
+    <!-- Center glow -->
+    <circle cx="0" cy="-40" r="7" fill="none" stroke="#D946A8" stroke-width="0.5" opacity="0.3"/>
+  </g>
+
+  <!-- Part badge -->
+  <g transform="translate(600,330)">
+    <rect x="-32" y="-14" width="64" height="28" rx="14" fill="#D946A8" opacity="0.15"/>
+    <text x="0" y="5" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#D946A8">PT.2</text>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="405" text-anchor="middle" font-family="monospace" font-size="64" font-weight="800" fill="#D946A8">THE SHAPE</text>
+  <text x="600" y="442" text-anchor="middle" font-family="monospace" font-size="20" fill="#71717a" letter-spacing="4">OF A SET</text>
+
+  <!-- Bottom bar -->
+  <g transform="translate(0,565)">
+    <rect width="1200" height="65" fill="#1A0A14" opacity="0.85"/>
+    <rect width="1200" height="1" fill="#D946A8" opacity="0.15"/>
+    <text x="150" y="38" text-anchor="middle" font-family="monospace" font-size="12" fill="#D946A8">RITMOS</text>
+    <text x="350" y="38" text-anchor="middle" font-family="monospace" font-size="12" fill="#D946A8" opacity="0.7">BUILDING IN PUBLIC</text>
+    <text x="600" y="38" text-anchor="middle" font-family="monospace" font-size="12" fill="#D946A8" opacity="0.5">PART 2 OF 3</text>
+    <text x="850" y="38" text-anchor="middle" font-family="monospace" font-size="12" fill="#D946A8" opacity="0.7">2-PASS AI</text>
+    <text x="1050" y="38" text-anchor="middle" font-family="monospace" font-size="12" fill="#D946A8" opacity="0.5">VIBE-CODED</text>
+  </g>
+</svg>

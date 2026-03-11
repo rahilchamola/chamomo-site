@@ -1,0 +1,101 @@
+---
+title: "Building Ritmos, Part 2: The Shape of a Set"
+date: 2026-02-25
+categories: [building]
+tags: [ai, dj, ritmos]
+description: "A DJ set is not a list of songs. It's a function of time, energy, crowd context, and BPM mathematics. Here's how Ritmos encodes that function into something you can run before you touch the mixer."
+image: "/images/posts/ritmos-pt2-shape.svg"
+series: "Building Ritmos"
+part: 2
+totalParts: 3
+prevSlug: "2026-02-25-building-ritmos-the-word"
+nextSlug: "2026-02-25-building-ritmos-dj-to-pm"
+---
+
+import SeriesNav from '@/components/blog/SeriesNav';
+import BriefBuilder from '@/components/blog/BriefBuilder';
+import TransitionCard from '@/components/blog/TransitionCard';
+
+<SeriesNav client:load current={2} total={3} prevSlug="2026-02-25-building-ritmos-the-word" nextSlug="2026-02-25-building-ritmos-dj-to-pm" seriesTitle="Building Ritmos" />
+
+Set design isn't a soft skill. It has rules. Not suggestions. Actual constraints.
+
+A BPM jump of 8 or more is audibly disruptive. The crowd feels the jolt. Even if the songs harmonically match, the energy snap pulls focus. You lose momentum. That's not opinion. That's physics and human perception. Systematic. Learnable. Programmable.
+
+Key clashes matter. A song in F-major cutting directly into B-flat major feels wrong even if you can't name why. The harmonic gap is real. The audience's nervous system recognizes it. It's not taste. It's information theory. The relationship between notes creates meaning.
+
+Energy peaks need architecture. Climb too steep, you have nowhere to go. Peak too early, the crowd gets bored. Peak too late, you never reach capacity. The timing of energy shifts is a mathematical problem solved through saturation and time.
+
+These rules are learnable because they're rules. Not intuition. Not vibe. Rules. Which means AI is phenomenally good at this particular problem.
+
+## The brief model
+
+The fundamental mistake people make with generative AI: treating it like a search engine. Describe what you want, ask it to find it. That works for retrieval. It fails for design.
+
+Ritmos doesn't work with song lists. It works with briefs.
+
+You give Ritmos a brief. Not a playlist to edit. A design document. What's the theme? What's the target BPM range and arc? What's the crowd context? How much singalong density matters? What energy profile do you need? Are you opening a night or closing? Festival set or intimate venue? Recognition density — how much does the crowd need to know the songs versus discover new ones?
+
+A brief is a constrained argument. Given these conditions, what set satisfies all constraints simultaneously?
+
+That reframes the entire interaction. You're not searching for songs. You're describing a design problem. "I need a 40-minute set that starts at 100 BPM, climbs to 130 by minute 15, holds there for 20 minutes, then descends to 115 for the closer. The crowd knows UK garage and wants some grime samples but mostly wants pop. Two singalongs minimum, one of them in the first 10 minutes to build trust."
+
+That brief contains constraints. It's executable. It's buildable.
+
+<BriefBuilder client:load />
+
+## Two-pass architecture
+
+Ritmos runs two passes. I borrowed this pattern from Sophis because it solved the same problem: generation without guardrails is creative chaos. Generation with constraints is disciplined architecture.
+
+Ingestion pass: pull track metadata. BPM from BPM Supreme, song key and harmonic context from music theory APIs and web search, release year and cultural moment, chart history, genre classification, typical energy curve per track. Build a candidate pool. Not the entire Spotify catalog — that's too big. A filtered pool of tracks that could plausibly work for this brief.
+
+Reasoning pass: receive the brief + candidate pool. Reason about arrangement. This isn't ranked scoring. This is sequential decision-making: which track opens strongest for this brief? When's the first energy shift and which song makes that shift invisible? Where do we plant the singalong? Which transition requires the least technical bridging? Which track locks the crowd at peak energy?
+
+The output isn't a ranked list. It's an ordered setlist with transition rationale at every decision point.
+
+"Espresso (118 BPM, G-major) to Levitating (103 BPM, B-major): both use major thirds in similar registers. Energy bridge from recognition to motion. Hold Levitating for 5m30s to lock singalong, then BPM jump to Taste (130 BPM, F-major) — jump audible but justified by energy context and rhythm break in music."
+
+That rationale is what makes Ritmos a tool instead of a playlist generator. You see the reasoning. You can disagree and adjust. You understand why this arrangement was chosen. The AI isn't a black box. It's a co-designer showing its work.
+
+## The arc logic was hardest
+
+BPM matching is arithmetic. Key compatibility is lookup table. Arc design is judgment about crowd psychology. How do you encode judgment?
+
+I started with narrative theory. Freytag's pyramid. A story has exposition (characters, world), rising action (tension building), climax (peak moment), falling action (resolution), denouement (settling). A DJ set has the same arc if you think about it rhythmically.
+
+Gathering = exposition. The crowd assembles. We establish the BPM, the energy signature, the cultural moment.
+
+Rising action = build phase. We climb the energy curve. Add intensity. Introduce new elements. Keep momentum climbing toward the peak.
+
+Climax = the lock. This is where the set lives. Maximum energy, maximum alignment, maximum crowd. Holds here as long as the moment supports.
+
+Falling action = descent. We can't hold peak forever. But we don't drop suddenly. We begin the resolution, guided descent, still energized but more thoughtful.
+
+Denouement = closer. The set philosophy concludes. Where we end says something about the story we told.
+
+That structure is learnable. That structure is mathematizable. That structure is what AI reasons about in the second pass.
+
+<TransitionCard client:load />
+
+## Constraints and freedom
+
+What Ritmos doesn't do matters as much as what it does.
+
+It doesn't know THIS specific crowd at THIS specific venue. That's you. That's the DJ. That's the part that requires being present. You show up with a designed set and you feel the actual people and you make adjustments. Maybe the crowd is colder than expected and you extend an opening track. Maybe there's a moment of transcendence and you hold it longer. Maybe you sense that the singalong landed differently and you shift to deeper production next.
+
+Ritmos handles what happens before you walk up to the decks. Every unit of preparation work that would otherwise occupy your brain during performance. All the technical calculation that would prevent you from reading the room.
+
+The preparation is the design. The performance is the jazz. Ritmos clears the space for the jazz to exist.
+
+## From naming to architecture
+
+This is where the naming decision pays off architecturally. Because I named it Ritmos (rhythm, shape, pattern), the design follows naturally. If I'd named it "Set Builder," I'd be optimizing for song selection speed. If I'd named it "Playlist Generator," I'd be optimizing for novelty and variation.
+
+But Ritmos is rhythm-focused. So the optimization is set coherence. The constraint satisfaction is rhythm-based. The output is a narrative about shape.
+
+The name did the architectural work before I wrote a line of code.
+
+**The building takeaway: set design is an optimization problem over time, energy, and crowd psychology. Encode the rules. Hand the optimization to the machine. Show up for the part the machine can't do.**
+
+<SeriesNav client:load current={2} total={3} prevSlug="2026-02-25-building-ritmos-the-word" nextSlug="2026-02-25-building-ritmos-dj-to-pm" seriesTitle="Building Ritmos" />

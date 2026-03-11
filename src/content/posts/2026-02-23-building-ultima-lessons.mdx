@@ -1,0 +1,151 @@
+---
+title: "Building Ultima, Part 3: Lessons from Building Your Own OS"
+date: 2026-02-23
+categories: [building]
+tags: [ai, product-management, productivity, ultima]
+description: "I built a productivity app for myself as a PM exercise and personal experiment. What I learned about product management came from the part where it failed on me."
+image: "/images/posts/ultima-pt3-lessons.svg"
+series: "Building Ultima"
+part: 3
+totalParts: 3
+prevSlug: "2026-02-23-building-ultima-four-engines"
+---
+
+import SeriesNav from '@/components/blog/SeriesNav';
+import FrictionLog from '@/components/blog/FrictionLog';
+
+<SeriesNav client:load current={3} total={3} prevSlug="2026-02-23-building-ultima-four-engines" seriesTitle="Building Ultima" />
+
+I built Ultima as a product management exercise and a personal experiment. The exercise was: can I build a unified productivity system that doesn't feel like a compromise between four apps? The experiment was: will I actually use my own tool if I finish it?
+
+The lessons I learned came from the part where it failed on me. Not catastrophically. But consistently. In ways that revealed how wrong I was about what I was building.
+
+## Lesson 1: Design for worst-self, not best-self
+
+The first week of using Ultima, I discovered the system was broken because I was broken.
+
+The context assembler would give me a recommendation: "You should do the project work right now—90 minutes, high focus, shipping value." I had the time. I had the energy. By the system's logic, this was the optimal choice.
+
+But I didn't want to do project work. I wanted to read Twitter. The system's recommendation sat ignored while I procrastinated.
+
+This is the core PM failure mode: designing for the user you aspire to be instead of the user you actually are.
+
+I was designing for best-self Rahil. Best-self Rahil wakes up at 7am, does the deep work first, executes toward goals. But actual-self Rahil often wakes up tired, feels resistance to the hardest task, and needs permission to ease into the day.
+
+So I rebuilt the recommendation engine. Instead of "here's the most important thing," it says "here's the lowest-friction thing that still moves you forward." The LLM now gets instructions: "Optimize for completion probability. Suggest something they'll actually do."
+
+Completion is worth more than optimal. A task completed is a task done. An optimal task left incomplete is procrastination with good intentions.
+
+ADHD forced the right design mode. ADHD is the worst-self amplifier. When you're dysregulated, unmotivated, resistant, resistant. The system can't assume motivation. It has to assume resistance and work backwards from there.
+
+This is the opposite of how most productivity apps are designed. They're designed for motivated users. Ultima is designed for lazy, tired, dysregulated users. And it turns out lazy, tired users still get things done—they just need permission to do them in a different order than the system originally imagined.
+
+## Lesson 2: Scope creep kills personal projects
+
+By week two, I was designing Focus Mode. A soundscape system. When you mark a task as in-focus, Ultima plays a custom soundscape generated via AI. Ambient. No lyrics. Tempo locked to your focus tempo.
+
+It was a seductive feature. I could see it in the product. Users marking tasks as in-focus, getting soundscapes, deeper focus.
+
+By day four, I killed it entirely.
+
+Not because it was hard to build. Because it wasn't the product.
+
+Ultima is solving one problem: "What should I do right now?" Everything else is infrastructure. A soundscape system doesn't solve that problem. It's an ornament on top of the solve.
+
+The temptation to build ornaments is powerful. They're fun. They feel like polish. They make the product feel more complete. But for personal projects, scope creep is a velocity killer and the velocity is what shipping requires.
+
+I cut:
+- Focus Mode soundscapes
+- Achievement badges for habit completion
+- Social sharing for journal entries
+- Export-to-Roam integration
+- Custom themes
+
+Every single one of these would have been abandoned mid-implementation because they didn't serve the core problem. I would have context-switched to them, lost momentum, and shipped nothing.
+
+The most underrated PM skill for personal projects is aggressive cutting. Not eventual cutting. Immediate cutting. The moment you feel temptation to build something that isn't the core, you kill it.
+
+Shipping one focused product beats shipping a half-baked system of eight features.
+
+## Lesson 3: Using your own tool honestly is the hardest PM skill
+
+The friction logs were brutal.
+
+Every morning, I logged what made Ultima annoying to use. Not big things. Small friction points.
+
+- Opening the app takes 3 seconds to load the recommendation. That's too long. During that 3 seconds, I'm already thinking about checking email.
+- The calendar lens shows all-day events at the top but I only care about time-blocked commitments. All-days are noise.
+- When I mark a habit as done, the app celebrates. I don't want celebration. I want invisibility. The system should recognize I did it and move on.
+- The todo list shows 15 items but I can only see 5 without scrolling. I scroll anyway, get distracted, lose my purpose.
+
+None of these are features. They're all UX. They're all invisible to users who've never used the tool. They're obvious to me because I use it daily.
+
+The PM lesson: your own tool is your harshest critic. Every friction point you log is a reason a user will abandon.
+
+The insight I had: if Ultima requires correct usage to work—if it works great when you interact with it exactly right but falls apart when you use it naturally—then it doesn't work. A tool that requires the user to be perfect is a broken tool.
+
+So I rebuilt large parts of the UX around how I actually used it, not how I thought I should use it. Faster loads. Simplified calendar view. Silent confirmations. Auto-scrolling. Small changes, massive impact.
+
+The friction log became the spec. When I had two options for a feature, I chose the one that had fewer friction points in my daily use.
+
+## Lesson 4: Design constraints from personal context beat user research
+
+Most product advice says: research your users. Build personas. Understand needs. Conduct interviews.
+
+I did the opposite. I designed Ultima around my constraints.
+
+I'm an MBA student. I'm a DJ. I have ADHD. I've built products before. I study philosophy. I code.
+
+Every single one of these constraints shaped the design:
+
+MBA student: I need time management that survives intense project periods and recovery periods. Habits can't have streaks. Tasks can't have deadlines that create guilt when missed.
+
+DJ: I understand rhythm and pattern. The habit system is based on frequency (rhythm) not perfection (binary). The journal prompts come from temporal patterns in my day.
+
+ADHD: The hard constraints on task limits. The frequency-over-streaks model. The single-recommendation interface. The context assembler that removes decision-making.
+
+Builder: I know what fails when you build products. Scope creep. Overengineering. Designing for aspirational users. So I constrained ruthlessly.
+
+Philosophy: I think about naming, about what a tool means in someone's life. That's why it's called Ultima, not "TaskBot" or "Productivity+".
+
+I didn't need personas. My constraints were specific enough. Instead of researching "productivity users," I designed for "Rahil in an MBA, running a side project, dysregulated, philosophically inclined."
+
+The irony: the more specific I designed for me, the more universally useful the tool became. Constraints create clarity. Specificity creates strength.
+
+I suspect that's why so many general-purpose productivity apps fail. They're designed for everyone, which means they're designed for no one. Ultima is designed for ADHD, overloaded, ambitious people who want to stop optimizing their tool stack and just get things done.
+
+If you're not that person, this tool isn't for you. And that's okay. It's better to be perfect for 5% of users than adequate for 50%.
+
+## Lesson 5: Non-engineer PM advantage is no implementation ego
+
+The last insight came from architectural decisions. When I designed the context assembler, I had three options for how to build it.
+
+Option 1 was elegant. It was clever. It used reactive streams and event-driven updates. It was the kind of architecture you'd see in production at a serious company. It would have taken three weeks to implement correctly.
+
+Option 2 was boring. Query all four modules. Structure the output. Send to Claude. Done. It would take two days. It would be slightly slower. It would be vastly simpler.
+
+I chose Option 2.
+
+Most of my engineer friends would have chosen Option 1. They would have been seduced by the elegance. They would have built a thing of beauty. Then they would have abandoned it half-done because they got bored with the implementation or hit a scaling problem they didn't anticipate.
+
+The non-engineer PM advantage is that I have no attachment to implementation. I don't care if the solution is elegant. I care if it works and if I finish it. Boring beats beautiful. Done beats perfect.
+
+This applies beyond architecture. When I chose between design patterns, I picked the one I could understand six months from now, not the one that impressed technically. When I picked a database, I picked the one I could reason about, not the one that was theoretically optimal. When I chose deployment, I picked simplicity over cleverness.
+
+Non-engineers have this advantage: we can evaluate arguments on their merits instead of their source. A suggestion to use boring technology isn't ego-threatening because I don't have ego in the codebase. A simpler design isn't a personal insult to my coding abilities.
+
+The builder's advantage: you can think clearly about what serves the product instead of what serves your technical pride.
+
+<FrictionLog client:visible />
+
+## What comes next
+
+Ultima is shipping in early April. It's a unified system for one ADHD, overloaded person. If it works for me, I'll know if it works for anyone. If it fails, it'll fail where it matters: in actual use, not in theory.
+
+The product management lessons are in that gap—between what I designed and what I actually do. Every friction point. Every moment I didn't use the feature I built. Every time the system was wrong about what I should do next.
+
+That's where the truth lives. Not in planning. In use.
+
+The final lesson: **Build for the worst version of yourself, not the best. That's where product clarity lives.**
+
+<SeriesNav client:load current={3} total={3} prevSlug="2026-02-23-building-ultima-four-engines" seriesTitle="Building Ultima" />

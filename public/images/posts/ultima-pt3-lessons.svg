@@ -1,0 +1,88 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1408;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2D2010;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#E8AF1A;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#D4920A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B87A0A;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="20" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow-sm">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.04" stroke="#D4920A" stroke-width="1">
+    <line x1="0" y1="0" x2="0" y2="630"/><line x1="60" y1="0" x2="60" y2="630"/><line x1="120" y1="0" x2="120" y2="630"/><line x1="180" y1="0" x2="180" y2="630"/><line x1="240" y1="0" x2="240" y2="630"/><line x1="300" y1="0" x2="300" y2="630"/><line x1="360" y1="0" x2="360" y2="630"/><line x1="420" y1="0" x2="420" y2="630"/><line x1="480" y1="0" x2="480" y2="630"/><line x1="540" y1="0" x2="540" y2="630"/><line x1="600" y1="0" x2="600" y2="630"/><line x1="660" y1="0" x2="660" y2="630"/><line x1="720" y1="0" x2="720" y2="630"/><line x1="780" y1="0" x2="780" y2="630"/><line x1="840" y1="0" x2="840" y2="630"/><line x1="900" y1="0" x2="900" y2="630"/><line x1="960" y1="0" x2="960" y2="630"/><line x1="1020" y1="0" x2="1020" y2="630"/><line x1="1080" y1="0" x2="1080" y2="630"/><line x1="1140" y1="0" x2="1140" y2="630"/>
+    <line x1="0" y1="60" x2="1200" y2="60"/><line x1="0" y1="120" x2="1200" y2="120"/><line x1="0" y1="180" x2="1200" y2="180"/><line x1="0" y1="240" x2="1200" y2="240"/><line x1="0" y1="300" x2="1200" y2="300"/><line x1="0" y1="360" x2="1200" y2="360"/><line x1="0" y1="420" x2="1200" y2="420"/><line x1="0" y1="480" x2="1200" y2="480"/><line x1="0" y1="540" x2="1200" y2="540"/><line x1="0" y1="600" x2="1200" y2="600"/>
+  </g>
+
+  <!-- Glowing orbs -->
+  <circle cx="300" cy="180" r="130" fill="#D4920A" opacity="0.08" filter="url(#glow)"/>
+  <circle cx="900" cy="400" r="160" fill="#E8AF1A" opacity="0.06" filter="url(#glow)"/>
+
+  <!-- Large part number -->
+  <text x="600" y="300" text-anchor="middle" font-family="monospace" font-size="220" font-weight="900" fill="url(#accent)" opacity="0.07" filter="url(#glow)">3</text>
+
+  <!-- Compass with kintsugi/cracked aesthetic -->
+  <g transform="translate(600,240)" filter="url(#glow-sm)">
+    <!-- Outer circle -->
+    <circle cx="0" cy="0" r="60" fill="none" stroke="url(#accent)" stroke-width="1.5" opacity="0.6"/>
+    <!-- Inner circle -->
+    <circle cx="0" cy="0" r="42" fill="none" stroke="url(#accent)" stroke-width="1" opacity="0.4"/>
+    <!-- Four quadrant segments -->
+    <path d="M 0,-42 L 25,-25 L 25,0 L 0,0 Z" fill="url(#accent)" opacity="0.1"/>
+    <path d="M 0,-42 L -25,-25 L -25,0 L 0,0 Z" fill="url(#accent)" opacity="0.08"/>
+    <path d="M 0,42 L 25,25 L 25,0 L 0,0 Z" fill="url(#accent)" opacity="0.08"/>
+    <path d="M 0,42 L -25,25 L -25,0 L 0,0 Z" fill="url(#accent)" opacity="0.1"/>
+    <!-- Cardinal points -->
+    <line x1="0" y1="-60" x2="0" y2="-42" stroke="url(#accent)" stroke-width="1.5" opacity="0.5"/>
+    <line x1="0" y1="42" x2="0" y2="60" stroke="url(#accent)" stroke-width="1.5" opacity="0.5"/>
+    <line x1="-60" y1="0" x2="-42" y2="0" stroke="url(#accent)" stroke-width="1.5" opacity="0.5"/>
+    <line x1="42" y1="0" x2="60" y2="0" stroke="url(#accent)" stroke-width="1.5" opacity="0.5"/>
+    <!-- Kintsugi cracks - gold-filled repair lines -->
+    <path d="M -20,-30 Q -10,-15 0,-5" fill="none" stroke="#D4920A" stroke-width="1.5" opacity="0.7"/>
+    <path d="M 20,-25 Q 15,-10 5,5" fill="none" stroke="#D4920A" stroke-width="1.5" opacity="0.7"/>
+    <path d="M 15,25 Q 5,15 -5,0" fill="none" stroke="#D4920A" stroke-width="1.5" opacity="0.7"/>
+    <path d="M -15,30 Q -8,20 0,10" fill="none" stroke="#D4920A" stroke-width="1.5" opacity="0.7"/>
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="3" fill="url(#accent)" opacity="0.7"/>
+  </g>
+
+  <!-- Part badge -->
+  <g transform="translate(600,345)">
+    <rect x="-32" y="-14" width="64" height="28" rx="14" fill="#D4920A" opacity="0.15"/>
+    <text x="0" y="5" text-anchor="middle" font-family="monospace" font-size="13" font-weight="700" fill="#D4920A">PT.3</text>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="410" text-anchor="middle" font-family="monospace" font-size="48" font-weight="800" fill="#D4920A">YOUR OWN OS</text>
+  <text x="600" y="448" text-anchor="middle" font-family="monospace" font-size="13" fill="#71717a" letter-spacing="4">WHAT BUILDING TAUGHT ME ABOUT PM</text>
+
+  <!-- Bottom bar -->
+  <g transform="translate(0,565)">
+    <rect width="1200" height="65" fill="#1A1408" opacity="0.85"/>
+    <rect width="1200" height="1" fill="#D4920A" opacity="0.15"/>
+    <text x="200" y="38" text-anchor="middle" font-family="monospace" font-size="12" fill="#D4920A">ULTIMA</text>
+    <text x="400" y="38" text-anchor="middle" font-family="monospace" font-size="12" fill="#D4920A" opacity="0.7">BUILDING IN PUBLIC</text>
+    <text x="600" y="38" text-anchor="middle" font-family="monospace" font-size="12" fill="#D4920A" opacity="0.5">PART 3 OF 3</text>
+    <text x="800" y="38" text-anchor="middle" font-family="monospace" font-size="12" fill="#D4920A" opacity="0.7">18 MODELS</text>
+    <text x="1000" y="38" text-anchor="middle" font-family="monospace" font-size="12" fill="#D4920A" opacity="0.5">VIBE-CODED</text>
+  </g>
+</svg>

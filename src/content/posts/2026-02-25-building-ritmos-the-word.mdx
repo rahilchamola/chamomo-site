@@ -1,0 +1,86 @@
+---
+title: "Building Ritmos, Part 1: The Word Before the Beat"
+date: 2026-02-25
+categories: [building]
+tags: [ai, dj, ritmos]
+description: "Ritmos is Greek and Spanish and older than DJing by two thousand years. I named a DJ set builder after the concept of rhythm itself because the tool is about the shape of a set, not its contents."
+image: "/images/posts/ritmos-pt1-the-word.svg"
+series: "Building Ritmos"
+part: 1
+totalParts: 3
+nextSlug: "2026-02-25-building-ritmos-shape-of-a-set"
+---
+
+import SeriesNav from '@/components/blog/SeriesNav';
+import EnergyArc from '@/components/blog/EnergyArc';
+import TwoKindsOfWork from '@/components/blog/TwoKindsOfWork';
+
+<SeriesNav client:load current={1} total={3} seriesTitle="Building Ritmos" nextSlug="2026-02-25-building-ritmos-shape-of-a-set" />
+
+Ῥυθμός. Rhythmos. Greek.
+
+Not "music." Not "beat." Not even "tempo." The word means the pattern of movement through time. The ordered recurrence. The shape a thing makes as it unfolds. Aristotle used it for dance. Plato used it for how thought structures itself. I'm using it to name a DJ set builder, and that choice matters more than it probably should.
+
+I could have called it "Set Builder" or "Playlist Generator" or "Set Arc" and built a completely different tool. Names are architectural decisions. They're the first line of code. They determine what problem you think you're solving, which determines what solutions you'll allow yourself to design.
+
+Ritmos says: this is not about song selection. This is not about content curation. This is about rhythm — the shape, the arc, the pattern. The ordered sequence of time and energy. That's what I named it, and that's what I built.
+
+## Two kinds of work
+
+Every DJ performance is two kinds of work stacked on top of each other, and I spent three years failing at DJing before I understood they're completely different skills requiring different attention models.
+
+Technical work: BPM matching. Key compatibility. Harmonic mixing. Building the BPM progression that takes the crowd from 100 BPM at minute 0 to 125 at minute 15 and holds it there for 20 minutes. Energy curve management. Song selection based on metadata. This is systematizable. Learnable. Transferable. Rules-based. A skilled mixing engineer who can't read a room will execute this flawlessly.
+
+Intuitive work: Reading the room. Sensing the moment when the crowd is ready for the next energy shift, when they want a singalong, when they want to drop into peak production. Making the call to extend a track or cut it short. Deciding between two songs that both technically work to pick the one that fits the psychological moment. This is judgment-based. Real-time. Irreducible. Art.
+
+These are NOT the same kind of work. They don't even use the same attention channels. Technical work is left-brain, systems thinking, pattern matching against rules. Intuitive work is right-brain, feel-based, pattern recognition without language.
+
+The root cause of every bad DJ performance I gave: I was doing technical work during intuitive moments. I'd be thinking about BPM compatibility while the room was waiting for a drop. I was calculating harmonic mixing when I should have been reading shoulders and feet and energy. I was never present because I was never done with the setup.
+
+<TwoKindsOfWork client:load />
+
+## The gap
+
+Ritmos exists to collapse that gap. Move ALL technical work into preparation time so every unit of attention during performance is available for the room.
+
+Ninety minutes of prep before a 20-minute set feels inefficient if you don't know the difference between technical work and intuitive work. It feels like overkill. But it's not prep time. It's the removal of impedance. It's the answer to: "I've done all the technical work, now I'm free to do the intuitive work."
+
+The set that started this: English pop, ISB at night. Crowd coming in cold. 100 BPM opening, need to build to 130 by minute 20. Singalong density required. Track curation across Spotify's entire pop catalog. BPM data for 15 different mixes and 40 candidate tracks. Key compatibility checks. Harmonic mixing to ensure smooth transitions. Energy arc that respects psychological curves. The whole thing lives in a spreadsheet and my brain.
+
+I spent 90 minutes on that spreadsheet. Every minute of that 90 was technical work. Systematizable. Learnable. Automatable.
+
+The set itself was 20 minutes. Every unit of attention during those 20 minutes was available for the room. I read the energy. I felt the singalong moment building three songs in advance. I made the call to extend "Levitating" by one loop because shoulders were still moving, then drop straight into Espresso without breaking energy. That 20 minutes was everything a DJ can be.
+
+That's the gap. That's what Ritmos closes.
+
+## Why name matters
+
+A tool's name is its ontology. The user internalizes the name and starts thinking about the problem through that lens.
+
+If I named it "Set Builder," the user would think: "I'm building a set. Which songs should I include?" The tool would be organized around content selection. Song database. Recommendation algorithms. "What song comes next?"
+
+If I named it "Playlist Generator," the thinking shifts again: "Generate me a playlist. Add variety. Make it listenable." The tool becomes about generative AI, about creating new options, maybe about discovery.
+
+But I named it Ritmos. So the user thinks: "I'm designing a rhythm. What's the shape of this set? What's the energy arc? What's the BPM argument?" The thinking becomes architectural. The tool becomes about constraints and progression and shape, not content.
+
+That name difference determines every design decision downstream. It's why Ritmos doesn't show you top-of-the-pops candidates. It's why it doesn't ask "what songs do you want?" but "what story are you telling?" It's why the output is a curve and a logic narrative, not a ranked list.
+
+Naming a tool after what it's actually for — not what it technically does — determines the design decisions you'll make.
+
+<EnergyArc client:load />
+
+## The interface of a set
+
+A BPM progression is a rhythmic argument. 100 BPM opening doesn't mean "slow song." It means: "We're beginning. There's room to grow. The room is coming in cold, we have space to build." It's a sentence about time.
+
+118 at minute 10 is a different sentence: "We're committed now. The crowd is with us. The arc is clear."
+
+125 held for 20 minutes is a sustained statement: "This is where we live. This is the pocket. Everything happens here."
+
+That's not technical. That's narrative. That's design. That's rhythm in the Aristotelian sense — the shape a thing makes as it unfolds through time.
+
+Ritmos is built around that narrative. Not around songs. Around shape.
+
+**The building takeaway: naming is architecture. Choose words that make you think the right way about the problem.**
+
+<SeriesNav client:load current={1} total={3} seriesTitle="Building Ritmos" nextSlug="2026-02-25-building-ritmos-shape-of-a-set" />

@@ -1,0 +1,59 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-ritmos" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A0A14;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2D1020;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent-ritmos" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#D946A8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C4179D;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="20" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow-sm">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg-ritmos)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.04" stroke="#D946A8" stroke-width="1">
+    <line x1="0" y1="0" x2="0" y2="630"/><line x1="60" y1="0" x2="60" y2="630"/><line x1="120" y1="0" x2="120" y2="630"/><line x1="180" y1="0" x2="180" y2="630"/><line x1="240" y1="0" x2="240" y2="630"/><line x1="300" y1="0" x2="300" y2="630"/><line x1="360" y1="0" x2="360" y2="630"/><line x1="420" y1="0" x2="420" y2="630"/><line x1="480" y1="0" x2="480" y2="630"/><line x1="540" y1="0" x2="540" y2="630"/><line x1="600" y1="0" x2="600" y2="630"/><line x1="660" y1="0" x2="660" y2="630"/><line x1="720" y1="0" x2="720" y2="630"/><line x1="780" y1="0" x2="780" y2="630"/><line x1="840" y1="0" x2="840" y2="630"/><line x1="900" y1="0" x2="900" y2="630"/><line x1="960" y1="0" x2="960" y2="630"/><line x1="1020" y1="0" x2="1020" y2="630"/><line x1="1080" y1="0" x2="1080" y2="630"/><line x1="1140" y1="0" x2="1140" y2="630"/>
+    <line x1="0" y1="60" x2="1200" y2="60"/><line x1="0" y1="120" x2="1200" y2="120"/><line x1="0" y1="180" x2="1200" y2="180"/><line x1="0" y1="240" x2="1200" y2="240"/><line x1="0" y1="300" x2="1200" y2="300"/><line x1="0" y1="360" x2="1200" y2="360"/><line x1="0" y1="420" x2="1200" y2="420"/><line x1="0" y1="480" x2="1200" y2="480"/><line x1="0" y1="540" x2="1200" y2="540"/><line x1="0" y1="600" x2="1200" y2="600"/>
+  </g>
+
+  <!-- Glowing orbs -->
+  <circle cx="200" cy="150" r="140" fill="#D946A8" opacity="0.06" filter="url(#glow)"/>
+  <circle cx="1000" cy="480" r="180" fill="#C4179D" opacity="0.05" filter="url(#glow)"/>
+
+  <!-- Large faded project name in background -->
+  <text x="600" y="320" text-anchor="middle" font-family="monospace" font-size="240" font-weight="900" fill="url(#accent-ritmos)" opacity="0.07" filter="url(#glow)">R</text>
+
+  <!-- Waveform energy arc icon -->
+  <g transform="translate(600,240)" filter="url(#glow-sm)">
+    <!-- Smooth energy arc - sculpted sine wave -->
+    <path d="M -60,20 Q -40,-30 0,-45 Q 40,-30 60,20" fill="none" stroke="url(#accent-ritmos)" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Inner arc for depth -->
+    <path d="M -50,15 Q -30,-20 0,-32 Q 30,-20 50,15" fill="none" stroke="#D946A8" stroke-width="1" opacity="0.4" stroke-linecap="round"/>
+    <!-- Energy points -->
+    <circle cx="-60" cy="20" r="3" fill="#D946A8" opacity="0.6"/>
+    <circle cx="0" cy="-45" r="4" fill="#D946A8" opacity="0.8"/>
+    <circle cx="60" cy="20" r="3" fill="#D946A8" opacity="0.6"/>
+    <!-- Glow rings around peak -->
+    <circle cx="0" cy="-45" r="8" fill="none" stroke="#D946A8" stroke-width="0.5" opacity="0.3"/>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="420" text-anchor="middle" font-family="monospace" font-size="72" font-weight="800" fill="white">RITMOS</text>
+  <text x="600" y="465" text-anchor="middle" font-family="monospace" font-size="14" fill="#71717a" letter-spacing="4">chamomo</text>
+</svg>

@@ -1,0 +1,109 @@
+---
+title: "Building Sophis, Part 3: What Building Sophis Taught Me About PM"
+date: 2026-02-24
+categories: [building]
+tags: [ai, product-management, signal-intelligence, sophis]
+description: "I built a signal intelligence tool. It taught me more about product management than three courses on the subject. Here are the lessons that didn't come from a lecture."
+image: "/images/posts/sophis-pt3-pm-lessons.svg"
+series: "Building Sophis"
+part: 3
+totalParts: 3
+prevSlug: "2026-02-24-building-sophis-how-it-thinks"
+---
+
+import SeriesNav from '@/components/blog/SeriesNav';
+import FeatureKillSwitch from '@/components/blog/FeatureKillSwitch';
+
+<SeriesNav client:load current={3} total={3} prevSlug="2026-02-24-building-sophis-how-it-thinks" seriesTitle="Building Sophis" />
+
+Building Sophis taught me more about product management in six weeks than three years of reading about it.
+
+Not in the ways you'd expect. Not strategy frameworks or growth metrics or how to talk to users. Those things matter. But what Sophis taught me was different. It taught me what actually happens when you build something real that you actually need, use every day, and are honest about when it fails.
+
+## Lesson 1: Cut the feature you're most excited about
+
+The feature I was most obsessed with was cross-Listener pattern detection.
+
+Track five separate Listeners — fintech, AI policy, ISB recruiting, Indian startup ecosystem, regulatory shifts. The system would look across them and say: "These unrelated-looking developments are actually connected. Here's the pattern."
+
+Intellectually, I loved it. It was clever. It was ambitious. It was the feature I'd pitch first.
+
+It was also the most brittle thing in the codebase.
+
+The implementation was unstable. It required holding multiple Listeners in context simultaneously. The false-positive rate was absurd — it found connections that didn't matter, clustered unrelated signals into phantom patterns. Every time I ran it, I'd get excited about a pattern and then spend 20 minutes realizing it was noise.
+
+And the core tool didn't need it. The Listeners that worked were the ones with a singular focus. Fintech policy. Recruitment signals. The connection-finding was intellectual masturbation.
+
+I deleted it. Completely. Months of thinking, gone.
+
+Here's what I learned: your excitement about a feature is an inverse signal. If you love it more than the user needs it, you're building something for yourself, not for the product. The features that actually matter are the ones that feel obvious once they work but were invisible before.
+
+The pattern: when you're excited about something, ask whether you'd use it if it didn't exist. Not "is it cool," but "does my actual workflow require this?" If the answer is no, you're building debt.
+
+## Lesson 2: Non-technical builders have a superpower
+
+I don't know how to code. This is supposed to be a liability. For product management, it's the opposite.
+
+I have no ego about the stack. I don't care if something is built in Node or Go or whatever. I don't get attached to architecture because I don't have to live in the code. I care about one thing: does it do what I need?
+
+This creates ruthlessness about what should exist. Most technical founders defend architecture. I defend usability. "This would be cleaner if we refactored the effects system" — I don't care. Does the current system work? Then keep it.
+
+The philosophy training reinforces this. I spent years studying arguments: what makes an argument valid, what are the premises, what would invalidate it. When I'm evaluating a technical proposal, I'm asking: what is this claiming? What evidence would prove it wrong? Does the complexity purchase us something real?
+
+This is why I could say no to cross-Listener pattern detection without hesitation. I wasn't defending the clean architecture. I was saying: this doesn't solve a real problem. The pattern doesn't hold up to scrutiny.
+
+Non-technical builders have no implementation sunk cost. We can kill anything if it's not working. We have to, because we can't reason about technical debt the way engineers can.
+
+## Lesson 3: Vibe coding is about specification, not generation
+
+I used AI heavily to build Sophis. But not in the way people think.
+
+I can't sit down and write a Node.js backend from scratch. What I can do is specify it precisely. Here's what I need. Here's the input. Here's exactly what the output should look like. Here's a case where you're wrong. Here's what would make me trust this.
+
+That precision is the entire game. Good specification means AI can code it. Bad specification means AI will do something you didn't mean. And because I'm not learning TypeScript while I'm also trying to design the product, I can iterate on the specification quickly.
+
+Weeks of refinement were spent writing prompts, testing tiering systems, thinking through edge cases. Not one line of "I'll learn to code later." Just: here's what matters, let me specify it more carefully.
+
+This is why vibe coding works for product people. You're not generating random code and seeing what sticks. You're specifying behavior so clearly that generation becomes a implementation detail, not the creative part.
+
+The specification work is where I earned my equity in Sophis. Not writing code. Knowing what it should do when everything else is noise.
+
+## Lesson 4: The user is you
+
+My first Listeners were real.
+
+RBI Policy Watch: tracking Reserve Bank of India policy signals and regulatory commentary relevant to credit and fintech. ISB Recruiting: what are the hiring patterns and announcements from companies that recruit ISB students?
+
+These weren't hypothetical users. They were me, every morning, needing wisdom about something. I ran them. I read the outputs. I noticed immediately when classifications were wrong.
+
+This is dangerously close to only building for yourself. The risk is real. A tool perfect for me might be terrible for someone else who has different urgency windows or learning goals. But early, when you don't know if the core idea works? Using the thing you're building is the only way to find out.
+
+Most startups build for a user they've never been. Then they're shocked when reality doesn't match the pitch. I couldn't escape reality. I lived in it every day.
+
+The moment I knew Sophis worked was when I caught myself using it differently than I'd designed it. I'd framed a Listener around one question, ran it for a week, and realized I was actually using it to answer a different question. The classification system still worked because it was disciplined, but the specificity enabled me to repurpose it without breaking it.
+
+That's when I knew the core architecture was right.
+
+<FeatureKillSwitch client:load />
+
+## Lesson 5: The best PM training is building something you need and using it every day
+
+You can read about feature prioritization. You can study frameworks. You can talk to customers.
+
+None of that beats building something you need, using it daily, and being honest about when it fails.
+
+Every morning, I'd run the Listeners. Every morning, I'd evaluate the output. "Is this tier right? Did I miss a signal? Was this noise?" You can't cheat that feedback. You can't rationalize it away. Either the tool helped you understand what you needed to understand, or it didn't.
+
+This is where I learned that the Listeners with the highest success rate were the ones with the most specific learning goals. "Track fintech" didn't work. "What should I understand about credit assessment approaches before my internship?" worked perfectly.
+
+This is where I learned that classification error was worse than missing signals. Better to miss something real than to trigger false alerts. Trust decays fast. You get one chance.
+
+This is where I learned that explaining the tier choice was mandatory. Not summarizing the information. Explaining why Sophis classified it the way it did. "This is an ALERT because it directly contradicts the regulatory framework you're tracking" tells you whether the system understood your question. A summary doesn't.
+
+Most product lessons come from distance. From data, from users, from abstraction. The best ones come from necessity. From waking up and thinking, "Did this make my life better today?"
+
+The answer for Sophis, most days, was yes. On the days it was no, I fixed it.
+
+That's the job.
+
+<SeriesNav client:load current={3} total={3} prevSlug="2026-02-24-building-sophis-how-it-thinks" seriesTitle="Building Sophis" />

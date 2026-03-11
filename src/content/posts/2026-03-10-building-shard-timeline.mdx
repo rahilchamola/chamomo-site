@@ -1,0 +1,95 @@
+---
+title: "Building Shard, Part 3: The Sprint Log"
+date: 2026-03-10
+categories: [ai, building]
+tags: [shard, vibe-coding, sprint, timeline, building-in-public]
+description: "The full timeline of building Shard: 12 design sessions before git, an 8-day sprint of 125 commits, and a post-sprint deep systems expansion. Here's what happened each day."
+image: "/images/posts/shard-timeline.svg"
+series: "Building Shard"
+part: 3
+totalParts: 5
+prevSlug: "2026-03-10-building-shard-architecture"
+nextSlug: "2026-03-10-building-shard-decisions"
+---
+
+import SeriesNav from '@/components/blog/SeriesNav';
+import BuildTimeline from '@/components/blog/BuildTimeline';
+import GrowthChart from '@/components/blog/GrowthChart';
+
+<SeriesNav client:load current={3} total={5} prevSlug="2026-03-10-building-shard-architecture" nextSlug="2026-03-10-building-shard-decisions" seriesTitle="Building Shard" />
+
+The story isn't "I built a game in 8 days." The story is: I spent weeks designing a game engine with AI partners, then sprinted for 8 days to ship it.
+
+Two acts. The design sessions that built the architecture. The sprint that turned architecture into a product.
+
+## Act 1: The design sessions
+
+Before the first git commit, Shard went through 12 full design sessions. These weren't coding marathons. They were product design sprints where I was making decisions about game systems, data models, and player experience with AI coding partners translating those decisions into architecture.
+
+**Session 1 (Pre-v0.1).** The vision crystallized. The core bet: the LLM is the engine, not the game. I picked the tech stack, defined the design philosophy, and wrote the first TypeScript interfaces.
+
+**Session 2 (v0.2).** The runtime engine came together. Effect applicator, narrative director, coherence checker, condition evaluator. Four systems that would become the spine of everything.
+
+**Session 3 (v0.3).** The relationship model. I rejected simple like/dislike scales and built a 6-axis system: trust, fear, desire, respect, rivalry, debt.
+
+**Session 4 (v0.4).** Living character sheets. The player's profile is inferred from their actions, not declared in a character creation screen.
+
+**Session 5 (v0.5).** World Builder platform and the consequence system. I was playing BitLife at the time and noticed how satisfying it is when small choices cascade into big outcomes.
+
+**Sessions 6-8 (v0.6 to v0.8.x).** UI overhaul after UI overhaul. Settings, home screen, choice and freetext redesign. RPG systems: AI-driven items, skills, and quests with no hardcoded trees.
+
+**Session 9 (v0.8.4).** The first formal world, Archons & Ashes. Player name modal. RuneScape-inspired choice pills.
+
+**Session 10 (v0.8.6).** The big reliability breakthrough. A 5-stage approach to parsing AI responses that finally made outputs consistent enough to trust.
+
+**Session 11 (v0.8.8).** The dual-LLM architecture split. One model decides WHAT happens. Another writes HOW it's described. This single decision fixed more bugs than any refactor before or after.
+
+**Session 12 (v0.9.0).** Player identity system and the genre-inclusive engine rewrite. Every world I generated kept defaulting to medieval fantasy. I killed the D&D bias and rebuilt the generation pipeline to be genre-agnostic.
+
+By the end of Session 12, the codebase was at 83,696 lines across 213 files. Tagged v0.9.0. Ready to sprint.
+
+## Act 2: The sprint
+
+March 3. First git commit. Already v0.9.12. The sprint wasn't about building from scratch. It was about polishing, scaling, and shipping a pre-designed engine.
+
+<BuildTimeline client:load phases={[
+  { id: "d1", day: "D1", label: "Coherence & Polish", dateRange: "Mar 3", color: "#818cf8", milestone: "v0.9.12 → v0.10.0", summary: "Coherence layers hardened. New Sakura visual theme. The game looked good for the first time, not just functioned well.", keyLearning: "Visual polish builds trust — if it looks broken, players assume it is broken.", metrics: { loc: 89000, files: 225, worlds: 5, effectTypes: 40 } },
+  { id: "d2", day: "D2", label: "Director Personas & HUDs", dateRange: "Mar 4", color: "#a78bfa", milestone: "v0.10.1", summary: "Skill UX overhaul. 8 Director Personas implemented. All 12 adaptive overlays converted from full-screen modals to inline HUDs. Map navigation. EmotionPulse system.", keyLearning: "Full-screen modals kill reading flow. Inline HUDs preserve immersion.", isPivot: true, pivotNote: "Killed all 12 full-screen overlays in a single session", metrics: { loc: 95000, files: 238, worlds: 5, effectTypes: 42 } },
+  { id: "d3", day: "D3", label: "Reliability Hardening", dateRange: "Mar 5", color: "#c084fc", milestone: "v0.10.2", summary: "Quest safety nets to prevent broken progressions. Five new worlds started. The engine was stable enough to trust with content.", keyLearning: "Safety nets for AI outputs matter more than optimizing the happy path.", metrics: { loc: 100000, files: 245, worlds: 8, effectTypes: 44 } },
+  { id: "d4", day: "D4", label: "Achievements & Worlds", dateRange: "Mar 6", color: "#e879f9", milestone: "v0.10.3", summary: "Achievement system built and wired into the effect bus. Five developer worlds completed (total: 10). Langfuse observability added.", keyLearning: "New mechanics should slot into existing systems, not require new architecture.", metrics: { loc: 108000, files: 260, worlds: 10, effectTypes: 48 } },
+  { id: "d5", day: "D5", label: "Living World Events", dateRange: "Mar 7", color: "#ec4899", milestone: "v0.11.0", summary: "Living world events: things happening without player triggers. NPC behavior engine with autonomous decision-making. Multi-segment turns for complex narrative moments.", keyLearning: "A world that moves without the player feels more alive than one that waits.", metrics: { loc: 115000, files: 272, worlds: 10, effectTypes: 50 } },
+  { id: "d6", day: "D6", label: "The Big Polish", dateRange: "Mar 8", color: "#f43f5e", milestone: "v0.11.1", summary: "33 commits. Migrated to a newer AI model. Audio layer added. RAG semantic memory for long-term NPC recall. The 'make it feel professional' day.", keyLearning: "33 commits in one day means you're in flow. Protect flow state ruthlessly.", metrics: { loc: 122000, files: 285, worlds: 15, effectTypes: 52 } },
+  { id: "d7", day: "D7", label: "Infrastructure", dateRange: "Mar 9", color: "#f59e0b", milestone: "v0.12.0", summary: "Auth, cloud save, rate limiting, middleware security. Built and killed SSE streaming in the same day. The unglamorous work that separates a prototype from a product.", keyLearning: "Ship what always works, not what usually works. Kill SSE, use typewriter.", isPivot: true, pivotNote: "Built and killed SSE streaming in 4 hours", metrics: { loc: 128000, files: 295, worlds: 18, effectTypes: 54 } },
+  { id: "d8", day: "D8", label: "Ship Day", dateRange: "Mar 10", color: "#34d399", milestone: "v0.12.3", summary: "10 worlds finalized. 298 images uploaded to CDN. TTS-synced typewriter for narration playback. Final testing. Deployed.", keyLearning: "Ship day is about saying no. Every feature you add delays the people who need it.", metrics: { loc: 134000, files: 310, worlds: 21, effectTypes: 54 } },
+]} />
+
+## Growth across the sprint
+
+<GrowthChart client:load data={[
+  { version: "D1", loc: 89000, files: 225, effectTypes: 40, messageTypes: 12, worlds: 5 },
+  { version: "D2", loc: 95000, files: 238, effectTypes: 42, messageTypes: 14, worlds: 5 },
+  { version: "D3", loc: 100000, files: 245, effectTypes: 44, messageTypes: 16, worlds: 8 },
+  { version: "D4", loc: 108000, files: 260, effectTypes: 48, messageTypes: 18, worlds: 10 },
+  { version: "D5", loc: 115000, files: 272, effectTypes: 50, messageTypes: 20, worlds: 10 },
+  { version: "D6", loc: 122000, files: 285, effectTypes: 52, messageTypes: 22, worlds: 15 },
+  { version: "D7", loc: 128000, files: 295, effectTypes: 54, messageTypes: 24, worlds: 18 },
+  { version: "D8", loc: 134000, files: 310, effectTypes: 54, messageTypes: 26, worlds: 21 },
+]} />
+
+## Epilogue: v0.14
+
+The sprint ended on March 10. On March 11, I added two more major systems.
+
+The Identity Engine (689 lines). Tracks not just what the player does, but who they're becoming. Are they a negotiator or a fighter? A loner or a leader? The game adapts its offerings based on emerging identity, not declared class.
+
+The Consequence Engine (234 lines). Formalizes how effects cascade. A single choice can ripple through relationships, quest states, world events, and NPC behaviors.
+
+21 worlds audited and retrofitted with the new systems. 54+ effect types. 14 versions from v0.1 to v0.14-alpha.
+
+## The numbers
+
+12 design sessions before the first commit. 8 days of sprinting. 125 git commits. 134,000+ lines of TypeScript. 21 worlds. 54+ effect types. 8 director personas. 6-axis relationship model. 5 coherence layers. 1 builder.
+
+**The vibe-coding takeaway: progressive complexity. Start simple. Add layers when the product demands it, not when the architecture permits it.**
+
+<SeriesNav client:load current={3} total={5} prevSlug="2026-03-10-building-shard-architecture" nextSlug="2026-03-10-building-shard-decisions" seriesTitle="Building Shard" />

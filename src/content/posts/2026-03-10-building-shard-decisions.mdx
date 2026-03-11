@@ -1,0 +1,77 @@
+---
+title: "Building Shard, Part 4: What I Killed"
+date: 2026-03-10
+categories: [ai, building]
+tags: [shard, vibe-coding, product-decisions, kills, building-in-public]
+description: "The features I removed from Shard were often the ones I was most proud of. SSE streaming, D&D-default genres, sparse choices, full-screen overlays. Here's why killing fast is a vibe-coding superpower."
+image: "/images/posts/shard-decisions.svg"
+series: "Building Shard"
+part: 4
+totalParts: 5
+prevSlug: "2026-03-10-building-shard-timeline"
+nextSlug: "2026-03-10-building-shard-lessons"
+---
+
+import SeriesNav from '@/components/blog/SeriesNav';
+import DecisionCards from '@/components/blog/DecisionCards';
+import FeaturesCutTable from '@/components/blog/FeaturesCutTable';
+
+<SeriesNav client:load current={4} total={5} prevSlug="2026-03-10-building-shard-timeline" nextSlug="2026-03-10-building-shard-lessons" seriesTitle="Building Shard" />
+
+The best product decisions in Shard weren't what I built. They were what I killed.
+
+AI makes building cheap. You can scaffold a feature in an afternoon. That same cheapness applies to killing. If rebuilding costs an hour, removing a broken feature isn't a loss. It's a trade: one hour of rebuild versus infinite hours debugging something that almost works.
+
+"Almost works" is the most dangerous state in software. It passes your tests. It demos well. Then it fails silently in production. 90% reliable means 1 in 10 players hits a wall. That's not a feature. That's a bug with good marketing.
+
+<FeaturesCutTable client:load features={[
+  { feature: "SSE Streaming", reason: "Token-by-token streaming hung on turn 2 with larger context windows. Beautiful but unreliable.", lesson: "Ship what always works, not what usually works." },
+  { feature: "D&D-Default Genres", reason: "Every world generated as medieval fantasy, even when cyberpunk or noir was specified. Structural bias, not a prompting issue.", lesson: "Check your defaults. Whatever the system does most becomes the gravity well." },
+  { feature: "Sparse Choice Gating", reason: "Freetext turns froze players. They typed timid, boring actions because they feared breaking something.", lesson: "Players don't want freedom. They want interesting constraints." },
+  { feature: "Full-Screen Overlays", reason: "12 game overlays as full-screen modals destroyed narrative immersion and reading flow.", lesson: "Information should be accessible without leaving the story." },
+  { feature: "Manual NPC Portraits", reason: "AI-generated portraits were slow (2-3s per NPC) and inconsistent — same character, different face each time.", lesson: "Consistency beats uniqueness. Players project from prose anyway." },
+  { feature: "Token-by-Token TTS", reason: "Synchronized voice with typewriter text was fragile. Any latency spike desynchronized voice and text.", lesson: "Separate coupled systems. Typewriter for eyes, TTS for ears." },
+]} />
+
+## The deeper stories
+
+### SSE streaming
+
+Token-by-token streaming was beautiful. You could watch the AI's words appear one at a time, like the game was thinking out loud. It felt alive.
+
+It hung on turn 2. The first turn streamed perfectly. The second turn, with a larger context window, would stall mid-sentence. I spent an hour trying to fix it. Timeouts, retry logic, chunked fallbacks. Every fix introduced a new edge case. I killed it.
+
+The replacement: a blocking generate call with a client-side typewriter animation. The player sees the same character-by-character reveal. The underlying mechanism is completely different, and completely reliable.
+
+### D&D-default genres
+
+The problem was structural. The engine's world-generation pipeline had been trained (through my own prompt examples) on fantasy tropes. I rewrote the entire genre system in a day. Seven archetype lists for fundamentally different settings. Genre-specific vocabulary banks, character name pools, location templates. The pipeline became genre-agnostic.
+
+### Sparse choice gating
+
+I thought players would love freetext freedom. Playtests showed the opposite. When given choices, players were bolder. They picked the risky option. They explored edges. Choices gave them permission to be dramatic.
+
+I switched to an always-decision policy. Every turn presents choices. Players can still override with freetext, but the default is curated options. The product insight: like DJing, you're not playing open mic. You're reading the crowd and picking from a curated crate. The constraint is the creative space.
+
+## The six key decisions
+
+<DecisionCards client:load decisions={[
+  { id: 1, category: "architecture", title: "Dual-LLM Split", choice: "Separate game logic from narrative prose", decided: "Game Master (cold, structured) + Narrator (warm, creative) — two models, two jobs, zero interference.", tradeoff: "Higher token cost per turn, but dramatically higher reliability.", lesson: "Match model to task. Don't ask a poet to do arithmetic." },
+  { id: 2, category: "product", title: "Always-Decision Mode", choice: "Every turn presents curated choices", decided: "Replaced freetext-dominant turns with choice-first design. Freetext remains as an override.", tradeoff: "Lost some sandbox feeling. Gained dramatically higher engagement and bolder player behavior.", lesson: "Interesting constraints produce more creative output than open freedom." },
+  { id: 3, category: "ux", title: "Inline HUDs Over Modals", choice: "All 12 game overlays as inline panels", decided: "Converted full-screen modals to collapsible inline panels below the narrative.", tradeoff: "More complex layout engineering. But immersion never breaks.", lesson: "The best UI is invisible. Information without interruption." },
+  { id: 4, category: "architecture", title: "Universal Effect Bus", choice: "Everything is an effect", decided: "Sword swings, confessions, trades, discoveries — all processed through one pipeline.", tradeoff: "Requires disciplined typing. But new mechanics are trivial to add.", lesson: "One system that does everything beats six systems that each do one thing." },
+  { id: 5, category: "process", title: "Design Before Code", choice: "33 interfaces before the first AI call", decided: "12 design sessions defining every game system in TypeScript before touching prompts.", tradeoff: "Felt slow at the start. Made the sprint possible.", lesson: "The design sessions weren't slow. They were the investment that made speed productive." },
+  { id: 6, category: "product", title: "Kill the Fantasy Default", choice: "Genre-agnostic generation pipeline", decided: "Rewrote world generation with 7 distinct archetype systems. No genre inherits from another.", tradeoff: "More upfront work per genre. But every world actually feels different.", lesson: "Defaults are invisible gravity wells. Audit them or they'll eat your product." },
+]} />
+
+## What survived
+
+Not everything got killed. The features that survived share a trait: they work 100% of the time, or they degrade gracefully.
+
+The effect bus always processes effects, even if the AI generates an unexpected one (the validator catches and patches it). The coherence stack always checks facts, even if it occasionally flags something that wasn't actually a contradiction (false positives are acceptable, false negatives aren't). The relationship model always updates, even if the magnitude of change is debatable.
+
+The survivors are systems. The kills were features. Systems are durable because they define how things work. Features are fragile because they define what things look like.
+
+**The vibe-coding takeaway: kill features fast. AI makes rebuilding cheap, so killing is cheap too. Ship what always works.**
+
+<SeriesNav client:load current={4} total={5} prevSlug="2026-03-10-building-shard-timeline" nextSlug="2026-03-10-building-shard-lessons" seriesTitle="Building Shard" />

@@ -1,0 +1,74 @@
+---
+title: "Building Shard, Part 1: The Bet"
+date: 2026-03-10
+categories: [ai, building]
+tags: [shard, vibe-coding, game-design, ai-architecture, building-in-public]
+description: "AI storytelling is stuck between rigid visual novels and aimless chatbots. I bet on a third option: design the entire game in TypeScript interfaces, then let AI power it. Here's how that bet started."
+image: "/images/posts/shard-origin.svg"
+series: "Building Shard"
+part: 1
+totalParts: 5
+nextSlug: "2026-03-10-building-shard-architecture"
+---
+
+import SeriesNav from '@/components/blog/SeriesNav';
+import SystemComplexity from '@/components/blog/SystemComplexity';
+
+<SeriesNav client:load current={1} total={5} nextSlug="2026-03-10-building-shard-architecture" seriesTitle="Building Shard" />
+
+The AI storytelling space is stuck between two bad poles.
+
+On one side, visual novels. Every path pre-written by a human. Branching dialogue trees with the illusion of choice. You pick A, B, or C, and the writer already decided what happens. It's polished, but it's a railroad.
+
+On the other side, chatbot RPGs. "You are in a tavern. What do you do?" The AI generates freely, but nothing sticks. NPCs forget your name between turns. The world has no memory, no stakes, no structure. It's a sandbox with no sand.
+
+I wanted the third option. Structure without scripting. Freedom without chaos. A game where the AI generates every character, relationship, quest, and consequence in real-time, but governed by systems that keep it all coherent.
+
+That's Shard.
+
+## The TypeScript-first bet
+
+The instinct with AI products is to start with the AI. Write a prompt, see what comes back, iterate on vibes. I did the opposite.
+
+Before writing a single AI prompt, I designed the entire game in TypeScript interfaces. 33 of them. Relationship axes (not just like/dislike, but trust, fear, desire, respect, rivalry, debt). Effect types for everything from gaining a skill to shifting an NPC's loyalty. World structures, character sheets, quest schemas.
+
+The principle: strip the LLM out entirely and you should still understand what the game is. The AI is the runtime, not the game. Every data model, every state transition, every rule can exist without AI. The AI just makes it dynamic instead of scripted.
+
+<SystemComplexity client:load systems={[
+  { label: "TypeScript Interfaces", value: 33, description: "Game systems defined before first AI call" },
+  { label: "Effect Types", value: 54, description: "Everything is an effect — sword swings to confessions" },
+  { label: "Relationship Axes", value: 6, description: "Trust, fear, desire, respect, rivalry, debt" },
+  { label: "Coherence Layers", value: 5, description: "No AI output reaches the player unchecked" },
+  { label: "Director Personas", value: 8, description: "Distinct narrative intelligences per genre" },
+  { label: "Worlds", value: 21, description: "10 developer-built, 11 user templates" },
+]} />
+
+This took 12 full design sessions with AI coding partners before I ever ran `git init`. Not coding sessions. Product design sessions where I was making decisions about how relationships should decay, how consequences should cascade, what it means for a character to grow. The TypeScript interfaces were the design documents.
+
+By the time I made the first git commit, the codebase was already at v0.9.12. 213 files. 83,696 lines of code. A working game engine that had been through a dozen architectural iterations.
+
+## Why this matters for vibe-coding
+
+Most vibe-coding projects fail because people start generating before they've designed. The AI is happy to write code for you. It will scaffold an app in minutes. But if you haven't decided what the app actually does, what its data model looks like, how state flows through it, you end up with a prototype that can't evolve.
+
+The 33-interface bet paid off every day of the sprint that followed. When I needed to add an achievement system on Day 4, the interfaces already knew what an achievement was. When I built 10 worlds on Day 6, the world schema had been designed in Session 5. When I added an identity engine post-sprint, it slotted into existing types without touching the core architecture.
+
+Design the game before you touch the AI. That's the lesson.
+
+## The first playtest
+
+The moment I knew the bet was working: an NPC referenced a conversation that happened three turns ago with a different NPC. I hadn't scripted that interaction. The coherence system tracked it, the relationship model weighted it, and the narrative AI wove it into dialogue naturally.
+
+Characters remembered. Relationships evolved. A betrayal in one quest changed how an NPC treated you in the next. Not because I wrote branching paths, but because the system understood consequences.
+
+During a break in my MBA at ISB, I sat down and started sprinting. The architecture was ready. The design sessions had stress-tested every system. It was time to ship.
+
+## What comes next
+
+The sprint that followed, March 3 through March 10, produced 125 commits, took the engine from v0.9.12 to v0.12.3, and added roughly 50,000 lines on top of the 84K pre-git base. But the sprint is a different story.
+
+This post is about the bet. The decision to treat AI as an engine component, not a magic box. To invest in design before generation. To build the skeleton before asking the AI to give it life.
+
+**The vibe-coding takeaway: design the system before you touch the AI. The LLM is the runtime, not the product.**
+
+<SeriesNav client:load current={1} total={5} nextSlug="2026-03-10-building-shard-architecture" seriesTitle="Building Shard" />

@@ -21,7 +21,7 @@ const allDj = (await getCollection('dj'))
 
 // Shard series for featured section
 const shardSeries = allPosts
-  .filter(p => p.data.series === 'building-shard')
+  .filter(p => p.data.series === 'Building Shard')
   .sort((a, b) => (a.data.part ?? 0) - (b.data.part ?? 0));
 
 const shardColors = ['#818cf8', '#c084fc', '#ec4899', '#f59e0b', '#34d399'];
@@ -85,9 +85,9 @@ const shardColors = ['#818cf8', '#c084fc', '#ec4899', '#f59e0b', '#34d399'];
               <span style="font-size: 0.6rem; font-family: monospace; color: #3f3f46; padding: 0.15rem 0.5rem; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.06);">5 Parts</span>
             </div>
             <h2 style="font-size: 1.5rem; font-weight: 800; color: #f4f4f5; margin: 0; line-height: 1.2;">Building Shard</h2>
-            <p style="font-size: 0.85rem; color: #71717a; margin: 0.25rem 0 0 0;">50,000 lines of AI game engine, vibe-coded in 8 days</p>
+            <p style="font-size: 0.85rem; color: #71717a; margin: 0.25rem 0 0 0;">134K lines of AI game engine, vibe-coded solo in 8 days</p>
           </div>
-          <a href="/writing/building-shard-1-the-spark/" style="font-size: 0.8rem; color: #a5b4fc; text-decoration: none; display: flex; align-items: center; gap: 0.3rem; padding: 0.4rem 0.85rem; border-radius: 0.5rem; background: rgba(129,140,248,0.1); transition: background 0.2s;">Start reading &rarr;</a>
+          <a href="/writing/2026-03-10-building-shard-the-bet/" style="font-size: 0.8rem; color: #a5b4fc; text-decoration: none; display: flex; align-items: center; gap: 0.3rem; padding: 0.4rem 0.85rem; border-radius: 0.5rem; background: rgba(129,140,248,0.1); transition: background 0.2s;">Start reading &rarr;</a>
         </div>
 
         <!-- Parts grid -->
@@ -95,7 +95,7 @@ const shardColors = ['#818cf8', '#c084fc', '#ec4899', '#f59e0b', '#34d399'];
           {shardSeries.map((post, i) => {
             const color = shardColors[i] || '#818cf8';
             const partNum = post.data.part ?? (i + 1);
-            const shortTitles = ['The Spark', 'AI as Engine', '8 Days', 'What We Killed', 'Ten Lessons'];
+            const shortTitles = ['The Bet', 'Brain & Body', 'Sprint Log', 'What I Killed', '10 Lessons'];
             return (
               <a href={`/writing/${post.id}/`} style={`text-decoration: none; border-radius: 0.875rem; border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02); padding: 1rem; transition: all 0.2s; display: flex; flex-direction: column; gap: 0.5rem;`}>
                 <div style={`display: flex; align-items: center; gap: 0.5rem;`}>

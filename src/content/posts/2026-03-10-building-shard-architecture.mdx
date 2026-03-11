@@ -1,0 +1,88 @@
+---
+title: "Building Shard, Part 2: Brain and Body"
+date: 2026-03-10
+categories: [ai, building]
+tags: [shard, vibe-coding, ai-architecture, multi-model, game-design]
+description: "One AI model tried to be game designer and novelist simultaneously. It failed at both. Here's how splitting the brain from the body made Shard's AI actually work."
+image: "/images/posts/shard-architecture.svg"
+series: "Building Shard"
+part: 2
+totalParts: 5
+prevSlug: "2026-03-10-building-shard-the-bet"
+nextSlug: "2026-03-10-building-shard-timeline"
+---
+
+import SeriesNav from '@/components/blog/SeriesNav';
+import ArchitectureDiagram from '@/components/blog/ArchitectureDiagram';
+
+<SeriesNav client:load current={2} total={5} prevSlug="2026-03-10-building-shard-the-bet" nextSlug="2026-03-10-building-shard-timeline" seriesTitle="Building Shard" />
+
+The first version of Shard used one AI call per turn. Give it the game state, the player's action, ask it to generate the narrative AND decide what happens mechanically. One model doing two jobs.
+
+It was terrible.
+
+The narrative was beautiful when it worked. Lyrical descriptions, emotional NPC dialogue, atmospheric world-building. But the mechanical outputs were unreliable. The AI would advance a quest that shouldn't trigger yet, give the player an item that didn't fit the context, or forget that an NPC was supposed to be hostile.
+
+The prose brain and the logic brain were fighting for attention in the same context window. Creative writing wants freedom. Game state management wants precision. Asking one model to do both is like asking someone to write poetry while doing mental arithmetic. One of them suffers.
+
+## The split
+
+The fix was conceptually simple: two models with different jobs.
+
+A Game Master model handles the WHAT. Given the game state and player action, what mechanically should happen? Which effects fire? What relationship shifts occur? Which quest flags update? This model runs cold. It thinks in structured data. Its job is correctness, not beauty.
+
+A Narrator model handles the HOW. Given the Game Master's mechanical decisions, write the prose. Describe the scene. Voice the NPCs. Build atmosphere. This model runs warm. Its job is beauty, not correctness.
+
+The Game Master decides the player's sword swing kills the guard. The Narrator decides whether that death is described as brutal, tragic, or matter-of-fact based on the narrative tone.
+
+This separation is the single most important architectural decision in Shard. Every reliability problem I had with single-model generation disappeared when I stopped asking creative models to also be logical ones.
+
+<ArchitectureDiagram client:load />
+
+## Everything is an effect
+
+The second architectural principle: everything that happens in the game flows through one system. The effect bus.
+
+A sword swing produces effects (damage, relationship shift with witnesses, potential quest trigger). A love confession produces effects (relationship shift, NPC memory update, possible achievement unlock). A merchant transaction produces effects (inventory change, currency change, reputation shift). Same pipeline. Same validation. Same state mutation logic.
+
+This means adding a new game mechanic doesn't require new architecture. It's just a new effect type. When I needed achievements on Day 4 of the sprint, I defined an achievement effect type and wired it into the existing bus. When I added identity tracking post-sprint, same pattern. The effect system has grown from 40 to 54+ types without structural changes to the core pipeline.
+
+The design philosophy: if you can express it as an effect, the engine already knows how to process it.
+
+## Coherence: five layers of truth
+
+LLMs lie. Not maliciously. They hallucinate. They put NPCs in the wrong room. They forget that a character died two turns ago. They contradict established facts about the world.
+
+For a chatbot, this is annoying. For a game with persistent state, it's fatal. If a dead NPC shows up alive, the player's trust in the world collapses.
+
+Shard uses five layers of coherence checking. I won't detail each layer (that's proprietary), but the principle matters: no single AI output reaches the player without being verified against the game's source of truth. Every generated turn passes through validators that check for contradictions, verify NPC locations, confirm relationship states, and ensure mechanical outputs match the current game state.
+
+The mental model: the AI is a creative employee who's brilliant but occasionally makes things up. The coherence stack is the fact-checker who sits between the employee and the client.
+
+## Director personas
+
+Not all stories should be told the same way. A noir mystery in 1940s Chicago needs different pacing and prose than a high fantasy quest. A horror campaign needs tension mechanics that a romance doesn't.
+
+Shard has 8 director personas, each with a distinct narrative intelligence. They control pacing, prose style, tension curves, and tonal guardrails. The same mechanical event (an NPC betrayal) plays out completely differently under the Noir Director versus the Epic Director versus the Psychological Director.
+
+These aren't prompt templates. They're structured configurations that shape how the Narrator model operates. Each persona defines a prose DNA (sentence rhythm, vocabulary register, atmospheric tendencies) and a narrative toolkit (how they handle reveals, build suspense, pace action sequences).
+
+The player doesn't choose a director directly. The world they pick, and the genre it implies, selects the right persona. A cyberpunk world activates a different narrative intelligence than a fairy tale one.
+
+## The relationship model
+
+Most RPGs reduce relationships to a single axis: like/dislike, reputation up/down. Real relationships are more complex. You can deeply respect someone you don't trust. You can fear someone you desire. You can owe a debt to a rival.
+
+Shard tracks relationships across six axes: trust, fear, desire, respect, rivalry, and debt. Each axis moves independently based on in-game events. An NPC might gain respect for you (you completed a difficult task) while simultaneously losing trust (you lied to do it).
+
+This produces emergent behavior that feels human. NPCs respond to the player differently based on the shape of the relationship, not just its magnitude. And NPC-to-NPC relationships exist too, creating a social graph that the player can navigate, manipulate, or be caught up in.
+
+## The vibe-coding principle
+
+Every architecture decision in Shard follows one rule: AI generates, pure functions govern. The models produce creative output. TypeScript functions validate, constrain, and apply that output to game state. The AI never directly mutates state. It proposes. The system disposes.
+
+This is the safest way to build AI-powered products. Let AI be creative within boundaries that deterministic code enforces. The boundaries are where the product quality lives.
+
+**The vibe-coding takeaway: separate generation from governance. The AI writes the story, pure functions keep the world sane.**
+
+<SeriesNav client:load current={2} total={5} prevSlug="2026-03-10-building-shard-the-bet" nextSlug="2026-03-10-building-shard-timeline" seriesTitle="Building Shard" />

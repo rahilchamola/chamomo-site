@@ -43,100 +43,104 @@ export default function TwoPassFlow() {
 
   const flowStyles = {
     container: {
-      maxWidth: "700px",
-      margin: "40px auto",
+      maxWidth: "56rem",
+      margin: "3rem auto",
       fontFamily: "system-ui, -apple-system, sans-serif",
     },
     title: {
-      fontSize: "20px",
-      fontWeight: "600",
-      color: "#1f2937",
-      margin: "0 0 30px 0",
+      fontSize: "1.05rem",
+      fontWeight: "700",
+      color: "#f4f4f5",
+      margin: "0 0 2rem 0",
       textAlign: "center",
+      lineHeight: 1.3,
     },
     pipelineContainer: {
-      backgroundColor: "#f9fafb",
-      border: "1px solid #e5e7eb",
-      borderRadius: "12px",
-      padding: "30px",
-      marginBottom: "30px",
+      backgroundColor: "rgba(255,255,255,0.02)",
+      border: "1px solid rgba(255,255,255,0.06)",
+      borderRadius: "1rem",
+      padding: "1.5rem",
+      marginBottom: "2rem",
     },
     inputCard: {
-      backgroundColor: "white",
-      border: "2px solid #9ca3af",
-      borderRadius: "8px",
-      padding: "16px",
-      marginBottom: "20px",
-      fontSize: "14px",
-      color: "#374151",
+      backgroundColor: "rgba(255,255,255,0.02)",
+      border: "1px solid rgba(255,255,255,0.06)",
+      borderRadius: "0.5rem",
+      padding: "1rem",
+      marginBottom: "1rem",
+      fontSize: "0.85rem",
+      color: "#d4d4d8",
+      lineHeight: 1.6,
     },
     passContainer: {
-      marginBottom: "20px",
+      marginBottom: "1rem",
     },
     passHeader: {
       display: "flex",
       alignItems: "center",
-      gap: "12px",
-      marginBottom: "12px",
-      fontSize: "13px",
+      gap: "0.75rem",
+      marginBottom: "0.75rem",
+      fontSize: "0.7rem",
       fontWeight: "600",
-      color: "#6b7280",
+      color: "#a1a1aa",
       textTransform: "uppercase",
-      letterSpacing: "0.5px",
+      letterSpacing: "0.08em",
+      fontFamily: "monospace",
     },
     passIcon: {
-      fontSize: "18px",
+      fontSize: "1rem",
     },
     passLabel: (color) => ({
       display: "inline-block",
       backgroundColor: color,
       color: "white",
-      padding: "4px 8px",
-      borderRadius: "4px",
-      fontSize: "11px",
+      padding: "0.3rem 0.5rem",
+      borderRadius: "0.25rem",
+      fontSize: "0.65rem",
       fontWeight: "600",
     }),
     passZone: (color) => ({
-      backgroundColor: color,
-      opacity: 0.08,
-      borderLeft: `4px solid ${color}`,
-      borderRadius: "6px",
-      padding: "16px",
-      marginBottom: "16px",
+      backgroundColor: `${color}10`,
+      borderLeft: `3px solid ${color}50`,
+      borderRadius: "0.5rem",
+      padding: "1rem",
+      marginBottom: "1rem",
     }),
     passOutput: {
-      fontSize: "14px",
-      color: "#374151",
-      lineHeight: "1.6",
+      fontSize: "0.85rem",
+      color: "#d4d4d8",
+      lineHeight: 1.6,
     },
     outputCard: {
-      backgroundColor: "white",
-      border: `3px solid ${classificationColor}`,
-      borderRadius: "8px",
-      padding: "20px",
-      marginTop: "20px",
+      backgroundColor: "rgba(255,255,255,0.02)",
+      border: `1px solid ${classificationColor}40`,
+      borderRadius: "0.5rem",
+      padding: "1.25rem 1.5rem",
+      marginTop: "1rem",
     },
     classificationLabel: {
-      fontSize: "12px",
+      fontSize: "0.7rem",
       fontWeight: "700",
       color: classificationColor,
-      marginBottom: "8px",
+      marginBottom: "0.5rem",
       textTransform: "uppercase",
-      letterSpacing: "1px",
+      letterSpacing: "0.08em",
+      fontFamily: "monospace",
     },
     classificationValue: {
-      fontSize: "24px",
+      fontSize: "1.25rem",
       fontWeight: "700",
       color: classificationColor,
-      marginBottom: "12px",
+      marginBottom: "0.75rem",
     },
     reason: {
-      fontSize: "13px",
-      color: "#6b7280",
+      fontSize: "0.8rem",
+      color: "#a1a1aa",
       fontStyle: "italic",
-      borderTop: `1px solid ${classificationColor}`,
-      paddingTop: "12px",
-      marginTop: "12px",
+      borderTop: `1px solid ${classificationColor}40`,
+      paddingTop: "0.75rem",
+      marginTop: "0.75rem",
+      lineHeight: 1.5,
     },
     controls: {
       textAlign: "center",
@@ -145,17 +149,17 @@ export default function TwoPassFlow() {
       backgroundColor: "#3EAE7C",
       color: "white",
       border: "none",
-      padding: "12px 24px",
-      borderRadius: "6px",
-      fontSize: "14px",
+      padding: "0.75rem 1.5rem",
+      borderRadius: "0.5rem",
+      fontSize: "0.85rem",
       fontWeight: "600",
       cursor: "pointer",
-      transition: "all 0.2s ease",
+      transition: "all 0.3s ease",
     },
     counter: {
-      fontSize: "12px",
-      color: "#9ca3af",
-      marginTop: "12px",
+      fontSize: "0.75rem",
+      color: "#71717a",
+      marginTop: "0.75rem",
     },
   };
 
@@ -166,22 +170,22 @@ export default function TwoPassFlow() {
       <div style={flowStyles.pipelineContainer}>
         {/* Input */}
         <div style={flowStyles.inputCard}>
-          <strong>Raw Web Data:</strong> {current.input}
+          <strong style={{ color: "#f4f4f5" }}>Raw Web Data:</strong> {current.input}
         </div>
 
         {/* Pass 1 */}
         <div style={flowStyles.passContainer}>
           <div style={flowStyles.passHeader}>
             <span style={flowStyles.passIcon}>📡</span>
-            <span style={flowStyles.passLabel("#0ea5e9")}>RETRIEVAL</span>
+            <span style={flowStyles.passLabel("#3EAE7C")}>RETRIEVAL</span>
           </div>
-          <div style={flowStyles.passZone("#0ea5e9")}>
+          <div style={flowStyles.passZone("#3EAE7C")}>
             <div style={flowStyles.passOutput}>{current.passOneOutput}</div>
           </div>
         </div>
 
         {/* Arrow */}
-        <div style={{ textAlign: "center", color: "#9ca3af", marginBottom: "16px", fontSize: "18px" }}>
+        <div style={{ textAlign: "center", color: "#52525b", marginBottom: "1rem", fontSize: "1rem" }}>
           ↓
         </div>
 

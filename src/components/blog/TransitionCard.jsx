@@ -20,54 +20,54 @@ const transitions = [
 function TrackCard({ track, showEnergy = true }) {
   return (
     <div style={{
-      padding: "16px",
-      backgroundColor: "#1a1a1a",
-      borderRadius: "6px",
-      border: "1px solid #333"
+      padding: "0.85rem",
+      backgroundColor: "rgba(255,255,255,0.02)",
+      borderRadius: "0.5rem",
+      border: "1px solid rgba(255,255,255,0.06)"
     }}>
-      <div style={{ fontSize: "12px", color: "#888", marginBottom: "4px" }}>
+      <div style={{ fontSize: "0.65rem", color: "#71717a", marginBottom: "0.25rem", fontFamily: "monospace", textTransform: "uppercase", letterSpacing: "0.08em" }}>
         {track.artist}
       </div>
-      <div style={{ fontSize: "15px", fontWeight: "600", color: "#fff", marginBottom: "12px" }}>
+      <div style={{ fontSize: "0.9rem", fontWeight: 600, color: "#f4f4f5", marginBottom: "0.5rem" }}>
         {track.title}
       </div>
       <div style={{
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
-        gap: "12px",
-        fontSize: "13px"
+        gap: "0.5rem",
+        fontSize: "0.8rem"
       }}>
         <div>
-          <div style={{ color: "#888", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.3px" }}>
+          <div style={{ color: "#71717a", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "monospace", fontWeight: 600, marginBottom: "0.25rem" }}>
             BPM
           </div>
-          <div style={{ color: "#D946A8", fontSize: "18px", fontWeight: "700", marginTop: "4px" }}>
+          <div style={{ color: "#D946A8", fontSize: "1.1rem", fontWeight: 700, fontFamily: "monospace" }}>
             {track.bpm}
           </div>
         </div>
         <div>
-          <div style={{ color: "#888", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.3px" }}>
+          <div style={{ color: "#71717a", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "monospace", fontWeight: 600, marginBottom: "0.25rem" }}>
             Key
           </div>
-          <div style={{ color: "#4A9EDE", fontSize: "16px", fontWeight: "700", marginTop: "4px" }}>
+          <div style={{ color: "#d4d4d8", fontSize: "1rem", fontWeight: 700, fontFamily: "monospace" }}>
             {track.key}
           </div>
         </div>
       </div>
       {showEnergy && (
-        <div style={{ marginTop: "12px" }}>
-          <div style={{ color: "#888", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.3px", marginBottom: "6px" }}>
+        <div style={{ marginTop: "0.5rem" }}>
+          <div style={{ color: "#71717a", fontSize: "0.6rem", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "monospace", fontWeight: 600, marginBottom: "0.35rem" }}>
             Energy
           </div>
-          <div style={{ display: "flex", gap: "4px" }}>
+          <div style={{ display: "flex", gap: "0.25rem" }}>
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i => (
               <div
                 key={i}
                 style={{
                   flex: 1,
-                  height: "4px",
-                  backgroundColor: i <= track.energy ? "#D946A8" : "#2a2a2a",
-                  borderRadius: "2px"
+                  height: "3px",
+                  backgroundColor: i <= track.energy ? "#D946A8" : "rgba(255,255,255,0.05)",
+                  borderRadius: "1.5px"
                 }}
               />
             ))}
@@ -83,9 +83,9 @@ export default function TransitionCard() {
   const transition = transitions[activeIndex];
 
   const getKeyCompatColor = () => {
-    if (transition.keyCompat === "perfect") return "#4ADE80";
-    if (transition.keyCompat === "compatible") return "#FBBF24";
-    return "#EF4444";
+    if (transition.keyCompat === "perfect") return "#22c55e";
+    if (transition.keyCompat === "compatible") return "#eab308";
+    return "#ef4444";
   };
 
   const getKeyCompatLabel = () => {
@@ -94,33 +94,35 @@ export default function TransitionCard() {
 
   return (
     <div style={{
-      padding: "24px",
-      backgroundColor: "#0f0f0f",
-      borderRadius: "8px",
-      color: "#fff",
+      padding: "1.25rem 1.5rem",
+      backgroundColor: "rgba(255,255,255,0.02)",
+      border: "1px solid rgba(255,255,255,0.06)",
+      borderRadius: "1rem",
+      color: "#f4f4f5",
       fontFamily: "system-ui, -apple-system, sans-serif"
     }}>
-      <h3 style={{ margin: "0 0 24px 0", fontSize: "18px", fontWeight: "600" }}>
+      <h3 style={{ margin: "0 0 1rem 0", fontSize: "1rem", fontWeight: 700, color: "#f4f4f5", lineHeight: 1.3 }}>
         Track-to-Track Transitions
       </h3>
 
       {/* Navigation */}
-      <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
+      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
         {transitions.map((_, i) => (
           <button
             key={i}
             onClick={() => setActiveIndex(i)}
             style={{
-              width: "32px",
-              height: "32px",
+              width: "28px",
+              height: "28px",
               borderRadius: "50%",
-              backgroundColor: i === activeIndex ? "#D946A8" : "#2a2a2a",
-              border: `2px solid ${i === activeIndex ? "#D946A8" : "#444"}`,
-              color: i === activeIndex ? "#000" : "#888",
+              backgroundColor: i === activeIndex ? "#D946A808" : "rgba(255,255,255,0.03)",
+              border: `1px solid ${i === activeIndex ? "#D946A840" : "rgba(255,255,255,0.06)"}`,
+              color: i === activeIndex ? "#D946A8" : "#71717a",
               cursor: "pointer",
-              fontWeight: "600",
-              fontSize: "13px",
-              transition: "all 0.2s"
+              fontWeight: 600,
+              fontSize: "0.75rem",
+              transition: "all 0.3s ease",
+              fontFamily: "monospace"
             }}
           >
             {i + 1}
@@ -132,9 +134,9 @@ export default function TransitionCard() {
       <div style={{
         display: "grid",
         gridTemplateColumns: "1fr auto 1fr",
-        gap: "16px",
+        gap: "0.75rem",
         alignItems: "center",
-        marginBottom: "24px"
+        marginBottom: "1rem"
       }}>
         {/* Track A */}
         <TrackCard track={transition.trackA} />
@@ -145,30 +147,34 @@ export default function TransitionCard() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          gap: "12px"
+          gap: "0.5rem",
+          minWidth: "50px"
         }}>
-          <div style={{ fontSize: "24px", color: "#D946A8" }}>→</div>
+          <div style={{ fontSize: "1.2rem", color: "#D946A8", fontWeight: 600 }}>→</div>
 
           {/* BPM Delta badge */}
           <div style={{
-            padding: "6px 10px",
-            backgroundColor: transition.bpmDelta === 0 ? "#4ADE80" : transition.bpmDelta > 0 ? "#FBBF24" : "#4A9EDE",
-            borderRadius: "4px",
-            fontSize: "11px",
-            fontWeight: "600",
-            color: "#000",
-            whiteSpace: "nowrap"
+            padding: "0.4rem 0.6rem",
+            backgroundColor: transition.bpmDelta === 0 ? "rgba(34,197,94,0.2)" : transition.bpmDelta > 0 ? "rgba(234,179,8,0.2)" : "rgba(59,130,246,0.2)",
+            border: `1px solid ${transition.bpmDelta === 0 ? "rgba(34,197,94,0.5)" : transition.bpmDelta > 0 ? "rgba(234,179,8,0.5)" : "rgba(59,130,246,0.5)"}`,
+            borderRadius: "0.35rem",
+            fontSize: "0.6rem",
+            fontWeight: 600,
+            color: transition.bpmDelta === 0 ? "#22c55e" : transition.bpmDelta > 0 ? "#eab308" : "#3b82f6",
+            whiteSpace: "nowrap",
+            fontFamily: "monospace"
           }}>
-            {transition.bpmDelta > 0 ? "+" : ""}{transition.bpmDelta} BPM
+            {transition.bpmDelta > 0 ? "+" : ""}{transition.bpmDelta}
           </div>
 
           {/* Key compatibility dot */}
           <div style={{
-            width: "16px",
-            height: "16px",
+            width: "14px",
+            height: "14px",
             borderRadius: "50%",
             backgroundColor: getKeyCompatColor(),
             border: `2px solid ${getKeyCompatColor()}`,
+            boxShadow: `0 0 8px ${getKeyCompatColor()}40`,
             title: getKeyCompatLabel()
           }} />
         </div>
@@ -179,56 +185,61 @@ export default function TransitionCard() {
 
       {/* Rationale */}
       <div style={{
-        padding: "16px",
-        backgroundColor: "#1a1a1a",
-        borderRadius: "6px",
+        padding: "1rem",
+        backgroundColor: "rgba(217,70,168,0.08)",
+        border: "1px solid rgba(217,70,168,0.3)",
         borderLeft: "3px solid #D946A8",
-        fontSize: "13px",
-        color: "#bbb",
-        lineHeight: "1.7",
+        borderRadius: "0.75rem",
+        fontSize: "0.8rem",
+        color: "#d4d4d8",
+        lineHeight: 1.6,
         fontStyle: "italic",
-        marginBottom: "16px"
+        marginBottom: "0.75rem"
       }}>
         {transition.rationale}
       </div>
 
       {/* Legend */}
       <div style={{
-        padding: "12px",
-        backgroundColor: "#1a1a1a",
-        borderRadius: "6px",
-        fontSize: "11px",
-        color: "#666",
+        padding: "0.75rem",
+        backgroundColor: "rgba(255,255,255,0.02)",
+        border: "1px solid rgba(255,255,255,0.06)",
+        borderRadius: "0.5rem",
+        fontSize: "0.65rem",
+        color: "#71717a",
         display: "grid",
         gridTemplateColumns: "1fr 1fr 1fr",
-        gap: "16px"
+        gap: "0.75rem",
+        fontFamily: "monospace",
+        textTransform: "uppercase",
+        letterSpacing: "0.08em"
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
           <div style={{
-            width: "12px",
-            height: "12px",
+            width: "10px",
+            height: "10px",
             borderRadius: "50%",
-            backgroundColor: "#4ADE80"
+            backgroundColor: "#22c55e"
           }} />
-          Perfect Key
+          Perfect
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
           <div style={{
-            width: "12px",
-            height: "12px",
+            width: "10px",
+            height: "10px",
             borderRadius: "50%",
-            backgroundColor: "#FBBF24"
+            backgroundColor: "#eab308"
           }} />
-          Compatible Key
+          Compatible
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
           <div style={{
-            width: "12px",
-            height: "12px",
+            width: "10px",
+            height: "10px",
             borderRadius: "50%",
-            backgroundColor: "#EF4444"
+            backgroundColor: "#ef4444"
           }} />
-          Key Clash
+          Clash
         </div>
       </div>
     </div>

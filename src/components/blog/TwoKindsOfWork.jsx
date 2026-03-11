@@ -15,7 +15,7 @@ const intuitiveItems = [
 ];
 
 export default function TwoKindsOfWork() {
-  const [attentionPos, setAttentionPos] = useState(50); // 0 = left (prep), 100 = right (performance)
+  const [attentionPos, setAttentionPos] = useState(50);
 
   const isConflict = attentionPos > 30 && attentionPos < 70;
   const isLeft = attentionPos < 30;
@@ -42,52 +42,55 @@ export default function TwoKindsOfWork() {
 
   return (
     <div style={{
-      padding: "24px",
-      backgroundColor: "#0f0f0f",
-      borderRadius: "8px",
-      color: "#fff",
+      padding: "1.25rem 1.5rem",
+      backgroundColor: "rgba(255,255,255,0.02)",
+      border: "1px solid rgba(255,255,255,0.06)",
+      borderRadius: "1rem",
+      color: "#f4f4f5",
       fontFamily: "system-ui, -apple-system, sans-serif"
     }}>
-      <h3 style={{ margin: "0 0 24px 0", fontSize: "18px", fontWeight: "600" }}>
+      <h3 style={{ margin: "0 0 1rem 0", fontSize: "1rem", fontWeight: 700, color: "#f4f4f5", lineHeight: 1.3 }}>
         Two Kinds of Work in DJing
       </h3>
 
       {/* Split screen columns */}
       <div style={{
         display: "grid",
-        gridTemplateColumns: "1fr 60px 1fr",
-        gap: "16px",
-        marginBottom: "32px"
+        gridTemplateColumns: "1fr 45px 1fr",
+        gap: "0.75rem",
+        marginBottom: "1rem"
       }}>
         {/* Left: Technical Work */}
         <div style={{
-          padding: "20px",
-          backgroundColor: "#1a1a1a",
-          borderRadius: "6px",
-          border: "1px solid #4A9EDE40",
+          padding: "1rem",
+          backgroundColor: "rgba(255,255,255,0.02)",
+          border: "1px solid rgba(217,70,168,0.25)",
+          borderRadius: "0.75rem",
           opacity: getTechOpacity(),
-          transition: "opacity 0.2s"
+          transition: "all 0.3s ease"
         }}>
           <h4 style={{
-            margin: "0 0 16px 0",
-            fontSize: "14px",
-            fontWeight: "600",
-            color: "#4A9EDE",
+            margin: "0 0 0.75rem 0",
+            fontSize: "0.65rem",
+            fontWeight: 600,
+            color: "#D946A8",
             textTransform: "uppercase",
-            letterSpacing: "0.5px"
+            letterSpacing: "0.08em",
+            fontFamily: "monospace"
           }}>
-            Technical Work
+            Technical
           </h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
             {technicalItems.map((item, i) => (
               <div
                 key={i}
                 style={{
-                  padding: "8px 12px",
-                  backgroundColor: "#4A9EDE20",
-                  borderRadius: "4px",
-                  fontSize: "13px",
-                  color: "#4A9EDE"
+                  padding: "0.5rem 0.75rem",
+                  backgroundColor: "#D946A815",
+                  borderRadius: "0.5rem",
+                  fontSize: "0.8rem",
+                  color: "#d4d4d8",
+                  lineHeight: 1.4
                 }}
               >
                 {item}
@@ -102,106 +105,86 @@ export default function TwoKindsOfWork() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          gap: "8px",
-          minHeight: "200px"
+          position: "relative",
+          minHeight: "160px"
         }}>
+          {/* Bar background */}
           <div style={{
-            width: "100%",
+            position: "absolute",
+            width: "6px",
             height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            position: "relative"
-          }}>
-            {/* Vertical bar background */}
-            <div style={{
+            backgroundColor: "rgba(255,255,255,0.03)",
+            borderRadius: "3px"
+          }} />
+
+          {/* Filled portion gradient */}
+          <svg width="6" height="100%" style={{ position: "absolute", inset: 0 }} preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="attentionGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset={`${attentionPos}%`} stopColor="#D946A8" />
+                <stop offset={`${attentionPos}%`} stopColor="#7C3AED" />
+              </linearGradient>
+            </defs>
+            <rect width="6" height="100%" fill="url(#attentionGradient)" />
+          </svg>
+
+          {/* Draggable thumb */}
+          <div
+            draggable
+            onDragStart={(e) => e.dataTransfer.effectAllowed = "move"}
+            onDrag={(e) => {
+              if (e.clientY === 0) return;
+              const container = e.currentTarget.parentElement;
+              const rect = container.getBoundingClientRect();
+              const newPos = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+              setAttentionPos(newPos);
+            }}
+            style={{
               position: "absolute",
-              width: "8px",
-              height: "100%",
-              backgroundColor: "#2a2a2a",
-              borderRadius: "4px",
-              top: 0
-            }} />
-
-            {/* Filled portion */}
-            <svg
-              width="8"
-              height="200"
-              style={{
-                position: "absolute",
-                top: 0,
-                left: "26px"
-              }}
-            >
-              <defs>
-                <linearGradient id="attentionGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset={`${attentionPos}%`} stopColor="#D946A8" />
-                  <stop offset={`${attentionPos}%`} stopColor="#4A9EDE" />
-                </linearGradient>
-              </defs>
-              <rect width="8" height="200" fill="url(#attentionGradient)" />
-            </svg>
-
-            {/* Draggable thumb */}
-            <div
-              draggable
-              onDragStart={(e) => {
-                e.dataTransfer.effectAllowed = "move";
-              }}
-              onDrag={(e) => {
-                if (e.clientY === 0) return;
-                const container = e.currentTarget.parentElement.parentElement;
-                const rect = container.getBoundingClientRect();
-                const newPos = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
-                setAttentionPos(newPos);
-              }}
-              style={{
-                position: "absolute",
-                width: "32px",
-                height: "12px",
-                backgroundColor: "#fff",
-                borderRadius: "6px",
-                cursor: "grab",
-                top: `calc(${100 - attentionPos}% - 6px)`,
-                left: "16px",
-                border: "2px solid #D946A8",
-                transition: attentionPos === 50 ? "none" : "none",
-                zIndex: 10
-              }}
-            />
-          </div>
+              width: "28px",
+              height: "10px",
+              backgroundColor: "#f4f4f5",
+              borderRadius: "5px",
+              cursor: "grab",
+              top: `calc(${100 - attentionPos}% - 5px)`,
+              border: "1px solid #D946A8",
+              zIndex: 10,
+              boxShadow: "0 0 8px rgba(217,70,168,0.3)"
+            }}
+          />
         </div>
 
         {/* Right: Intuitive Work */}
         <div style={{
-          padding: "20px",
-          backgroundColor: "#1a1a1a",
-          borderRadius: "6px",
-          border: "1px solid #D946A840",
+          padding: "1rem",
+          backgroundColor: "rgba(255,255,255,0.02)",
+          border: "1px solid rgba(217,70,168,0.25)",
+          borderRadius: "0.75rem",
           opacity: getIntuitionOpacity(),
-          transition: "opacity 0.2s"
+          transition: "all 0.3s ease"
         }}>
           <h4 style={{
-            margin: "0 0 16px 0",
-            fontSize: "14px",
-            fontWeight: "600",
+            margin: "0 0 0.75rem 0",
+            fontSize: "0.65rem",
+            fontWeight: 600,
             color: "#D946A8",
             textTransform: "uppercase",
-            letterSpacing: "0.5px"
+            letterSpacing: "0.08em",
+            fontFamily: "monospace"
           }}>
-            Intuitive Work
+            Intuitive
           </h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
             {intuitiveItems.map((item, i) => (
               <div
                 key={i}
                 style={{
-                  padding: "8px 12px",
-                  backgroundColor: "#D946A820",
-                  borderRadius: "4px",
-                  fontSize: "13px",
-                  color: "#D946A8"
+                  padding: "0.5rem 0.75rem",
+                  backgroundColor: "#D946A815",
+                  borderRadius: "0.5rem",
+                  fontSize: "0.8rem",
+                  color: "#d4d4d8",
+                  lineHeight: 1.4
                 }}
               >
                 {item}
@@ -213,31 +196,35 @@ export default function TwoKindsOfWork() {
 
       {/* Status label */}
       <div style={{
-        padding: "12px 16px",
-        backgroundColor: isConflict ? "#8B4513" : isLeft ? "#4A9EDE30" : "#D946A830",
-        borderRadius: "4px",
-        fontSize: "13px",
+        padding: "0.75rem 1rem",
+        backgroundColor: isConflict ? "#D946A820" : isLeft ? "rgba(217,70,168,0.15)" : "rgba(217,70,168,0.15)",
+        borderRadius: "0.5rem",
+        fontSize: "0.7rem",
         textAlign: "center",
-        color: isConflict ? "#FFB84D" : "#888",
-        marginBottom: "16px",
-        fontWeight: "500",
+        color: "#D946A8",
+        marginBottom: "0.75rem",
+        fontWeight: 600,
         textTransform: "uppercase",
-        letterSpacing: "0.5px"
+        letterSpacing: "0.08em",
+        fontFamily: "monospace"
       }}>
         {getConflictLabel()}
       </div>
 
-      {/* Message */}
+      {/* Insight */}
       <div style={{
-        padding: "16px",
-        backgroundColor: "#1a1a1a",
-        borderRadius: "6px",
+        padding: "1rem",
+        backgroundColor: "rgba(255,255,255,0.02)",
+        border: "3px solid rgba(217,70,168,0.5)",
         borderLeft: "3px solid #D946A8",
-        fontSize: "13px",
-        color: "#bbb",
-        lineHeight: "1.6"
+        borderRadius: "0.75rem",
+        fontSize: "0.85rem",
+        color: "#d4d4d8",
+        lineHeight: 1.6,
+        fontStyle: "italic",
+        fontWeight: 500
       }}>
-        <strong style={{ color: "#D946A8" }}>Ritmos</strong> keeps the attention bar on the left side — so during performance, it's fully on the right.
+        <span style={{ color: "#D946A8", fontWeight: 600, fontStyle: "normal" }}>Ritmos</span> keeps attention on the left — so during performance, it's fully on the right.
       </div>
     </div>
   );

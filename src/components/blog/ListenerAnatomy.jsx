@@ -23,51 +23,52 @@ export default function ListenerAnatomy() {
 
   const layerStyles = {
     container: {
-      maxWidth: "600px",
-      margin: "40px auto",
+      maxWidth: "56rem",
+      margin: "3rem auto",
       fontFamily: "system-ui, -apple-system, sans-serif",
     },
     header: {
       textAlign: "center",
-      marginBottom: "30px",
+      marginBottom: "2rem",
     },
     title: {
-      fontSize: "20px",
-      fontWeight: "600",
-      color: "#1f2937",
-      margin: "0 0 20px 0",
+      fontSize: "1.05rem",
+      fontWeight: "700",
+      color: "#f4f4f5",
+      margin: "0 0 1rem 0",
+      lineHeight: 1.3,
     },
     toggles: {
       display: "flex",
-      gap: "10px",
+      gap: "0.75rem",
       justifyContent: "center",
-      marginBottom: "30px",
+      marginBottom: "2rem",
       flexWrap: "wrap",
     },
     toggleButton: (isActive) => ({
-      padding: "8px 16px",
-      border: "2px solid #3EAE7C",
-      backgroundColor: isActive ? "#3EAE7C" : "transparent",
-      color: isActive ? "white" : "#3EAE7C",
-      borderRadius: "20px",
+      padding: "0.5rem 1rem",
+      border: `1px solid ${isActive ? "#3EAE7C40" : "rgba(255,255,255,0.06)"}`,
+      backgroundColor: isActive ? "#3EAE7C08" : "rgba(255,255,255,0.02)",
+      color: isActive ? "#3EAE7C" : "#d4d4d8",
+      borderRadius: "0.5rem",
       cursor: "pointer",
-      fontSize: "14px",
+      fontSize: "0.85rem",
       fontWeight: "500",
-      transition: "all 0.2s ease",
+      transition: "all 0.3s ease",
     }),
     diagram: {
       position: "relative",
       width: "300px",
       height: "300px",
-      margin: "0 auto 30px",
+      margin: "0 auto 2rem",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
     },
-    ring: (radius, layerType) => ({
+    ring: (layerType) => ({
       position: "absolute",
       borderRadius: "50%",
-      border: `3px solid ${layerType === 'outer' ? '#8EE4D9' : layerType === 'middle' ? '#5EC4B0' : '#3EAE7C'}`,
+      border: `2px solid ${layerType === 'outer' ? 'rgba(62, 174, 124, 0.3)' : layerType === 'middle' ? 'rgba(62, 174, 124, 0.5)' : '#3EAE7C'}`,
       cursor: "pointer",
       display: "flex",
       alignItems: "center",
@@ -88,38 +89,34 @@ export default function ListenerAnatomy() {
     },
     ringLabel: {
       textAlign: "center",
-      fontSize: "12px",
-      fontWeight: "500",
-      padding: "10px",
-      color: "#1f2937",
+      fontSize: "0.75rem",
+      fontWeight: "600",
+      padding: "0.75rem",
+      color: "#f4f4f5",
     },
-    tag: {
-      position: "absolute",
-      backgroundColor: "#E0F8F5",
-      border: "1px solid #3EAE7C",
-      color: "#0f766e",
-      padding: "4px 8px",
-      borderRadius: "12px",
-      fontSize: "11px",
-      fontWeight: "500",
+    ringSubLabel: {
+      fontSize: "0.7rem",
+      color: "#a1a1aa",
+      marginTop: "0.35rem",
     },
     expandedContent: {
-      backgroundColor: "#f3f4f6",
-      border: "2px solid #3EAE7C",
-      borderRadius: "8px",
-      padding: "20px",
-      marginTop: "20px",
+      backgroundColor: "rgba(255,255,255,0.02)",
+      border: "1px solid #3EAE7C40",
+      borderRadius: "1rem",
+      padding: "1.25rem 1.5rem",
+      marginTop: "1.5rem",
     },
     expandedSection: {
-      marginBottom: "15px",
+      marginBottom: "0.75rem",
     },
     expandedTitle: {
-      fontSize: "13px",
+      fontSize: "0.7rem",
       fontWeight: "600",
       color: "#3EAE7C",
-      marginBottom: "8px",
+      marginBottom: "0.5rem",
       textTransform: "uppercase",
-      letterSpacing: "0.5px",
+      letterSpacing: "0.08em",
+      fontFamily: "monospace",
     },
     expandedList: {
       listStyle: "none",
@@ -127,11 +124,12 @@ export default function ListenerAnatomy() {
       margin: "0",
     },
     expandedItem: {
-      fontSize: "13px",
-      color: "#374151",
-      marginBottom: "6px",
-      paddingLeft: "16px",
+      fontSize: "0.85rem",
+      color: "#d4d4d8",
+      marginBottom: "0.35rem",
+      paddingLeft: "1rem",
       position: "relative",
+      lineHeight: 1.5,
     },
     expandedItemBullet: {
       position: "absolute",
@@ -165,43 +163,43 @@ export default function ListenerAnatomy() {
         {/* Outer ring - Entities */}
         <div
           style={{
-            ...layerStyles.ring(140, 'outer'),
+            ...layerStyles.ring('outer'),
             ...layerStyles.ringOuter,
           }}
           onClick={() => setExpandedLayer(expandedLayer === 'entities' ? null : 'entities')}
         >
           <div style={layerStyles.ringLabel}>
-            <div style={{ fontSize: "11px", fontWeight: "600", marginBottom: "4px" }}>ENTITIES</div>
-            <div style={{ fontSize: "10px", color: "#6b7280" }}>what you watch</div>
+            <div style={{ fontWeight: "700" }}>ENTITIES</div>
+            <div style={layerStyles.ringSubLabel}>what you watch</div>
           </div>
         </div>
 
         {/* Middle ring - Signal Types */}
         <div
           style={{
-            ...layerStyles.ring(90, 'middle'),
+            ...layerStyles.ring('middle'),
             ...layerStyles.ringMiddle,
           }}
           onClick={() => setExpandedLayer(expandedLayer === 'signals' ? null : 'signals')}
         >
           <div style={layerStyles.ringLabel}>
-            <div style={{ fontSize: "11px", fontWeight: "600", marginBottom: "4px" }}>SIGNALS</div>
-            <div style={{ fontSize: "10px", color: "#6b7280" }}>what matters</div>
+            <div style={{ fontWeight: "700" }}>SIGNALS</div>
+            <div style={layerStyles.ringSubLabel}>what matters</div>
           </div>
         </div>
 
         {/* Inner ring - Learning Goal */}
         <div
           style={{
-            ...layerStyles.ring(50, 'inner'),
+            ...layerStyles.ring('inner'),
             ...layerStyles.ringInner,
-            boxShadow: "0 0 20px rgba(62, 174, 124, 0.3)",
+            boxShadow: "0 0 16px #3EAE7C40",
           }}
           onClick={() => setExpandedLayer(expandedLayer === 'goal' ? null : 'goal')}
         >
           <div style={layerStyles.ringLabel}>
-            <div style={{ fontSize: "10px", fontWeight: "600" }}>THE</div>
-            <div style={{ fontSize: "9px", fontWeight: "600" }}>QUESTION</div>
+            <div style={{ fontSize: "0.7rem", fontWeight: "700" }}>THE</div>
+            <div style={{ fontSize: "0.65rem", fontWeight: "700" }}>QUESTION</div>
           </div>
         </div>
       </div>
@@ -244,7 +242,7 @@ export default function ListenerAnatomy() {
             <div>
               <div style={layerStyles.expandedSection}>
                 <div style={layerStyles.expandedTitle}>Learning Goal</div>
-                <p style={{ fontSize: "14px", color: "#374151", margin: "0", fontStyle: "italic" }}>
+                <p style={{ fontSize: "0.85rem", color: "#f4f4f5", margin: "0", fontStyle: "italic", fontWeight: 500, lineHeight: 1.6 }}>
                   "{current.learningGoal}"
                 </p>
               </div>

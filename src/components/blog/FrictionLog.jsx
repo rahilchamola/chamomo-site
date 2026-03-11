@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
 export default function FrictionLog() {
+  const [expandedItem, setExpandedItem] = useState(null);
+
   const frictionPoints = [
     { day: "Mon", time: "8:12am", friction: "Opened app, saw 6 tasks. Closed app.", category: "ux", resolved: true },
     { day: "Mon", time: "2:30pm", friction: "AI suggested deep work during 15-min calendar gap", category: "logic", resolved: true },
@@ -11,21 +13,13 @@ export default function FrictionLog() {
     { day: "Sat", time: "10:00am", friction: "Week review was useful but took too long to load", category: "performance", resolved: false }
   ];
 
-  const categoryColors = {
-    ux: '#6495ed',
-    logic: '#9370db',
-    performance: '#ff9500',
-    missing: '#ff6b6b'
+  const categoryInfo = {
+    ux: { label: 'UX', color: '#6495ed' },
+    logic: { label: 'Logic', color: '#9370db' },
+    performance: { label: 'Perf', color: '#ff9500' },
+    missing: { label: 'Missing', color: '#ff6b6b' }
   };
 
-  const categoryLabels = {
-    ux: 'UX',
-    logic: 'Logic',
-    performance: 'Perf',
-    missing: 'Missing'
-  };
-
-  // Group by day
   const groupedByDay = frictionPoints.reduce((acc, point) => {
     if (!acc[point.day]) acc[point.day] = [];
     acc[point.day].push(point);
@@ -33,186 +27,154 @@ export default function FrictionLog() {
   }, {});
 
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const accent = '#D4920A';
 
   return (
     <div style={{ padding: '2rem 0' }}>
       <div style={{
         position: 'relative',
-        paddingLeft: '3rem',
+        paddingLeft: '2.5rem',
         paddingRight: '1rem'
       }}>
-        {/* Vertical line */}
         <div style={{
           position: 'absolute',
-          left: '0.75rem',
+          left: '0.6rem',
           top: 0,
           bottom: 0,
-          width: '2px',
-          background: 'linear-gradient(to bottom, #D4920A, #D4920A 50%, transparent)',
-          opacity: 0.3
+          width: '1px',
+          background: `linear-gradient(to bottom, ${accent}40 0%, ${accent}20 50%, transparent 100%)`
         }} />
 
-        {/* Timeline entries */}
         {days.map((day) => (
-          <div key={day} style={{ marginBottom: '2.5rem' }}>
-            {/* Day header */}
+          <div key={day} style={{ marginBottom: '2rem' }}>
             <div style={{
               position: 'relative',
               marginBottom: '1rem'
             }}>
               <div style={{
                 position: 'absolute',
-                left: '-2.5rem',
-                top: 0,
-                width: '1.5rem',
-                height: '1.5rem',
+                left: '-1.5rem',
+                top: '0.1rem',
+                width: '1.2rem',
+                height: '1.2rem',
                 borderRadius: '50%',
-                background: '#D4920A',
-                border: '3px solid #0a0a0a',
-                opacity: 0.7
+                background: accent,
+                border: `2px solid #0a0a0a`,
+                opacity: 0.8
               }} />
               <h4 style={{
-                margin: '0 0 0.75rem 0',
-                fontSize: '0.95rem',
+                margin: 0,
+                fontSize: '0.75rem',
                 fontWeight: 700,
-                color: '#D4920A',
                 textTransform: 'uppercase',
-                letterSpacing: '0.5px'
+                letterSpacing: '0.1em',
+                color: accent
               }}>
                 {day}day
               </h4>
             </div>
 
-            {/* Friction entries for this day */}
             {groupedByDay[day] && groupedByDay[day].map((point, idx) => (
-              <div
+              <button
                 key={`${day}-${idx}`}
+                onClick={() => setExpandedItem(expandedItem === `${day}-${idx}` ? null : `${day}-${idx}`)}
                 style={{
-                  background: '#1a1a1a',
-                  border: `1px solid rgba(212, 146, 10, 0.1)`,
-                  borderRadius: '6px',
-                  padding: '1rem',
-                  marginBottom: '0.75rem',
+                  background: expandedItem === `${day}-${idx}` ? `${accent}08` : 'rgba(255,255,255,0.02)',
+                  border: expandedItem === `${day}-${idx}` ? `1px solid ${accent}40` : '1px solid rgba(255,255,255,0.06)',
+                  borderRadius: '0.75rem',
+                  padding: '1rem 1.25rem',
+                  marginBottom: '0.5rem',
                   position: 'relative',
-                  paddingLeft: '3rem'
+                  paddingLeft: '2.5rem',
+                  textAlign: 'left',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                  gap: '1rem',
+                  width: '100%'
                 }}
               >
-                {/* Resolved/Unresolved indicator */}
                 <div style={{
                   position: 'absolute',
-                  left: '0.75rem',
+                  left: '0.55rem',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: '1.25rem',
-                  height: '1.25rem',
+                  width: '1rem',
+                  height: '1rem',
                   borderRadius: '50%',
-                  background: point.resolved ? '#4ade80' : '#D4920A',
-                  border: '2px solid #0a0a0a',
+                  background: point.resolved ? '#4ade80' : accent,
+                  border: `2px solid #0a0a0a`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '0.7rem',
-                  color: point.resolved ? '#000' : '#000',
+                  fontSize: '0.6rem',
+                  color: '#000',
                   fontWeight: 700
                 }}>
                   {point.resolved ? '✓' : '●'}
                 </div>
 
-                {/* Time and friction text */}
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-start',
-                  gap: '1rem'
-                }}>
-                  <div style={{ flex: 1 }}>
-                    <p style={{
-                      margin: '0 0 0.5rem 0',
-                      fontSize: '0.8rem',
-                      color: '#888',
-                      fontWeight: 500
-                    }}>
-                      {point.time}
-                    </p>
-                    <p style={{
-                      margin: 0,
-                      fontSize: '0.9rem',
-                      color: '#e0e0e0',
-                      lineHeight: 1.5
-                    }}>
-                      {point.friction}
-                    </p>
-                  </div>
-
-                  {/* Category tag */}
-                  <div style={{
-                    background: categoryColors[point.category],
-                    color: '#000',
-                    padding: '0.25rem 0.6rem',
-                    borderRadius: '4px',
-                    fontSize: '0.7rem',
-                    fontWeight: 700,
-                    whiteSpace: 'nowrap',
-                    textTransform: 'uppercase',
-                    opacity: 0.8
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <p style={{
+                    margin: '0 0 0.4rem 0',
+                    fontSize: '0.75rem',
+                    color: '#a1a1aa',
+                    fontFamily: 'monospace'
                   }}>
-                    {categoryLabels[point.category]}
-                  </div>
+                    {point.time}
+                  </p>
+                  <p style={{
+                    margin: 0,
+                    fontSize: '0.85rem',
+                    color: '#f4f4f5',
+                    lineHeight: 1.4
+                  }}>
+                    {point.friction}
+                  </p>
                 </div>
-              </div>
+
+                <div style={{
+                  background: categoryInfo[point.category].color,
+                  color: '#000',
+                  padding: '0.3rem 0.7rem',
+                  borderRadius: '0.4rem',
+                  fontSize: '0.65rem',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  whiteSpace: 'nowrap',
+                  letterSpacing: '0.05em',
+                  opacity: 0.85,
+                  flexShrink: 0
+                }}>
+                  {categoryInfo[point.category].label}
+                </div>
+              </button>
             ))}
           </div>
         ))}
       </div>
 
-      {/* Caption */}
       <div style={{
-        marginTop: '3rem',
-        padding: '1.5rem',
-        background: 'rgba(212, 146, 10, 0.05)',
-        border: '1px solid rgba(212, 146, 10, 0.1)',
-        borderRadius: '6px',
+        marginTop: '2.5rem',
+        padding: '1.25rem 1.5rem',
+        background: `${accent}08`,
+        border: `1px solid ${accent}40`,
+        borderLeft: `3px solid ${accent}50`,
+        borderRadius: '1rem',
         textAlign: 'center'
       }}>
         <p style={{
           margin: 0,
-          fontSize: '0.9rem',
-          color: '#999',
+          fontSize: '0.85rem',
+          color: '#f4f4f5',
+          lineHeight: 1.6,
           fontStyle: 'italic',
-          lineHeight: 1.6
+          fontWeight: 500
         }}>
           Every friction moment is a product decision waiting to be made
         </p>
-      </div>
-
-      {/* Legend */}
-      <div style={{
-        marginTop: '2rem',
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '2rem',
-        flexWrap: 'wrap',
-        fontSize: '0.8rem',
-        color: '#777'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <div style={{
-            width: '0.75rem',
-            height: '0.75rem',
-            borderRadius: '50%',
-            background: '#4ade80'
-          }} />
-          Resolved
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <div style={{
-            width: '0.75rem',
-            height: '0.75rem',
-            borderRadius: '50%',
-            background: '#D4920A'
-          }} />
-          Unresolved
-        </div>
       </div>
     </div>
   );

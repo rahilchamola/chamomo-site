@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function ADHDDesignCards() {
-  const [flipped, setFlipped] = useState({});
+  const [expanded, setExpanded] = useState({});
 
   const cards = [
     {
@@ -30,170 +30,105 @@ export default function ADHDDesignCards() {
     }
   ];
 
-  const toggleFlip = (name) => {
-    setFlipped(prev => ({
+  const toggleExpanded = (name) => {
+    setExpanded(prev => ({
       ...prev,
       [name]: !prev[name]
     }));
   };
 
-  const cardStyle = (isFront) => ({
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    backfaceVisibility: 'hidden',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '1.5rem',
-    textAlign: 'center',
-    opacity: isFront ? 1 : 0,
-    transform: isFront ? 'rotateY(0deg)' : 'rotateY(180deg)',
-    transition: 'opacity 0.6s ease, transform 0.6s ease'
-  });
+  const accent = '#D4920A';
 
   return (
     <div style={{ padding: '2rem 0' }}>
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-        gap: '2rem',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+        gap: '0.75rem',
         width: '100%'
       }}>
-        {cards.map((card, idx) => (
+        {cards.map((card) => (
           <button
             key={card.name}
-            onClick={() => toggleFlip(card.name)}
+            onClick={() => toggleExpanded(card.name)}
             style={{
-              perspective: '1000px',
-              background: 'transparent',
-              border: 'none',
+              background: expanded[card.name] ? `${accent}08` : 'rgba(255,255,255,0.02)',
+              border: expanded[card.name] ? `1px solid ${accent}40` : '1px solid rgba(255,255,255,0.06)',
+              borderRadius: '1rem',
+              padding: '1.25rem 1.5rem',
               cursor: 'pointer',
-              padding: 0,
-              height: '300px',
+              minHeight: expanded[card.name] ? '160px' : '140px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              transition: 'all 0.3s ease',
               position: 'relative',
-              transformStyle: 'preserve-3d',
-              animation: `slideIn 0.6s ease ${idx * 0.1}s both`,
-              outline: 'none'
+              overflow: 'hidden',
+              textAlign: 'left'
             }}
           >
-            <div style={{
-              position: 'relative',
-              width: '100%',
-              height: '100%',
-              transformStyle: 'preserve-3d',
-              transform: flipped[card.name] ? 'rotateY(180deg)' : 'rotateY(0deg)',
-              transition: 'transform 0.6s ease'
-            }}>
-              {/* Front */}
-              <div style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                background: '#1a1a1a',
-                border: '2px solid #D4920A',
-                borderRadius: '8px',
-                padding: '1.5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                backfaceVisibility: 'hidden',
-                boxShadow: '0 8px 32px rgba(212, 146, 10, 0.1)'
-              }}>
+            {!expanded[card.name] ? (
+              <>
                 <div>
                   <div style={{
-                    fontSize: '2.5rem',
-                    marginBottom: '1rem'
+                    fontSize: '1.8rem',
+                    marginBottom: '0.5rem',
+                    lineHeight: 1
                   }}>
                     {card.icon}
                   </div>
                   <h3 style={{
-                    margin: '0 0 1rem 0',
-                    fontSize: '1.3rem',
+                    margin: '0 0 0.5rem 0',
+                    fontSize: '1rem',
                     fontWeight: 700,
-                    color: '#fff'
+                    color: '#f4f4f5',
+                    lineHeight: 1.3
                   }}>
                     {card.name}
                   </h3>
                 </div>
-
-                <div>
-                  <p style={{
-                    margin: 0,
-                    fontSize: '0.9rem',
-                    color: '#ff6b6b',
-                    lineHeight: 1.5,
-                    fontWeight: 500
-                  }}>
-                    {card.failureMode}
-                  </p>
-                </div>
-
-                <div style={{
-                  fontSize: '0.75rem',
-                  color: '#666',
-                  textAlign: 'center'
+                <p style={{
+                  margin: 0,
+                  fontSize: '0.8rem',
+                  color: '#d4d4d8',
+                  lineHeight: 1.4,
+                  fontStyle: 'italic'
                 }}>
-                  Click to flip
-                </div>
-              </div>
-
-              {/* Back */}
+                  {card.failureMode}
+                </p>
+              </>
+            ) : (
               <div style={{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-                background: '#1a1a1a',
-                border: '2px solid #D4920A',
-                borderRadius: '8px',
-                padding: '1.5rem',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                backfaceVisibility: 'hidden',
-                transform: 'rotateY(180deg)',
-                boxShadow: '0 8px 32px rgba(212, 146, 10, 0.1)'
+                height: '100%'
               }}>
-                <div />
-
-                <div>
-                  <p style={{
-                    margin: 0,
-                    fontSize: '0.95rem',
-                    color: '#D4920A',
-                    lineHeight: 1.6,
-                    fontWeight: 500
-                  }}>
-                    {card.designResponse}
-                  </p>
-                </div>
-
                 <div style={{
-                  fontSize: '0.75rem',
-                  color: '#666',
-                  textAlign: 'center'
+                  fontSize: '0.65rem',
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  color: accent,
+                  marginBottom: '0.75rem'
                 }}>
                   Design Response
                 </div>
+                <p style={{
+                  margin: 0,
+                  fontSize: '0.85rem',
+                  color: '#f4f4f5',
+                  lineHeight: 1.5,
+                  fontStyle: 'italic',
+                  fontWeight: 500
+                }}>
+                  {card.designResponse}
+                </p>
               </div>
-            </div>
+            )}
           </button>
         ))}
       </div>
-
-      <style>{`
-        @keyframes slideIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 }

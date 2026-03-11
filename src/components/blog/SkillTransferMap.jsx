@@ -11,43 +11,46 @@ const skillPairs = [
 export default function SkillTransferMap() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  const width = 800;
-  const height = 500;
-  const leftX = 80;
-  const rightX = width - 80;
-  const nodeRadius = 30;
-  const nodeSpacing = (height - 80) / skillPairs.length;
+  const viewBoxWidth = 560;
+  const viewBoxHeight = 320;
+  const leftX = 50;
+  const rightX = viewBoxWidth - 50;
+  const nodeRadius = 18;
+  const nodeSpacing = (viewBoxHeight - 60) / skillPairs.length;
 
   const leftNodes = skillPairs.map((_, i) => ({
     x: leftX,
-    y: 60 + i * nodeSpacing
+    y: 40 + i * nodeSpacing
   }));
 
   const rightNodes = skillPairs.map((_, i) => ({
     x: rightX,
-    y: 60 + i * nodeSpacing
+    y: 40 + i * nodeSpacing
   }));
 
   return (
     <div style={{
-      padding: "24px",
-      backgroundColor: "#0f0f0f",
-      borderRadius: "8px",
-      color: "#fff",
+      padding: "1.25rem 1.5rem",
+      backgroundColor: "rgba(255,255,255,0.02)",
+      border: "1px solid rgba(255,255,255,0.06)",
+      borderRadius: "1rem",
+      color: "#f4f4f5",
       fontFamily: "system-ui, -apple-system, sans-serif"
     }}>
-      <h3 style={{ margin: "0 0 24px 0", fontSize: "18px", fontWeight: "600" }}>
-        DJ Skills → PM Skills Transfer Map
+      <h3 style={{ margin: "0 0 1rem 0", fontSize: "1rem", fontWeight: 700, color: "#f4f4f5", lineHeight: 1.3 }}>
+        DJ Skills → PM Skills
       </h3>
 
       <div style={{
         position: "relative",
-        backgroundColor: "#1a1a1a",
-        borderRadius: "6px",
+        backgroundColor: "rgba(255,255,255,0.02)",
+        border: "1px solid rgba(255,255,255,0.06)",
+        borderRadius: "0.75rem",
         overflow: "hidden",
-        marginBottom: "20px"
+        marginBottom: "1rem",
+        minHeight: "280px"
       }}>
-        <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} style={{ display: "block" }}>
+        <svg width="100%" height="auto" viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="xMidYMid meet" style={{ display: "block" }}>
           <defs>
             <linearGradient id="skillGradient" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#D946A8" />
@@ -61,18 +64,17 @@ export default function SkillTransferMap() {
             const isHovered = hoveredIndex === i;
 
             return (
-              <g key={`line-${i}`}>
-                <path
-                  d={`M ${leftNode.x + nodeRadius} ${leftNode.y} Q ${width / 2} ${(leftNode.y + rightNode.y) / 2} ${rightNode.x - nodeRadius} ${rightNode.y}`}
-                  stroke={isHovered ? "#D946A8" : "#7C3AED"}
-                  strokeWidth={isHovered ? 3 : 1.5}
-                  fill="none"
-                  opacity={isHovered ? 1 : 0.4}
-                  style={{ transition: "all 0.2s", cursor: "pointer" }}
-                  onMouseEnter={() => setHoveredIndex(i)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                />
-              </g>
+              <path
+                key={`line-${i}`}
+                d={`M ${leftNode.x + nodeRadius} ${leftNode.y} Q ${viewBoxWidth / 2} ${(leftNode.y + rightNode.y) / 2} ${rightNode.x - nodeRadius} ${rightNode.y}`}
+                stroke={isHovered ? "#D946A8" : "#7C3AED"}
+                strokeWidth={isHovered ? 2 : 1}
+                fill="none"
+                opacity={isHovered ? 1 : 0.35}
+                style={{ transition: "all 0.3s ease", cursor: "pointer" }}
+                onMouseEnter={() => setHoveredIndex(i)}
+                onMouseLeave={() => setHoveredIndex(null)}
+              />
             );
           })}
 
@@ -90,20 +92,21 @@ export default function SkillTransferMap() {
                   cx={node.x}
                   cy={node.y}
                   r={nodeRadius}
-                  fill={isHovered ? "#D946A8" : "#D946A840"}
+                  fill={isHovered ? "#D946A8" : "#D946A820"}
                   stroke="#D946A8"
-                  strokeWidth="2"
-                  style={{ transition: "all 0.2s" }}
+                  strokeWidth="1.5"
+                  style={{ transition: "all 0.3s ease" }}
                 />
                 <text
                   x={node.x}
                   y={node.y}
                   textAnchor="middle"
                   dy="0.3em"
-                  fontSize="11"
-                  fontWeight="600"
-                  fill={isHovered ? "#000" : "#D946A8"}
-                  style={{ pointerEvents: "none", transition: "all 0.2s" }}
+                  fontSize="9"
+                  fontWeight="700"
+                  fill={isHovered ? "#f4f4f5" : "#D946A8"}
+                  fontFamily="monospace"
+                  style={{ pointerEvents: "none", transition: "all 0.3s ease" }}
                 >
                   {i + 1}
                 </text>
@@ -125,20 +128,21 @@ export default function SkillTransferMap() {
                   cx={node.x}
                   cy={node.y}
                   r={nodeRadius}
-                  fill={isHovered ? "#7C3AED" : "#7C3AED40"}
+                  fill={isHovered ? "#7C3AED" : "#7C3AED20"}
                   stroke="#7C3AED"
-                  strokeWidth="2"
-                  style={{ transition: "all 0.2s" }}
+                  strokeWidth="1.5"
+                  style={{ transition: "all 0.3s ease" }}
                 />
                 <text
                   x={node.x}
                   y={node.y}
                   textAnchor="middle"
                   dy="0.3em"
-                  fontSize="11"
-                  fontWeight="600"
-                  fill={isHovered ? "#fff" : "#7C3AED"}
-                  style={{ pointerEvents: "none", transition: "all 0.2s" }}
+                  fontSize="9"
+                  fontWeight="700"
+                  fill={isHovered ? "#f4f4f5" : "#7C3AED"}
+                  fontFamily="monospace"
+                  style={{ pointerEvents: "none", transition: "all 0.3s ease" }}
                 >
                   {i + 1}
                 </text>
@@ -153,27 +157,30 @@ export default function SkillTransferMap() {
           top: 0,
           left: 0,
           width: "100%",
-          height: height,
-          pointerEvents: "none"
+          height: "100%",
+          pointerEvents: "none",
+          paddingTop: "1rem"
         }}>
           {/* Left side labels */}
           {skillPairs.map((pair, i) => {
-            const node = leftNodes[i];
+            const ratio = (viewBoxHeight / 320);
+            const pixelY = (40 + i * nodeSpacing) * ratio;
             const isHovered = hoveredIndex === i;
             return (
               <div
                 key={`left-label-${i}`}
                 style={{
                   position: "absolute",
-                  left: "12px",
-                  top: node.y,
+                  left: "0.5rem",
+                  top: `calc(${pixelY}px - 0.5rem)`,
                   transform: "translateY(-50%)",
-                  fontSize: "12px",
-                  fontWeight: "500",
-                  color: isHovered ? "#D946A8" : "#888",
-                  maxWidth: "60px",
-                  lineHeight: "1.3",
-                  transition: "color 0.2s"
+                  fontSize: "0.65rem",
+                  fontWeight: 500,
+                  color: isHovered ? "#D946A8" : "#71717a",
+                  maxWidth: "50px",
+                  lineHeight: 1.3,
+                  transition: "color 0.3s ease",
+                  fontFamily: "monospace"
                 }}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
@@ -187,23 +194,25 @@ export default function SkillTransferMap() {
 
           {/* Right side labels */}
           {skillPairs.map((pair, i) => {
-            const node = rightNodes[i];
+            const ratio = (viewBoxHeight / 320);
+            const pixelY = (40 + i * nodeSpacing) * ratio;
             const isHovered = hoveredIndex === i;
             return (
               <div
                 key={`right-label-${i}`}
                 style={{
                   position: "absolute",
-                  right: "12px",
-                  top: node.y,
+                  right: "0.5rem",
+                  top: `calc(${pixelY}px - 0.5rem)`,
                   transform: "translateY(-50%)",
-                  fontSize: "12px",
-                  fontWeight: "500",
-                  color: isHovered ? "#7C3AED" : "#888",
-                  maxWidth: "60px",
+                  fontSize: "0.65rem",
+                  fontWeight: 500,
+                  color: isHovered ? "#7C3AED" : "#71717a",
+                  maxWidth: "50px",
                   textAlign: "right",
-                  lineHeight: "1.3",
-                  transition: "color 0.2s"
+                  lineHeight: 1.3,
+                  transition: "color 0.3s ease",
+                  fontFamily: "monospace"
                 }}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
@@ -220,25 +229,26 @@ export default function SkillTransferMap() {
       {/* Details section */}
       {hoveredIndex !== null && (
         <div style={{
-          padding: "20px",
-          backgroundColor: "#1a1a1a",
-          borderRadius: "6px",
+          padding: "1rem",
+          backgroundColor: "rgba(217,70,168,0.08)",
+          border: "1px solid rgba(217,70,168,0.3)",
           borderLeft: "3px solid #D946A8",
-          animation: "fadeIn 0.2s ease-in"
+          borderRadius: "0.75rem",
+          animation: "fadeIn 0.3s ease-in"
         }}>
-          <div style={{ marginBottom: "8px", fontSize: "13px", color: "#888", textTransform: "uppercase", letterSpacing: "0.3px" }}>
-            Connection #{hoveredIndex + 1}
+          <div style={{ marginBottom: "0.5rem", fontSize: "0.65rem", color: "#71717a", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "monospace", fontWeight: 600 }}>
+            Connection {hoveredIndex + 1}
           </div>
-          <div style={{ marginBottom: "12px" }}>
-            <span style={{ color: "#D946A8", fontWeight: "600" }}>
+          <div style={{ marginBottom: "0.75rem", fontSize: "0.8rem", lineHeight: 1.5 }}>
+            <span style={{ color: "#D946A8", fontWeight: 600 }}>
               {skillPairs[hoveredIndex].djSkill}
             </span>
-            <span style={{ color: "#666", margin: "0 8px" }}>→</span>
-            <span style={{ color: "#7C3AED", fontWeight: "600" }}>
+            <span style={{ color: "#52525b", margin: "0 0.5rem" }}>→</span>
+            <span style={{ color: "#7C3AED", fontWeight: 600 }}>
               {skillPairs[hoveredIndex].pmSkill}
             </span>
           </div>
-          <div style={{ color: "#aaa", fontSize: "13px", lineHeight: "1.6" }}>
+          <div style={{ color: "#d4d4d8", fontSize: "0.75rem", lineHeight: 1.6, fontStyle: "italic" }}>
             {skillPairs[hoveredIndex].connection}
           </div>
         </div>
@@ -246,8 +256,8 @@ export default function SkillTransferMap() {
 
       <style>{`
         @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          from { opacity: 0; transform: translateY(-4px); }
+          to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
     </div>

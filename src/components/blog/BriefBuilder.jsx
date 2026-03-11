@@ -21,7 +21,6 @@ export default function BriefBuilder() {
     setRecognition(preset.recognition);
   };
 
-  // Calculate gathering phase length based on crowd energy
   const gatheringLength = crowdEnergy === "hot" ? 5 : crowdEnergy === "warm" ? 8 : 10;
   const arcPoints = [
     { x: 0, y: 20 + (bpmStart - 95) / 45 * 30 },
@@ -43,53 +42,49 @@ export default function BriefBuilder() {
 
   const fillPath = pathData + ` L ${arcPoints[arcPoints.length - 1].x * 2.5} 100 L 0 100 Z`;
 
-  const energyLabels = {
-    "cold": "🥶 Cold",
-    "warm": "🔥 Warm",
-    "hot": "🌡️ Hot"
-  };
-
-  const recognitionLabels = {
-    "all-bangers": "All Bangers",
-    "deep-cuts": "Deep Cuts"
-  };
+  const energyLabels = { "cold": "Cold", "warm": "Warm", "hot": "Hot" };
+  const recognitionLabels = { "all-bangers": "All Bangers", "deep-cuts": "Deep Cuts" };
 
   return (
     <div style={{
-      padding: "24px",
-      backgroundColor: "#0f0f0f",
-      borderRadius: "8px",
-      color: "#fff",
+      padding: "1.25rem 1.5rem",
+      backgroundColor: "rgba(255,255,255,0.02)",
+      border: "1px solid rgba(255,255,255,0.06)",
+      borderRadius: "1rem",
+      color: "#f4f4f5",
       fontFamily: "system-ui, -apple-system, sans-serif"
     }}>
-      <h3 style={{ margin: "0 0 20px 0", fontSize: "18px", fontWeight: "600" }}>
+      <h3 style={{ margin: "0 0 0.75rem 0", fontSize: "1rem", fontWeight: 700, color: "#f4f4f5", lineHeight: 1.3 }}>
         Brief Builder
       </h3>
 
       {/* Presets */}
-      <div style={{ marginBottom: "24px", display: "flex", gap: "8px", flexWrap: "wrap" }}>
+      <div style={{ marginBottom: "1rem", display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
         {presets.map((preset, i) => (
           <button
             key={i}
             onClick={() => applyPreset(preset)}
             style={{
-              padding: "8px 12px",
-              backgroundColor: "#D946A830",
-              border: "1px solid #D946A850",
-              borderRadius: "4px",
+              padding: "0.5rem 0.75rem",
+              backgroundColor: "#D946A815",
+              border: "1px solid #D946A840",
+              borderRadius: "0.5rem",
               color: "#D946A8",
               cursor: "pointer",
-              fontSize: "12px",
-              fontWeight: "500",
-              transition: "all 0.2s",
+              fontSize: "0.65rem",
+              fontWeight: 600,
+              transition: "all 0.3s ease",
               textTransform: "uppercase",
-              letterSpacing: "0.3px"
+              letterSpacing: "0.08em",
+              fontFamily: "monospace"
             }}
             onMouseEnter={(e) => {
-              e.target.style.backgroundColor = "#D946A850";
+              e.target.style.backgroundColor = "#D946A825";
+              e.target.style.borderColor = "#D946A860";
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "#D946A830";
+              e.target.style.backgroundColor = "#D946A815";
+              e.target.style.borderColor = "#D946A840";
             }}
           >
             {preset.name}
@@ -101,23 +96,25 @@ export default function BriefBuilder() {
       <div style={{
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
-        gap: "24px"
+        gap: "1rem"
       }}>
         {/* Left: Inputs */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           {/* Theme display */}
           <div>
-            <label style={{ fontSize: "12px", color: "#888", textTransform: "uppercase", letterSpacing: "0.3px" }}>
+            <label style={{ fontSize: "0.65rem", color: "#71717a", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "monospace", fontWeight: 600 }}>
               Theme
             </label>
             <div style={{
-              marginTop: "8px",
-              padding: "12px",
-              backgroundColor: "#1a1a1a",
-              borderRadius: "4px",
-              fontSize: "14px",
-              fontWeight: "500",
-              color: "#D946A8"
+              marginTop: "0.35rem",
+              padding: "0.75rem",
+              backgroundColor: "rgba(255,255,255,0.02)",
+              border: "1px solid rgba(217,70,168,0.2)",
+              borderRadius: "0.5rem",
+              fontSize: "0.85rem",
+              fontWeight: 500,
+              color: "#D946A8",
+              fontFamily: "monospace"
             }}>
               {theme}
             </div>
@@ -125,8 +122,9 @@ export default function BriefBuilder() {
 
           {/* BPM Start */}
           <div>
-            <label style={{ fontSize: "12px", color: "#888", textTransform: "uppercase", letterSpacing: "0.3px" }}>
-              Starting BPM: {bpmStart}
+            <label style={{ fontSize: "0.65rem", color: "#71717a", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "monospace", fontWeight: 600, display: "flex", justifyContent: "space-between" }}>
+              <span>Starting BPM</span>
+              <span style={{ color: "#D946A8" }}>{bpmStart}</span>
             </label>
             <input
               type="range"
@@ -136,20 +134,22 @@ export default function BriefBuilder() {
               onChange={(e) => setBpmStart(parseInt(e.target.value))}
               style={{
                 width: "100%",
-                height: "6px",
-                marginTop: "8px",
-                backgroundColor: "#2a2a2a",
+                height: "5px",
+                marginTop: "0.35rem",
+                backgroundColor: "rgba(255,255,255,0.05)",
                 borderRadius: "3px",
                 outline: "none",
-                accentColor: "#D946A8"
+                accentColor: "#D946A8",
+                cursor: "pointer"
               }}
             />
           </div>
 
           {/* BPM Peak */}
           <div>
-            <label style={{ fontSize: "12px", color: "#888", textTransform: "uppercase", letterSpacing: "0.3px" }}>
-              Peak BPM: {bpmPeak}
+            <label style={{ fontSize: "0.65rem", color: "#71717a", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "monospace", fontWeight: 600, display: "flex", justifyContent: "space-between" }}>
+              <span>Peak BPM</span>
+              <span style={{ color: "#D946A8" }}>{bpmPeak}</span>
             </label>
             <input
               type="range"
@@ -159,37 +159,41 @@ export default function BriefBuilder() {
               onChange={(e) => setBpmPeak(parseInt(e.target.value))}
               style={{
                 width: "100%",
-                height: "6px",
-                marginTop: "8px",
-                backgroundColor: "#2a2a2a",
+                height: "5px",
+                marginTop: "0.35rem",
+                backgroundColor: "rgba(255,255,255,0.05)",
                 borderRadius: "3px",
                 outline: "none",
-                accentColor: "#D946A8"
+                accentColor: "#D946A8",
+                cursor: "pointer"
               }}
             />
           </div>
 
           {/* Crowd Energy */}
           <div>
-            <label style={{ fontSize: "12px", color: "#888", textTransform: "uppercase", letterSpacing: "0.3px" }}>
+            <label style={{ fontSize: "0.65rem", color: "#71717a", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "monospace", fontWeight: 600 }}>
               Crowd Energy
             </label>
-            <div style={{ display: "flex", gap: "8px", marginTop: "8px" }}>
+            <div style={{ display: "flex", gap: "0.35rem", marginTop: "0.35rem" }}>
               {["cold", "warm", "hot"].map(option => (
                 <button
                   key={option}
                   onClick={() => setCrowdEnergy(option)}
                   style={{
                     flex: 1,
-                    padding: "8px",
-                    backgroundColor: crowdEnergy === option ? "#D946A8" : "#2a2a2a",
-                    border: `1px solid ${crowdEnergy === option ? "#D946A8" : "#444"}`,
-                    borderRadius: "4px",
-                    color: crowdEnergy === option ? "#000" : "#888",
+                    padding: "0.6rem 0.5rem",
+                    backgroundColor: crowdEnergy === option ? "#D946A808" : "rgba(255,255,255,0.03)",
+                    border: `1px solid ${crowdEnergy === option ? "#D946A840" : "rgba(255,255,255,0.06)"}`,
+                    borderRadius: "0.35rem",
+                    color: crowdEnergy === option ? "#D946A8" : "#71717a",
                     cursor: "pointer",
-                    fontSize: "12px",
-                    fontWeight: "500",
-                    transition: "all 0.2s"
+                    fontSize: "0.7rem",
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    fontFamily: "monospace",
+                    transition: "all 0.3s ease"
                   }}
                 >
                   {energyLabels[option]}
@@ -200,28 +204,31 @@ export default function BriefBuilder() {
 
           {/* Recognition */}
           <div>
-            <label style={{ fontSize: "12px", color: "#888", textTransform: "uppercase", letterSpacing: "0.3px" }}>
+            <label style={{ fontSize: "0.65rem", color: "#71717a", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "monospace", fontWeight: 600 }}>
               Recognition
             </label>
-            <div style={{ display: "flex", gap: "8px", marginTop: "8px" }}>
+            <div style={{ display: "flex", gap: "0.35rem", marginTop: "0.35rem" }}>
               {["all-bangers", "deep-cuts"].map(option => (
                 <button
                   key={option}
                   onClick={() => setRecognition(option)}
                   style={{
                     flex: 1,
-                    padding: "8px",
-                    backgroundColor: recognition === option ? "#D946A8" : "#2a2a2a",
-                    border: `1px solid ${recognition === option ? "#D946A8" : "#444"}`,
-                    borderRadius: "4px",
-                    color: recognition === option ? "#000" : "#888",
+                    padding: "0.6rem 0.5rem",
+                    backgroundColor: recognition === option ? "#D946A808" : "rgba(255,255,255,0.03)",
+                    border: `1px solid ${recognition === option ? "#D946A840" : "rgba(255,255,255,0.06)"}`,
+                    borderRadius: "0.35rem",
+                    color: recognition === option ? "#D946A8" : "#71717a",
                     cursor: "pointer",
-                    fontSize: "12px",
-                    fontWeight: "500",
-                    transition: "all 0.2s"
+                    fontSize: "0.7rem",
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    fontFamily: "monospace",
+                    transition: "all 0.3s ease"
                   }}
                 >
-                  {recognitionLabels[option]}
+                  {recognitionLabels[option].split(" ")[0]}
                 </button>
               ))}
             </div>
@@ -230,43 +237,47 @@ export default function BriefBuilder() {
 
         {/* Right: Live preview */}
         <div style={{
-          padding: "20px",
-          backgroundColor: "#1a1a1a",
-          borderRadius: "6px",
+          padding: "1rem",
+          backgroundColor: "rgba(255,255,255,0.02)",
+          border: "1px solid rgba(255,255,255,0.06)",
+          borderRadius: "0.75rem",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center"
         }}>
-          <h4 style={{ margin: "0 0 16px 0", fontSize: "13px", color: "#888", textTransform: "uppercase", letterSpacing: "0.3px" }}>
-            Set Shape Preview
+          <h4 style={{ margin: "0 0 0.5rem 0", fontSize: "0.65rem", color: "#71717a", textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "monospace", fontWeight: 600 }}>
+            Shape
           </h4>
-          <svg width="100%" height="180" viewBox="0 0 150 110" preserveAspectRatio="xMidYMid meet">
+          <svg width="100%" height="120" viewBox="0 0 150 110" preserveAspectRatio="xMidYMid meet" style={{ display: "block" }}>
             <defs>
               <linearGradient id="previewGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#D946A8" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#D946A8" stopOpacity="0.1" />
+                <stop offset="0%" stopColor="#D946A8" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="#D946A8" stopOpacity="0.08" />
               </linearGradient>
             </defs>
             <path d={fillPath} fill="url(#previewGradient)" />
-            <path d={pathData} stroke="#D946A8" strokeWidth="1.5" fill="none" vectorEffect="non-scaling-stroke" />
+            <path d={pathData} stroke="#D946A8" strokeWidth="1" fill="none" vectorEffect="non-scaling-stroke" />
           </svg>
-          <div style={{ marginTop: "12px", fontSize: "11px", color: "#666", textAlign: "center" }}>
-            BPM: {bpmStart} → {bpmPeak}
+          <div style={{ marginTop: "0.5rem", fontSize: "0.65rem", color: "#71717a", textAlign: "center", fontFamily: "monospace" }}>
+            {bpmStart} → {bpmPeak} bpm
           </div>
         </div>
       </div>
 
       {/* Summary */}
       <div style={{
-        marginTop: "24px",
-        padding: "16px",
-        backgroundColor: "#1a1a1a",
-        borderRadius: "6px",
-        fontSize: "12px",
-        color: "#aaa",
-        lineHeight: "1.6"
+        marginTop: "1rem",
+        padding: "1rem",
+        backgroundColor: "rgba(217,70,168,0.08)",
+        border: "1px solid rgba(217,70,168,0.3)",
+        borderLeft: "3px solid #D946A8",
+        borderRadius: "0.75rem",
+        fontSize: "0.8rem",
+        color: "#d4d4d8",
+        lineHeight: 1.6,
+        fontStyle: "italic"
       }}>
-        <strong style={{ color: "#D946A8" }}>Brief Summary:</strong> {theme} set, {bpmStart}–{bpmPeak} BPM, {crowdEnergy} crowd, {recognitionLabels[recognition].toLowerCase()}.
+        <span style={{ color: "#D946A8", fontWeight: 600, fontStyle: "normal", fontFamily: "monospace" }}>Brief:</span> {theme} set, {bpmStart}–{bpmPeak} BPM, {crowdEnergy} crowd, {recognitionLabels[recognition].toLowerCase()}.
       </div>
     </div>
   );

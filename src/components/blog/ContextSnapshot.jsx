@@ -34,38 +34,23 @@ export default function ContextSnapshot() {
   const [activeScenario, setActiveScenario] = useState(0);
   const scenario = scenarios[activeScenario];
 
+  const accent = '#D4920A';
+
   const moduleStyle = {
-    background: 'linear-gradient(135deg, rgba(212, 146, 10, 0.08) 0%, rgba(212, 146, 10, 0.02) 100%)',
-    border: '1px solid rgba(212, 146, 10, 0.2)',
-    borderRadius: '8px',
-    padding: '1.5rem',
+    background: `${accent}08`,
+    border: `1px solid ${accent}40`,
+    borderRadius: '1rem',
+    padding: '1.25rem 1.5rem',
     flex: 1
-  };
-
-  const labelStyle = {
-    fontSize: '0.75rem',
-    fontWeight: 700,
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px',
-    color: '#D4920A',
-    marginBottom: '0.75rem'
-  };
-
-  const contentStyle = {
-    fontSize: '0.95rem',
-    color: '#e0e0e0',
-    lineHeight: 1.5,
-    margin: 0
   };
 
   return (
     <div style={{ padding: '2rem 0' }}>
-      {/* Scenario selector */}
       <div style={{
         display: 'flex',
-        gap: '0.75rem',
+        gap: '0.5rem',
         justifyContent: 'center',
-        marginBottom: '2rem',
+        marginBottom: '1.5rem',
         flexWrap: 'wrap'
       }}>
         {scenarios.map((s, idx) => (
@@ -73,27 +58,15 @@ export default function ContextSnapshot() {
             key={idx}
             onClick={() => setActiveScenario(idx)}
             style={{
-              background: activeScenario === idx ? '#D4920A' : '#2a2a2a',
-              color: activeScenario === idx ? '#000' : '#999',
-              border: activeScenario === idx ? '2px solid #D4920A' : '2px solid #404040',
-              padding: '0.6rem 1.2rem',
-              borderRadius: '20px',
-              fontSize: '0.9rem',
+              background: activeScenario === idx ? accent : 'rgba(255,255,255,0.02)',
+              color: activeScenario === idx ? '#000' : '#a1a1aa',
+              border: activeScenario === idx ? `1px solid ${accent}40` : '1px solid rgba(255,255,255,0.06)',
+              padding: '0.4rem 1rem',
+              borderRadius: '1rem',
+              fontSize: '0.8rem',
               fontWeight: 600,
               cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              if (activeScenario !== idx) {
-                e.target.style.borderColor = '#D4920A';
-                e.target.style.color = '#D4920A';
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (activeScenario !== idx) {
-                e.target.style.borderColor = '#404040';
-                e.target.style.color = '#999';
-              }
+              transition: 'all 0.3s ease'
             }}
           >
             {s.label}
@@ -101,128 +74,178 @@ export default function ContextSnapshot() {
         ))}
       </div>
 
-      {/* Time display */}
       <div style={{
         textAlign: 'center',
-        marginBottom: '2rem',
-        fontSize: '0.85rem',
-        color: '#888'
+        marginBottom: '1.5rem',
+        fontSize: '0.8rem',
+        color: '#a1a1aa'
       }}>
         {scenario.time}
       </div>
 
-      {/* 2x2 Grid */}
       <div style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-        gap: '1.5rem',
-        marginBottom: '2rem'
+        gap: '0.75rem',
+        marginBottom: '1.5rem'
       }}>
-        {/* Todo Module */}
         <div style={moduleStyle}>
-          <div style={labelStyle}>📝 Todo</div>
-          <p style={contentStyle}>
-            <strong>{scenario.todoState.active || '—'}</strong>
+          <div style={{
+            fontSize: '0.65rem',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            color: accent,
+            marginBottom: '0.5rem'
+          }}>
+            📝 Todo
+          </div>
+          <p style={{
+            margin: 0,
+            fontSize: '0.9rem',
+            color: '#f4f4f5',
+            fontWeight: 500,
+            lineHeight: 1.4
+          }}>
+            {scenario.todoState.active || '—'}
           </p>
           {scenario.todoState.overdue > 0 && (
-            <p style={{ ...contentStyle, color: '#ff6b6b', fontSize: '0.85rem', marginTop: '0.5rem' }}>
+            <p style={{
+              margin: '0.5rem 0 0 0',
+              fontSize: '0.8rem',
+              color: '#a1a1aa'
+            }}>
               {scenario.todoState.overdue} overdue
             </p>
           )}
         </div>
 
-        {/* Habits Module */}
         <div style={moduleStyle}>
-          <div style={labelStyle}>↻ Habits</div>
-          <p style={contentStyle}>
-            {scenario.habitState.completed} / {scenario.habitState.total} completed
+          <div style={{
+            fontSize: '0.65rem',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            color: accent,
+            marginBottom: '0.5rem'
+          }}>
+            ↻ Habits
+          </div>
+          <p style={{
+            margin: 0,
+            fontSize: '0.9rem',
+            color: '#f4f4f5',
+            fontWeight: 500,
+            lineHeight: 1.4
+          }}>
+            {scenario.habitState.completed}/{scenario.habitState.total}
           </p>
           <p style={{
-            ...contentStyle,
-            fontSize: '0.85rem',
-            color: scenario.habitState.streak === 'Strong' ? '#4ade80' : '#ff9500',
-            marginTop: '0.5rem'
+            margin: '0.5rem 0 0 0',
+            fontSize: '0.8rem',
+            color: '#a1a1aa'
           }}>
-            Streak: {scenario.habitState.streak}
+            {scenario.habitState.streak}
           </p>
         </div>
 
-        {/* Journal Module */}
         <div style={moduleStyle}>
-          <div style={labelStyle}>✎ Journal</div>
-          <p style={{ ...contentStyle, fontSize: '0.9rem' }}>
-            <strong>{scenario.journalState.lastMood}</strong>
+          <div style={{
+            fontSize: '0.65rem',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            color: accent,
+            marginBottom: '0.5rem'
+          }}>
+            ✎ Journal
+          </div>
+          <p style={{
+            margin: 0,
+            fontSize: '0.9rem',
+            color: '#f4f4f5',
+            fontWeight: 500,
+            lineHeight: 1.4
+          }}>
+            {scenario.journalState.lastMood}
           </p>
-          <p style={{ ...contentStyle, fontSize: '0.85rem', color: '#999', marginTop: '0.5rem' }}>
+          <p style={{
+            margin: '0.5rem 0 0 0',
+            fontSize: '0.8rem',
+            color: '#a1a1aa',
+            fontStyle: 'italic'
+          }}>
             "{scenario.journalState.lastEntry}"
           </p>
         </div>
 
-        {/* Calendar Module */}
         <div style={moduleStyle}>
-          <div style={labelStyle}>◷ Calendar</div>
-          <p style={contentStyle}>
-            <strong>{scenario.calendarState.nextEvent}</strong>
+          <div style={{
+            fontSize: '0.65rem',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            color: accent,
+            marginBottom: '0.5rem'
+          }}>
+            ◷ Calendar
+          </div>
+          <p style={{
+            margin: 0,
+            fontSize: '0.9rem',
+            color: '#f4f4f5',
+            fontWeight: 500,
+            lineHeight: 1.4
+          }}>
+            {scenario.calendarState.nextEvent}
           </p>
-          <p style={{ ...contentStyle, fontSize: '0.85rem', color: '#999', marginTop: '0.5rem' }}>
+          <p style={{
+            margin: '0.5rem 0 0 0',
+            fontSize: '0.8rem',
+            color: '#a1a1aa'
+          }}>
             {scenario.calendarState.gapMinutes} min gap
           </p>
         </div>
       </div>
 
-      {/* AI Surface Panel */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(212, 146, 10, 0.15) 0%, rgba(212, 146, 10, 0.05) 100%)',
-        border: '2px solid #D4920A',
-        borderRadius: '8px',
-        padding: '2rem',
-        textAlign: 'center',
-        animation: 'pulse 2s ease-in-out infinite',
-        animationKeyframes: `
-          @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.85; }
-          }
-        `
+        background: `${accent}08`,
+        border: `1px solid ${accent}40`,
+        borderLeft: `3px solid ${accent}50`,
+        borderRadius: '1rem',
+        padding: '1.5rem',
+        textAlign: 'left'
       }}>
-        <div style={{ marginBottom: '1rem' }}>
-          <div style={{
-            fontSize: '0.75rem',
-            fontWeight: 700,
-            textTransform: 'uppercase',
-            letterSpacing: '0.5px',
-            color: '#D4920A',
-            marginBottom: '0.75rem'
-          }}>
-            🎯 Surfaced to User
-          </div>
-          <p style={{
-            margin: 0,
-            fontSize: '1.2rem',
-            fontWeight: 700,
-            color: '#D4920A',
-            marginBottom: '1rem'
-          }}>
-            {scenario.aiSurface.widget}
-          </p>
+        <div style={{
+          fontSize: '0.65rem',
+          fontWeight: 600,
+          textTransform: 'uppercase',
+          letterSpacing: '0.1em',
+          color: accent,
+          marginBottom: '0.75rem'
+        }}>
+          🎯 Surfaced to User
         </div>
         <p style={{
           margin: 0,
-          fontSize: '0.9rem',
-          color: '#bbb',
-          lineHeight: 1.6
-
+          fontSize: '1rem',
+          fontWeight: 700,
+          color: '#f4f4f5',
+          marginBottom: '0.75rem'
+        }}>
+          {scenario.aiSurface.widget}
+        </p>
+        <p style={{
+          margin: 0,
+          fontSize: '0.85rem',
+          color: '#d4d4d8',
+          lineHeight: 1.6,
+          fontStyle: 'italic'
         }}>
           {scenario.aiSurface.reason}
         </p>
       </div>
-
-      <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.85; }
-        }
-      `}</style>
     </div>
   );
 }

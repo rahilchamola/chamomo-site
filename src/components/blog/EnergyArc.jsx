@@ -22,11 +22,11 @@ const phaseMapping = {
 export default function EnergyArc() {
   const [showNarrative, setShowNarrative] = useState(false);
 
-  const width = 700;
-  const height = 400;
-  const padding = 60;
-  const chartWidth = width - padding * 2;
-  const chartHeight = height - padding * 2;
+  const viewBoxWidth = 500;
+  const viewBoxHeight = 280;
+  const padding = 45;
+  const chartWidth = viewBoxWidth - padding * 2;
+  const chartHeight = viewBoxHeight - padding * 2;
 
   const maxMinute = Math.max(...data.map(d => d.minute));
   const minBpm = Math.min(...data.map(d => d.bpm));
@@ -35,11 +35,10 @@ export default function EnergyArc() {
 
   const points = data.map(d => ({
     x: padding + (d.minute / maxMinute) * chartWidth,
-    y: height - padding - ((d.bpm - minBpm) / bpmRange) * chartHeight,
+    y: viewBoxHeight - padding - ((d.bpm - minBpm) / bpmRange) * chartHeight,
     ...d
   }));
 
-  // Generate smooth curve path
   const pathData = points.map((p, i) => {
     if (i === 0) return `M ${p.x} ${p.y}`;
     const prev = points[i - 1];
@@ -50,53 +49,62 @@ export default function EnergyArc() {
     return `C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p.x} ${p.y}`;
   }).join(" ");
 
-  // Fill area under curve
-  const fillPath = pathData + ` L ${points[points.length - 1].x} ${height - padding} L ${points[0].x} ${height - padding} Z`;
+  const fillPath = pathData + ` L ${points[points.length - 1].x} ${viewBoxHeight - padding} L ${points[0].x} ${viewBoxHeight - padding} Z`;
 
-  // Get unique phases for labels
   const phases = Array.from(new Map(data.map(d => [d.phase, d])).values());
   const phasePositions = phases.map(phase => {
     const phasePoints = points.filter(p => p.phase === phase.phase);
     return {
       phase: phase.phase,
       x: (phasePoints[0].x + phasePoints[phasePoints.length - 1].x) / 2,
-      y: Math.min(...phasePoints.map(p => p.y)) - 30
+      y: Math.min(...phasePoints.map(p => p.y)) - 22
     };
   });
 
   return (
     <div style={{
-      padding: "20px",
-      backgroundColor: "#0f0f0f",
-      borderRadius: "8px",
-      color: "#fff",
+      padding: "1.25rem 1.5rem",
+      backgroundColor: "rgba(255,255,255,0.02)",
+      border: "1px solid rgba(255,255,255,0.06)",
+      borderRadius: "1rem",
+      color: "#f4f4f5",
       fontFamily: "system-ui, -apple-system, sans-serif"
     }}>
-      <div style={{ marginBottom: "16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <h3 style={{ margin: 0, fontSize: "18px", fontWeight: "600" }}>DJ Set Energy Arc</h3>
-        <label style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }}>
+      <div style={{ marginBottom: "0.75rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <h3 style={{ margin: 0, fontSize: "1rem", fontWeight: 700, color: "#f4f4f5", lineHeight: 1.3 }}>
+          DJ Set Energy Arc
+        </h3>
+        <label style={{ display: "flex", alignItems: "center", gap: "0.35rem", cursor: "pointer", fontSize: "0.85rem", color: "#a1a1aa" }}>
           <input
             type="checkbox"
             checked={showNarrative}
             onChange={(e) => setShowNarrative(e.target.checked)}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", accentColor: "#D946A8" }}
           />
-          <span style={{ fontSize: "14px" }}>Show Narrative Overlay</span>
+          <span>Narrative</span>
         </label>
       </div>
 
-      <svg width={width} height={height} style={{ backgroundColor: "#1a1a1a", borderRadius: "6px", overflow: "hidden" }}>
+      <svg width="100%" height="auto" viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="xMidYMid meet" style={{ display: "block", minHeight: "200px" }}>
+        <defs>
+          <linearGradient id="arcGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#D946A8" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="#D946A8" stopOpacity="0.08" />
+          </linearGradient>
+        </defs>
+
         {/* Grid lines */}
         {[0, 1, 2, 3, 4].map(i => (
           <line
             key={`hline-${i}`}
             x1={padding}
             y1={padding + (i * chartHeight / 4)}
-            x2={width - padding}
+            x2={viewBoxWidth - padding}
             y2={padding + (i * chartHeight / 4)}
-            stroke="#333"
-            strokeWidth="1"
-            strokeDasharray="4"
+            stroke="#52525b"
+            strokeWidth="0.5"
+            strokeDasharray="3,2"
+            opacity="0.4"
           />
         ))}
 
@@ -106,11 +114,12 @@ export default function EnergyArc() {
           return (
             <text
               key={`ylabel-${i}`}
-              x={padding - 10}
-              y={height - padding - (i * chartHeight / 4) + 5}
+              x={padding - 8}
+              y={viewBoxHeight - padding - (i * chartHeight / 4) + 3}
               textAnchor="end"
-              fontSize="12"
-              fill="#888"
+              fontSize="9"
+              fill="#71717a"
+              fontFamily="monospace"
             >
               {bpm}
             </text>
@@ -124,23 +133,16 @@ export default function EnergyArc() {
             <text
               key={`xlabel-${minute}`}
               x={x}
-              y={height - padding + 20}
+              y={viewBoxHeight - padding + 14}
               textAnchor="middle"
-              fontSize="12"
-              fill="#888"
+              fontSize="9"
+              fill="#71717a"
+              fontFamily="monospace"
             >
               {minute}m
             </text>
           );
         })}
-
-        {/* Gradient definition */}
-        <defs>
-          <linearGradient id="arcGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#D946A8" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#D946A8" stopOpacity="0.1" />
-          </linearGradient>
-        </defs>
 
         {/* Fill under curve */}
         <path d={fillPath} fill="url(#arcGradient)" />
@@ -149,7 +151,7 @@ export default function EnergyArc() {
         <path
           d={pathData}
           stroke="#D946A8"
-          strokeWidth="3"
+          strokeWidth="2"
           fill="none"
           vectorEffect="non-scaling-stroke"
         />
@@ -160,26 +162,11 @@ export default function EnergyArc() {
             key={`point-${i}`}
             cx={p.x}
             cy={p.y}
-            r="4"
+            r="2.5"
             fill="#D946A8"
-            stroke="#fff"
-            strokeWidth="2"
+            stroke="#f4f4f5"
+            strokeWidth="1"
           />
-        ))}
-
-        {/* BPM labels at points */}
-        {points.map((p, i) => (
-          <text
-            key={`bpm-${i}`}
-            x={p.x}
-            y={p.y - 15}
-            textAnchor="middle"
-            fontSize="11"
-            fill="#D946A8"
-            fontWeight="600"
-          >
-            {p.bpm}
-          </text>
         ))}
 
         {/* Phase labels */}
@@ -189,19 +176,20 @@ export default function EnergyArc() {
               x={phasePos.x}
               y={phasePos.y}
               textAnchor="middle"
-              fontSize="13"
+              fontSize="10"
               fill="#D946A8"
               fontWeight="600"
+              fontFamily="monospace"
             >
               {phasePos.phase}
             </text>
             {showNarrative && (
               <text
                 x={phasePos.x}
-                y={phasePos.y + 18}
+                y={phasePos.y + 12}
                 textAnchor="middle"
-                fontSize="12"
-                fill="#888"
+                fontSize="8"
+                fill="#71717a"
                 fontStyle="italic"
               >
                 {phaseMapping[phasePos.phase]}
@@ -211,12 +199,12 @@ export default function EnergyArc() {
         ))}
 
         {/* Axes */}
-        <line x1={padding} y1={height - padding} x2={width - padding} y2={height - padding} stroke="#444" strokeWidth="2" />
-        <line x1={padding} y1={padding} x2={padding} y2={height - padding} stroke="#444" strokeWidth="2" />
+        <line x1={padding} y1={viewBoxHeight - padding} x2={viewBoxWidth - padding} y2={viewBoxHeight - padding} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        <line x1={padding} y1={padding} x2={padding} y2={viewBoxHeight - padding} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
       </svg>
 
-      <div style={{ marginTop: "12px", fontSize: "12px", color: "#888" }}>
-        X: Time (minutes) | Y: BPM
+      <div style={{ marginTop: "0.5rem", fontSize: "0.7rem", color: "#71717a", fontFamily: "monospace", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+        Time (min) × BPM
       </div>
     </div>
   );

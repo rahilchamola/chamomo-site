@@ -61,121 +61,124 @@ export default function FeatureKillSwitch() {
 
   const switchStyles = {
     container: {
-      maxWidth: "800px",
-      margin: "40px auto",
+      maxWidth: "56rem",
+      margin: "3rem auto",
       fontFamily: "system-ui, -apple-system, sans-serif",
     },
     title: {
-      fontSize: "20px",
-      fontWeight: "600",
-      color: "#1f2937",
-      margin: "0 0 10px 0",
+      fontSize: "1.05rem",
+      fontWeight: "700",
+      color: "#f4f4f5",
+      margin: "0 0 0.5rem 0",
       textAlign: "center",
+      lineHeight: 1.3,
     },
     subtitle: {
-      fontSize: "13px",
-      color: "#6b7280",
+      fontSize: "0.8rem",
+      color: "#a1a1aa",
       textAlign: "center",
-      marginBottom: "30px",
+      marginBottom: "2rem",
       fontStyle: "italic",
+      lineHeight: 1.5,
     },
     featureCard: (isKilled) => ({
-      backgroundColor: "#1f2937",
-      borderRadius: "8px",
-      padding: "20px",
-      marginBottom: "16px",
+      backgroundColor: "rgba(255,255,255,0.02)",
+      borderRadius: "1rem",
+      padding: "1.25rem 1.5rem",
+      marginBottom: "0.75rem",
       display: "flex",
-      gap: "20px",
+      gap: "1.25rem",
       alignItems: "flex-start",
-      border: "1px solid #374151",
-      opacity: isKilled ? 0.7 : 1,
-      transition: "all 0.2s ease",
+      border: "1px solid rgba(255,255,255,0.06)",
+      opacity: isKilled ? 0.6 : 1,
+      transition: "all 0.3s ease",
     }),
     featureContent: {
       flex: 1,
     },
     featureName: (isKilled) => ({
-      fontSize: "15px",
+      fontSize: "0.95rem",
       fontWeight: "700",
-      color: "#ffffff",
-      marginBottom: "6px",
+      color: "#f4f4f5",
+      marginBottom: "0.35rem",
       textDecoration: isKilled ? "line-through" : "none",
-      textDecorationColor: "#ef4444",
+      textDecorationColor: "#EF4444",
       textDecorationThickness: "2px",
     }),
     featureDescription: {
-      fontSize: "13px",
-      color: "#d1d5db",
-      marginBottom: "12px",
-      lineHeight: "1.5",
+      fontSize: "0.8rem",
+      color: "#d4d4d8",
+      marginBottom: "0.75rem",
+      lineHeight: 1.5,
     },
     featureReason: {
-      fontSize: "12px",
-      color: "#9ca3af",
+      fontSize: "0.75rem",
+      color: "#a1a1aa",
       fontStyle: "italic",
     },
     barContainer: {
-      width: "120px",
+      width: "100px",
       flexShrink: 0,
     },
     barLabel: {
-      fontSize: "11px",
+      fontSize: "0.65rem",
       fontWeight: "600",
-      color: "#9ca3af",
-      marginBottom: "6px",
+      color: "#a1a1aa",
+      marginBottom: "0.4rem",
       textTransform: "uppercase",
-      letterSpacing: "0.5px",
+      letterSpacing: "0.08em",
+      fontFamily: "monospace",
     },
     barRow: {
-      marginBottom: "12px",
+      marginBottom: "0.75rem",
     },
     barRowLabel: {
-      fontSize: "10px",
-      color: "#6b7280",
-      marginBottom: "4px",
+      fontSize: "0.7rem",
+      color: "#71717a",
+      marginBottom: "0.25rem",
     },
     bar: (value, color) => ({
-      height: "6px",
+      height: "4px",
       backgroundColor: color,
-      borderRadius: "3px",
-      width: `${value * 12}px`,
-      minWidth: `${value * 12}px`,
+      borderRadius: "2px",
+      width: `${value * 9}px`,
+      minWidth: `${value * 9}px`,
       opacity: 0.8,
     }),
     switchContainer: {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      gap: "12px",
+      gap: "0.5rem",
       flexShrink: 0,
     },
     toggle: (isShipped) => ({
-      width: "56px",
-      height: "28px",
+      width: "48px",
+      height: "24px",
       backgroundColor: isShipped ? "#3EAE7C" : "#EF4444",
       border: "none",
-      borderRadius: "14px",
+      borderRadius: "12px",
       cursor: "pointer",
       position: "relative",
       transition: "all 0.3s ease",
-      boxShadow: `0 2px 8px ${isShipped ? 'rgba(62, 174, 124, 0.3)' : 'rgba(239, 68, 68, 0.3)'}`,
     }),
     toggleDot: (isShipped) => ({
       position: "absolute",
       top: "2px",
-      left: isShipped ? "30px" : "2px",
-      width: "24px",
-      height: "24px",
+      left: isShipped ? "26px" : "2px",
+      width: "20px",
+      height: "20px",
       backgroundColor: "white",
-      borderRadius: "12px",
+      borderRadius: "10px",
       transition: "left 0.3s ease",
     }),
     verdictLabel: (verdict) => ({
-      fontSize: "11px",
+      fontSize: "0.65rem",
       fontWeight: "700",
-      color: verdict === "shipped" ? "#10b981" : "#ef4444",
+      color: verdict === "shipped" ? "#3EAE7C" : "#EF4444",
       textTransform: "uppercase",
-      letterSpacing: "0.5px",
+      letterSpacing: "0.08em",
+      fontFamily: "monospace",
     }),
   };
 
@@ -204,12 +207,12 @@ export default function FeatureKillSwitch() {
                 <div style={switchStyles.bar(feature.excitement, "#EF4444")} />
               </div>
 
-              <div style={{ ...switchStyles.barLabel, marginTop: "12px" }}>
+              <div style={{ ...switchStyles.barLabel, marginTop: "0.75rem" }}>
                 Practical
               </div>
               <div style={switchStyles.barRow}>
                 <div style={switchStyles.barRowLabel}>{feature.practicalValue}/10</div>
-                <div style={switchStyles.bar(feature.practicalValue, "#10b981")} />
+                <div style={switchStyles.bar(feature.practicalValue, "#3EAE7C")} />
               </div>
             </div>
 
@@ -229,9 +232,9 @@ export default function FeatureKillSwitch() {
         );
       })}
 
-      <div style={{ marginTop: "30px", padding: "20px", backgroundColor: "#f9fafb", borderRadius: "8px", textAlign: "center" }}>
-        <p style={{ fontSize: "13px", color: "#6b7280", margin: "0", lineHeight: "1.6" }}>
-          <strong>The pattern:</strong> The three most exciting ideas (9, 8, 7) all got killed. The two shipped features scored 9 and 5 on practical value. Excitement is a terrible signal for what matters.
+      <div style={{ marginTop: "2rem", padding: "1.25rem 1.5rem", backgroundColor: "rgba(255,255,255,0.02)", borderRadius: "1rem", border: "1px solid rgba(255,255,255,0.06)", textAlign: "center" }}>
+        <p style={{ fontSize: "0.8rem", color: "#a1a1aa", margin: "0", lineHeight: 1.6 }}>
+          <strong style={{ color: "#f4f4f5" }}>The pattern:</strong> The three most exciting ideas (9, 8, 7) all got killed. The two shipped features scored 9 and 5 on practical value. Excitement is a terrible signal for what matters.
         </p>
       </div>
     </div>

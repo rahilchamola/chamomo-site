@@ -1,15 +1,35 @@
 {
-  "additionalDirectories": ["../docs"],
+  "additionalDirectories": [
+    "../docs"
+  ],
   "permissions": {
     "allow": {
-      "Bash": ["npx astro *", "npm *", "git *", "npx prettier *"],
-      "Read": ["**"],
-      "Write": ["src/**", "public/**", "CLAUDE.md", ".claude/**", "../docs/**"]
-    }
+      "Bash": [
+        "npx astro *",
+        "npm *",
+        "git *",
+        "npx prettier *"
+      ],
+      "Read": [
+        "**"
+      ],
+      "Write": [
+        "src/**",
+        "public/**",
+        "CLAUDE.md",
+        ".claude/**",
+        "../docs/**"
+      ]
+    },
+    "additionalDirectories": [
+      "/Users/rahilchamola/.claude/skills"
+    ]
   },
   "hooks": {
     "afterEdit": [
-      { "command": "npx prettier --write $FILE" }
+      {
+        "command": "npx prettier --write $FILE"
+      }
     ]
   }
 }

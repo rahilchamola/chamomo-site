@@ -22,6 +22,14 @@ const pageTitle = title === 'Chamomo' ? title : `${title} — Chamomo`;
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Anti-FOWT: set theme before first paint -->
+  <script is:inline>
+    (function(){
+      var t = localStorage.getItem('theme');
+      if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="generator" content={Astro.generator} />

@@ -96,8 +96,10 @@ This project follows the Vibe Coder OS standard:
 - Temporary work and drafts go in ../docs/specs/ or ../docs/devlogs/
 
 ## Skills Available
+- /chamomo-editor — Full voice guide, content templates, draft-branch workflow. Use for all content work.
 - /decode — Explain code, commands, and architecture decisions
-- Custom skills in .claude/skills/ if created
+- /doc — Create structured documentation (devlogs, decisions, PRDs, learnings) in ../docs/
+- /tidy-docs — Scan ../docs/ for misnamed files and rename to YYYY-MM-DD-type-title.md convention
 
 ## Session Discipline
 - /clear between unrelated tasks

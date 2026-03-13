@@ -1,9 +1,0 @@
----
-# This empty front matter tells Jekyll to process this file
----
-
-// Load design tokens first, then base styles, then layout, then components
-@import "variables";
-@import "base";
-@import "layout";
-@import "components";

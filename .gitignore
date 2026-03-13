@@ -1,12 +1,15 @@
 # Build output
 dist/
-.vercel/
+_site/
 
 # Dependencies
 node_modules/
 
 # Astro
 .astro/
+
+# Vercel
+.vercel/
 
 # Environment
 .env
@@ -20,12 +23,8 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Blog source assets (raw notes, not for public repo)
-Blog Post 01 Assets (Shard)/
+# Jekyll leftovers
+.jekyll-cache/
 
-# Old Jekyll build output
-_site/
-Gemfile.lock
-jekyll-skill/
-JEKYLL_COMPREHENSIVE_GUIDE.md
-SITE-MANAGEMENT-GUIDE.md
+# Logs
+*.log

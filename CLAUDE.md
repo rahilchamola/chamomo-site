@@ -2,6 +2,12 @@
 
 > Instant context for any Claude session editing this site.
 
+## Project Setup
+- **Dev:** `npx astro dev`
+- **Build:** `npx astro build`
+- **Preview:** `npx astro preview`
+- **Docs:** `../docs/` (decisions, learnings, devlogs, specs, prompts, research, retros)
+
 ## What This Is
 Personal website for Rahil Chamola (Chamomo). Built with **Astro 5.7** + React 19 islands. Deployed on **Vercel**. Covers writing (essays + series), projects, ideas, DJ content.
 
@@ -81,3 +87,20 @@ src/
 - `src/layouts/BaseLayout.astro` — master layout
 - Routing patterns in `[...id].astro` files
 - `package.json` dependencies
+
+## File Organization
+This project follows the Vibe Coder OS standard:
+- Code lives in this folder (src/, public/, config files)
+- Private docs live in ../docs/ (not committed to git)
+- Assets for the site go in public/images/<section>/
+- Temporary work and drafts go in ../docs/specs/ or ../docs/devlogs/
+
+## Skills Available
+- /decode — Explain code, commands, and architecture decisions
+- Custom skills in .claude/skills/ if created
+
+## Session Discipline
+- /clear between unrelated tasks
+- /compact at ~80% context usage
+- Commit after every logical unit (conventional commits)
+- Save learnings to ../docs/learnings/ when something non-obvious comes up

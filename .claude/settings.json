@@ -1,0 +1,15 @@
+{
+  "additionalDirectories": ["../docs"],
+  "permissions": {
+    "allow": {
+      "Bash": ["npx astro *", "npm *", "git *", "npx prettier *"],
+      "Read": ["**"],
+      "Write": ["src/**", "public/**", "CLAUDE.md", ".claude/**", "../docs/**"]
+    }
+  },
+  "hooks": {
+    "afterEdit": [
+      { "command": "npx prettier --write $FILE" }
+    ]
+  }
+}
